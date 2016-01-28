@@ -1,2 +1,2 @@
-# MEScrollToTopButton
-A drop-in UITableView/UICollectionView superclass category for showing a scroll to top button whenever the view scrolls down.
+# MEFloatingButton
+A drop-in UITableView/UICollectionView/UIScrollView superclass category for showing a floating button on top of it.
