@@ -15,6 +15,9 @@
 		C4344C981C58C97300CA397D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C4344C961C58C97300CA397D /* LaunchScreen.storyboard */; };
 		C4344CA31C58C97300CA397D /* ExamplesTests.m in Sources */ = {isa = PBXBuildFile; fileRef = C4344CA21C58C97300CA397D /* ExamplesTests.m */; };
 		C4344CAE1C58C97300CA397D /* ExamplesUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = C4344CAD1C58C97300CA397D /* ExamplesUITests.m */; };
+		C4BDA2D91C5A1B4300C7E1EB /* UIScrollView+FloatingButton.m in Sources */ = {isa = PBXBuildFile; fileRef = C4BDA2D81C5A1B4300C7E1EB /* UIScrollView+FloatingButton.m */; };
+		C4BDA2DA1C5A1B4300C7E1EB /* UIScrollView+FloatingButton.m in Sources */ = {isa = PBXBuildFile; fileRef = C4BDA2D81C5A1B4300C7E1EB /* UIScrollView+FloatingButton.m */; };
+		C4BDA2DB1C5A1B4300C7E1EB /* UIScrollView+FloatingButton.m in Sources */ = {isa = PBXBuildFile; fileRef = C4BDA2D81C5A1B4300C7E1EB /* UIScrollView+FloatingButton.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -51,6 +54,8 @@
 		C4344CA91C58C97300CA397D /* ExamplesUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ExamplesUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		C4344CAD1C58C97300CA397D /* ExamplesUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ExamplesUITests.m; sourceTree = "<group>"; };
 		C4344CAF1C58C97300CA397D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		C4BDA2D71C5A1B4300C7E1EB /* UIScrollView+FloatingButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIScrollView+FloatingButton.h"; sourceTree = "<group>"; };
+		C4BDA2D81C5A1B4300C7E1EB /* UIScrollView+FloatingButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIScrollView+FloatingButton.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -81,6 +86,7 @@
 		C4344C7C1C58C97300CA397D = {
 			isa = PBXGroup;
 			children = (
+				C4344CBC1C58CB8B00CA397D /* Source */,
 				C4344C871C58C97300CA397D /* Examples */,
 				C4344CA11C58C97300CA397D /* ExamplesTests */,
 				C4344CAC1C58C97300CA397D /* ExamplesUITests */,
@@ -138,6 +144,15 @@
 				C4344CAF1C58C97300CA397D /* Info.plist */,
 			);
 			path = ExamplesUITests;
+			sourceTree = "<group>";
+		};
+		C4344CBC1C58CB8B00CA397D /* Source */ = {
+			isa = PBXGroup;
+			children = (
+				C4BDA2D71C5A1B4300C7E1EB /* UIScrollView+FloatingButton.h */,
+				C4BDA2D81C5A1B4300C7E1EB /* UIScrollView+FloatingButton.m */,
+			);
+			path = Source;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -272,6 +287,7 @@
 			files = (
 				C4344C901C58C97300CA397D /* ViewController.m in Sources */,
 				C4344C8D1C58C97300CA397D /* AppDelegate.m in Sources */,
+				C4BDA2D91C5A1B4300C7E1EB /* UIScrollView+FloatingButton.m in Sources */,
 				C4344C8A1C58C97300CA397D /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -281,6 +297,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C4344CA31C58C97300CA397D /* ExamplesTests.m in Sources */,
+				C4BDA2DA1C5A1B4300C7E1EB /* UIScrollView+FloatingButton.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -289,6 +306,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C4344CAE1C58C97300CA397D /* ExamplesUITests.m in Sources */,
+				C4BDA2DB1C5A1B4300C7E1EB /* UIScrollView+FloatingButton.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -414,6 +432,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = Examples/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = Ventura.Media.Examples;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -425,6 +444,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = Examples/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = Ventura.Media.Examples;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -498,6 +518,7 @@
 				C4344CB41C58C97300CA397D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		C4344CB51C58C97300CA397D /* Build configuration list for PBXNativeTarget "ExamplesTests" */ = {
 			isa = XCConfigurationList;
@@ -506,6 +527,7 @@
 				C4344CB71C58C97300CA397D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		C4344CB81C58C97300CA397D /* Build configuration list for PBXNativeTarget "ExamplesUITests" */ = {
 			isa = XCConfigurationList;
@@ -514,6 +536,7 @@
 				C4344CBA1C58C97300CA397D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
