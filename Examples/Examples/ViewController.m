@@ -24,9 +24,9 @@ static NSString *CellIdentifier = @"CellIdentifier";
     
     self.tableView.backgroundColor = [UIColor lightGrayColor];
     
-    
     self.tableView.floatingButtonSource = self;
     self.tableView.floatingButtonDelegate = self;
+    self.tableView.hideOnTap = YES;
     
     [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:CellIdentifier];
 }

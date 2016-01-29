@@ -38,6 +38,8 @@ typedef NS_ENUM(NSInteger, FloatingButtonDisplayMode) {
 @property (nonatomic, weak) IBOutlet id <MEFloatingButtonSource> floatingButtonSource;
 /** The floating button delegate. */
 @property (nonatomic, weak) IBOutlet id <MEFloatingButtonDelegate> floatingButtonDelegate;
+/** Hides the floating button when it is tapped. Default NO. */
+@property (nonatomic, assign, getter = isHideOnTap) BOOL hideOnTap;
 /** YES if floating button is visible. */
 @property (nonatomic, readonly, getter = isFloatingButtonVisible) BOOL floatingButtonVisible;
 
