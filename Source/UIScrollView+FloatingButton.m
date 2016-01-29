@@ -33,6 +33,7 @@ typedef NS_ENUM(NSInteger, FloatingButtonState) {
 
 @property (nonatomic, assign) FloatingButtonState buttonState;
 @property (nonatomic, assign) FloatingButtonAnimationType buttonAnimationType;
+@property (nonatomic, assign) FloatingButtonDisplayMode buttonDisplayMode;
 
 - (void)setupConstraints;
 - (void)prepareForReuse;
@@ -44,7 +45,9 @@ typedef NS_ENUM(NSInteger, FloatingButtonState) {
 static char const *const kFloatingButtonSource = "floatingButtonSource";
 static char const *const kFloatingButtonDelegate = "floatingButtonDelegate";
 static char const *const kFloatingButtonView = "floatingButtonView";
-static char const *const kFloatingButtonHideOnTap = "hideOnTap";
+
+static NSString *const kObserverContentOffset = @"contentOffset";
+static NSString *const kObserverFrame = @"frame";
 
 static float const kFloatingButtonDefaultImagePadding = 10.0f;
 static float const kFloatingButtonDefaultOffset = 10.0f;
@@ -82,15 +85,10 @@ static float const kFloatingButtonDefaultFromBottomAnimationTime = 0.5f;
     objc_setAssociatedObject(self, kFloatingButtonDelegate, floatingButtonDelegate, OBJC_ASSOCIATION_ASSIGN);
     
     // Add observer to be notified when scrolling
-    [self addObserver:self forKeyPath:@"contentOffset" options:NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld context:nil];
+    [self addObserver:self forKeyPath:kObserverContentOffset options:NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld context:nil];
     
     // Add observer to be notified when frame changes
-    [self addObserver:self forKeyPath:@"frame" options:NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld context:nil];
-}
-
-- (void)setHideOnTap:(BOOL)hideOnTap
-{
-    objc_setAssociatedObject(self, kFloatingButtonHideOnTap, @(hideOnTap), OBJC_ASSOCIATION_RETAIN);
+    [self addObserver:self forKeyPath:kObserverFrame options:NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld context:nil];
 }
 
 
@@ -118,11 +116,6 @@ static float const kFloatingButtonDefaultFromBottomAnimationTime = 0.5f;
 {
     UIView *view = objc_getAssociatedObject(self, kFloatingButtonView);
     return view ? !view.hidden : NO;
-}
-
-- (BOOL)isHideOnTap
-{
-    return [objc_getAssociatedObject(self, kFloatingButtonHideOnTap) boolValue];
 }
 
 
@@ -156,6 +149,22 @@ static float const kFloatingButtonDefaultFromBottomAnimationTime = 0.5f;
 
 
 #pragma mark - DataSource Getters (Private)
+
+- (BOOL)me_shouldDisplay
+{
+    if (self.floatingButtonSource && [self.floatingButtonSource respondsToSelector:@selector(floatingButtonShouldDisplay:)]) {
+        return [self.floatingButtonSource floatingButtonShouldDisplay:self];
+    }
+    return YES;
+}
+
+- (BOOL)me_hideOnTap
+{
+    if (self.floatingButtonSource && [self.floatingButtonSource respondsToSelector:@selector(floatingButtonShouldDisplay:)]) {
+        return [self.floatingButtonSource floatingButtonHideOnTap:self];
+    }
+    return NO;
+}
 
 - (UIImage *)me_buttonImageForState:(UIControlState)state
 {
@@ -208,22 +217,6 @@ static float const kFloatingButtonDefaultFromBottomAnimationTime = 0.5f;
     return kFloatingButtonDefaultOffset;
 }
 
-- (BOOL)me_hideOnTap
-{
-
-    NSString *key = @"hideOnTap";
-    NSString *setterStr = [NSString stringWithFormat:@"set%@%@:",
-                           [[key substringToIndex:1] capitalizedString],
-                           [key substringFromIndex:1]];
-    
-    if ([self respondsToSelector:NSSelectorFromString(setterStr)]) {
-        NSLog(@"found the setter!");
-        return [self isHideOnTap];
-    }
-    
-    return NO;
-}
-
 - (FloatingButtonAnimationType)me_animationType
 {
     if (self.floatingButtonSource && [self.floatingButtonSource respondsToSelector:@selector(animationTypeForFloatingButton:)]) {
@@ -232,17 +225,16 @@ static float const kFloatingButtonDefaultFromBottomAnimationTime = 0.5f;
     return FloatingButtonAnimationTypeFadeIn;
 }
 
+- (FloatingButtonDisplayMode)me_displayMode
+{
+    if (self.floatingButtonSource && [self.floatingButtonSource respondsToSelector:@selector(displayModeForFloatingButton:)]) {
+        return [self.floatingButtonSource displayModeForFloatingButton:self];
+    }
+    return FloatingButtonDisplayModeWhenScrolling;
+}
 
 
 #pragma mark - Delegate Events (Private)
-
-- (BOOL)me_shouldDisplay
-{
-    if (self.floatingButtonDelegate && [self.floatingButtonDelegate respondsToSelector:@selector(floatingButtonShouldDisplay:)]) {
-        return [self.floatingButtonDelegate floatingButtonShouldDisplay:self];
-    }
-    return YES;
-}
 
 - (void)me_willAppear
 {
@@ -274,9 +266,7 @@ static float const kFloatingButtonDefaultFromBottomAnimationTime = 0.5f;
 
 - (void)me_didTapDataButton:(id)sender
 {
-    NSLog(@"me_didTapDataButton");
-    
-    if ([self me_hideOnTap]) {
+    if ([self me_hideOnTap] && self.floatingButtonView.buttonDisplayMode != FloatingButtonDisplayModeAlways) {
         [self me_hideFloatingButtonView];
     }
     
@@ -296,7 +286,7 @@ static float const kFloatingButtonDefaultFromBottomAnimationTime = 0.5f;
     
     if ([self me_shouldDisplay]) {
         
-        // Notifies that the scroll to top button view will appear
+        // Notifies that the floating button view will appear
         [self me_willAppear];
         
         MEFloatingButtonView *view = self.floatingButtonView;
@@ -335,20 +325,39 @@ static float const kFloatingButtonDefaultFromBottomAnimationTime = 0.5f;
         // Configure offset
         view.verticalOffset = [self me_verticalOffset];
         
-        // Configure the scroll to top button view
+        // Configure the floating button view
         view.backgroundColor = [UIColor clearColor];
-        view.hidden = NO;
         view.clipsToBounds = YES;
         
-        // Configure scroll to top button userInteraction permission
+        // Configure floating button userInteraction permission
         view.userInteractionEnabled = YES;
         
-        // Configure scroll to top button fade in display
+        // Configure animation type
         view.buttonAnimationType = [self me_animationType];
+        
+        // Configure display mode
+        view.buttonDisplayMode = [self me_displayMode];
         
         [view setupConstraints];
         
-        // Notifies that the scroll to top button view did appear
+//        switch (self.floatingButtonView.buttonDisplayMode) {
+//            case FloatingButtonDisplayModeAlways:
+//                view.hidden = NO;
+//                break;
+//            case FloatingButtonDisplayModeWhenScrolling:
+//                view.hidden = YES;
+//                break;
+//            case FloatingButtonDisplayModeWhenScrollingDownOnly:
+//                view.hidden = YES;
+//                break;
+//            case FloatingButtonDisplayModeWhenScrollingUpOnly:
+//                view.hidden = YES;
+//                break;
+//            default:
+//                break;
+//        }
+        
+        // Notifies that the floating button view did appear
         [self me_didAppear];
 
     } else if (self.isFloatingButtonVisible) {
@@ -358,7 +367,7 @@ static float const kFloatingButtonDefaultFromBottomAnimationTime = 0.5f;
 
 - (void)me_invalidateView
 {
-    // Notifies that the scroll to top button view will disappear
+    // Notifies that the floating button view will disappear
     [self me_willDisappear];
     
     if (self.floatingButtonView) {
@@ -368,7 +377,7 @@ static float const kFloatingButtonDefaultFromBottomAnimationTime = 0.5f;
         [self setFloatingButtonView:nil];
     }
     
-    // Notifies that the scroll to top button view did disappear
+    // Notifies that the floating button view did disappear
     [self me_didDisappear];
 }
 
@@ -419,7 +428,6 @@ static float const kFloatingButtonDefaultFromBottomAnimationTime = 0.5f;
     }
 }
 
-
 - (void)me_repositionFloatingButtonViewFrame:(CGPoint)point
 {
     CGRect fixedFrame = self.floatingButtonView.frame;
@@ -427,51 +435,55 @@ static float const kFloatingButtonDefaultFromBottomAnimationTime = 0.5f;
     [self.floatingButtonView setFrame:fixedFrame];
 }
 
+
 #pragma mark - KVO Methods (Private)
 
 -(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
-    NSLog(@"observeValueForKeyPath - change = %@", change);
-    NSLog(@"self.floatingButtonView.buttonState = %d", self.floatingButtonView.buttonState);
-
-    if ([keyPath isEqualToString:@"frame"]) {
+    if ([keyPath isEqualToString:kObserverFrame]) {
         
         if (![self me_canDisplay]) {
             [self me_invalidateView];
         }
         
         [self me_validateView];
-        
-    } else if ([keyPath isEqualToString:@"contentOffset"]) {
-        
-        [self stopTimer];
-        [self startTimer];
+
+    } else if ([keyPath isEqualToString:kObserverContentOffset]) {
         
         [self bringSubviewToFront:self.floatingButtonView];
         
-        switch (self.floatingButtonView.buttonState) {
-            case FloatingButtonStateWillAppear:
-                [self me_repositionFloatingButtonViewFrame:((UITableView *)object).contentOffset];
-                break;
-                
-            case FloatingButtonStateDidAppear:
-                [self me_repositionFloatingButtonViewFrame:((UITableView *)object).contentOffset];
-                break;
-                
-            case FloatingButtonStateWillDisappear:
-                if (self.floatingButtonView.buttonAnimationType == FloatingButtonAnimationTypeFadeIn) {
+        if (self.floatingButtonView.buttonDisplayMode == FloatingButtonDisplayModeAlways) {
+            [self.floatingButtonView setHidden:NO];
+            [self me_repositionFloatingButtonViewFrame:((UITableView *)object).contentOffset];
+            
+        } else {
+            
+            [self stopTimer];
+            [self startTimer];
+            
+            switch (self.floatingButtonView.buttonState) {
+                case FloatingButtonStateWillAppear:
                     [self me_repositionFloatingButtonViewFrame:((UITableView *)object).contentOffset];
-                }
-                break;
-                
-            case FloatingButtonStateDidDisappear:
-                [self me_showFloatingButtonView];
-                break;
-                
-            default:
-                break;
+                    break;
+                    
+                case FloatingButtonStateDidAppear:
+                    [self me_repositionFloatingButtonViewFrame:((UITableView *)object).contentOffset];
+                    break;
+                    
+                case FloatingButtonStateWillDisappear:
+                    if (self.floatingButtonView.buttonAnimationType == FloatingButtonAnimationTypeFadeIn) {
+                        [self me_repositionFloatingButtonViewFrame:((UITableView *)object).contentOffset];
+                    }
+                    break;
+                    
+                case FloatingButtonStateDidDisappear:
+                    [self me_showFloatingButtonView];
+                    break;
+                    
+                default:
+                    break;
+            }
         }
-        
     }
 }
 
@@ -492,8 +504,9 @@ static float const kFloatingButtonDefaultFromBottomAnimationTime = 0.5f;
 
 #pragma mark - Animation Methods (Private)
 
--(void)fadeInView:(BOOL)animated
+- (void)fadeInView:(BOOL)animated
 {
+    self.floatingButtonView.hidden = NO;
     [UIView animateWithDuration:animated ? kFloatingButtonDefaultFadingAnimationTime : 0.0f
                      animations:^{
                          [self.floatingButtonView setAlpha:1];
@@ -510,19 +523,18 @@ static float const kFloatingButtonDefaultFromBottomAnimationTime = 0.5f;
                      } completion:^(BOOL finished) {
                          dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0.2 * NSEC_PER_SEC), dispatch_get_main_queue(), ^(void){
                              self.floatingButtonView.buttonState = FloatingButtonStateDidDisappear;
+                             self.floatingButtonView.hidden = YES;
                          });
                      }];
 }
 
--(void)animateInView
+- (void)animateInView
 {
     CGRect frame = self.floatingButtonView.frame;
     CGPoint finalPosition = CGPointMake(0, self.frame.size.height - self.floatingButtonView.frame.size.height - self.floatingButtonView.verticalOffset);
     CGPoint previousPosition = CGPointMake(finalPosition.x, finalPosition.y + self.floatingButtonView.frame.size.height + self.floatingButtonView.verticalOffset);
-    
     [self.floatingButtonView setFrame:CGRectMake(previousPosition.x, previousPosition.y, frame.size.width, frame.size.height)];
 
-    
     self.floatingButtonView.hidden = NO;
     [UIView animateWithDuration:kFloatingButtonDefaultFromBottomAnimationTime
                      animations:^{
@@ -543,8 +555,8 @@ static float const kFloatingButtonDefaultFromBottomAnimationTime = 0.5f;
                      } completion:^(BOOL finished) {
                          dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0.2 * NSEC_PER_SEC), dispatch_get_main_queue(), ^(void){
                              self.floatingButtonView.buttonState = FloatingButtonStateDidDisappear;
+                             self.floatingButtonView.hidden = YES;
                          });
-                         self.floatingButtonView.hidden = YES;
                      }];
 }
 

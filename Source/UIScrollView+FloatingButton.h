@@ -20,27 +20,29 @@ typedef NS_ENUM(NSInteger, FloatingButtonAnimationType) {
     FloatingButtonAnimationTypeFromBottom
 };
 
-/*
 typedef NS_ENUM(NSInteger, FloatingButtonDisplayMode) {
     FloatingButtonDisplayModeAlways,
-    FloatingButtonDisplayModeWhenScrolling,
-    FloatingButtonDisplayModeWhenScrollingDownOnly,
-    FloatingButtonDisplayModeWhenScrollingUpOnly
+    FloatingButtonDisplayModeWhenScrolling
 };
-*/
 
 /**
  A drop-in UITableView/UICollectionView superclass category for showing a floating button on top of it.
  */
 @interface UIScrollView (FloatingButton)
 
-/** The floating button data source. */
+/** 
+ The floating button data source.
+ */
 @property (nonatomic, weak) IBOutlet id <MEFloatingButtonSource> floatingButtonSource;
-/** The floating button delegate. */
+
+/**
+ The floating button delegate.
+ */
 @property (nonatomic, weak) IBOutlet id <MEFloatingButtonDelegate> floatingButtonDelegate;
-/** Hides the floating button when it is tapped. Default NO. */
-@property (nonatomic, assign, getter = isHideOnTap) BOOL hideOnTap;
-/** YES if floating button is visible. */
+
+/**
+ YES if floating button is visible. 
+ */
 @property (nonatomic, readonly, getter = isFloatingButtonVisible) BOOL floatingButtonVisible;
 
 @end
@@ -51,6 +53,23 @@ typedef NS_ENUM(NSInteger, FloatingButtonDisplayMode) {
  */
 @protocol MEFloatingButtonSource <NSObject>
 @optional
+
+/**
+ Asks the delegate to know if the floating button should be rendered and displayed. Default is YES.
+ 
+ @param scrollView A scrollView subclass object informing the the data source.
+ @return YES if the floating button should show.
+ */
+- (BOOL)floatingButtonShouldDisplay:(UIScrollView *)scrollView;
+
+/**
+ Asks the data source to know if the floating button should be hidden when is tapped.
+ 
+ @param scrollView A scrollView subclass object informing the data source.
+ @return YES if the floating button should hide. Default NO.
+ @discussion When FloatingButtonDisplayModeAlways is selected as FloatingButtonDisplayMode, this method won't have any effect.
+ */
+- (BOOL)floatingButtonHideOnTap:(UIScrollView *)scrollView;
 
 /**
  Asks the data source for the image to be used for the specified button state.
@@ -105,6 +124,15 @@ typedef NS_ENUM(NSInteger, FloatingButtonDisplayMode) {
  */
 - (FloatingButtonAnimationType)animationTypeForFloatingButton:(UIScrollView *)scrollView;
 
+/**
+ Asks the data source for the display mode to be used with the floating button.
+ 
+ @param scrollView A scrollView subclass object informing the data source.
+ @return FloatingButtonDisplayMode object type.
+ @discussion When this method is not implemented. Default value is FloatingButtonDisplayModeWhenScrolling.
+ */
+- (FloatingButtonDisplayMode)displayModeForFloatingButton:(UIScrollView *)scrollView;
+
 @end
 
 
@@ -115,14 +143,6 @@ typedef NS_ENUM(NSInteger, FloatingButtonDisplayMode) {
  */
 @protocol MEFloatingButtonDelegate <NSObject>
 @optional
-
-/**
- Asks the delegate to know if the floating button should be rendered and displayed. Default is YES.
- 
- @param scrollView A scrollView subclass object informing the delegate.
- @return YES if the floating button should show.
- */
-- (BOOL)floatingButtonShouldDisplay:(UIScrollView *)scrollView;
 
 /**
  Tells the delegate that the action button was tapped.

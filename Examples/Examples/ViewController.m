@@ -23,10 +23,8 @@ static NSString *CellIdentifier = @"CellIdentifier";
     NSLog(@"viewDidLoad");
     
     self.tableView.backgroundColor = [UIColor lightGrayColor];
-    
-    self.tableView.floatingButtonSource = self;
     self.tableView.floatingButtonDelegate = self;
-    self.tableView.hideOnTap = YES;
+    self.tableView.floatingButtonSource = self;
     
     [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:CellIdentifier];
 }
@@ -101,6 +99,14 @@ static NSString *CellIdentifier = @"CellIdentifier";
 
 #pragma mark - MEScrollToTopSource Methods
 
+- (BOOL)floatingButtonShouldDisplay:(UIScrollView *)scrollView {
+    return YES;
+}
+
+- (BOOL)floatingButtonHideOnTap:(UIScrollView *)scrollView {
+    return YES;
+}
+
 - (UIImage *)buttonImageForFloatingButton:(UIScrollView *)scrollView forState:(UIControlState)state {
     return [UIImage imageNamed:@"UpArrow"];
 }
@@ -125,45 +131,32 @@ static NSString *CellIdentifier = @"CellIdentifier";
     return FloatingButtonAnimationTypeFromBottom;
 }
 
+- (FloatingButtonDisplayMode)displayModeForFloatingButton:(UIScrollView *)scrollView {
+    return FloatingButtonDisplayModeWhenScrolling;
+}
+
 
 #pragma mark - MEScrollToTopDelegate Methods
 
-- (BOOL)floatingButtonShouldDisplay:(UIScrollView *)scrollView {
-    NSLog(@"floatingButtonShouldDisplay");
-
-    return YES;
-}
-
-
 - (void)floatingButton:(UIScrollView *)scrollView didTapButton:(UIButton *)button {
     NSLog(@"didTapButton");
-    
     [self.tableView setContentOffset:CGPointMake(0, -self.tableView.contentInset.top) animated:YES];
 }
 
-
 - (void)floatingButtonWillAppear:(UIScrollView *)scrollView {
     NSLog(@"floatingButtonWillAppear");
-
 }
-
 
 - (void)floatingButtonDidAppear:(UIScrollView *)scrollView {
     NSLog(@"floatingButtonDidAppear");
-
 }
-
 
 - (void)floatingButtonWillDisappear:(UIScrollView *)scrollView {
     NSLog(@"floatingButtonWillDisappear");
-
 }
-
 
 - (void)floatingButtonDidDisappear:(UIScrollView *)scrollView; {
     NSLog(@"floatingButtonDidDisappear");
-
 }
-
 
 @end
