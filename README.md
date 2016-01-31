@@ -29,4 +29,4 @@ Manuel Escrig Ventura, manuelescrig@gmail.com
 
 ## License
 
-MEFlating is available under the MIT License. See the LICENSE file for more info.
+MEFloatingButton is available under the MIT License. See the LICENSE file for more info.
