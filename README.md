@@ -7,3 +7,26 @@ An iOS drop-in UITableView/UICollectionView/UIScrollView superclass category for
 )](https://developer.apple.com/library/mac/documentation/Cocoa/Conceptual/ProgrammingWithObjectiveC/Introduction/Introduction.html)
 [![License](http://img.shields.io/badge/license-MIT-lightgrey.svg?style=flat
 )](http://mit-license.org)
+
+## Demo
+
+
+## Requirements
+
+Requires iOS SDK version > 8.0
+
+
+## Installation
+
+
+## Usage
+
+
+
+## Author
+
+Manuel Escrig Ventura, manuelescrig@gmail.com
+
+## License
+
+MEFlating is available under the MIT License. See the LICENSE file for more info.
