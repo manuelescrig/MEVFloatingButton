@@ -22,6 +22,7 @@ Requires iOS SDK version > 8.0
 ## Usage
 
 
+For more info check the Example project.
 
 ## Author
 
