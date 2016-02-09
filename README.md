@@ -27,7 +27,6 @@ For more info check the Examples project.
 ## Author
 
 Manuel Escrig Ventura, [@manuelescrig](https://twitter.com/manuelescrig)
-
 manuelescrig@gmail.com
 
 ## License
