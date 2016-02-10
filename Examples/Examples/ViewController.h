@@ -8,7 +8,6 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "UIScrollView+FloatingButton.h"
 
 @interface ViewController : UITableViewController
 
