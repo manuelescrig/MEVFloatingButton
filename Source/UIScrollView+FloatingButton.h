@@ -69,6 +69,7 @@ typedef NS_ENUM(NSInteger, MEFloatingButtonPosition) {
 
 @property (nonatomic, readonly) MEFloatingButton *floatingButton;
 
+
 /** 
  The floating button data source.
  */
@@ -79,10 +80,9 @@ typedef NS_ENUM(NSInteger, MEFloatingButtonPosition) {
  */
 @property (nonatomic, weak) IBOutlet id <MEFloatingButtonDelegate> floatingButtonDelegate;
 
-/**
- YES if floating button is visible. 
- */
-@property (nonatomic, readonly, getter = isFloatingButtonVisible) BOOL floatingButtonVisible;
+
+- (void)setFloatingButtonView:(MEFloatingButton *)view;
+
 
 @end
 

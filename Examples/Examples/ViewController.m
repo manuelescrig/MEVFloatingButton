@@ -28,8 +28,14 @@ static NSString *CellIdentifier = @"CellIdentifier";
     
     self.title = @"MEFloatingButton";
     
+    MEFloatingButton *button = [[MEFloatingButton alloc] init];
+    button.backgroundColor = [UIColor orangeColor];
+    [self.tableView setFloatingButtonView:button];
+    
     self.tableView.floatingButtonDelegate = self;
     self.tableView.floatingButtonSource = self;
+    
+
     
     [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:CellIdentifier];
 }
