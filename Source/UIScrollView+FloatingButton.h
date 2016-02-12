@@ -11,24 +11,63 @@
 
 #import <UIKit/UIKit.h>
 
+#define DLog(s, ... ) NSLog(@"%@ | %@ | %@", [[NSString stringWithUTF8String:__FILE__] lastPathComponent], NSStringFromSelector(_cmd), [NSString stringWithFormat:(s), ##__VA_ARGS__] )
+
 @protocol MEFloatingButtonSource;
 @protocol MEFloatingButtonDelegate;
 
-typedef NS_ENUM(NSInteger, FloatingButtonAnimationType) {
-    FloatingButtonAnimationTypeNone,
-    FloatingButtonAnimationTypeFadeIn,
-    FloatingButtonAnimationTypeFromBottom
+typedef NS_ENUM(NSInteger, FloatingButtonAnimation) {
+    MEFloatingButtonAnimationNone,
+    MEFloatingButtonAnimationFadeIn,
+    MEFloatingButtonAnimationFromBottom
 };
 
-typedef NS_ENUM(NSInteger, FloatingButtonDisplayMode) {
-    FloatingButtonDisplayModeAlways,
-    FloatingButtonDisplayModeWhenScrolling
+typedef NS_ENUM(NSInteger, MEFloatingButtonDisplayMode) {
+    MEFloatingButtonDisplayModeAlways,
+    MEFloatingButtonDisplayModeWhenScrolling
 };
+
+typedef NS_ENUM(NSInteger, MEFloatingButtonPosition) {
+    MEFloatingButtonPositionBottomCenter,
+    MEFloatingButtonPositionBottomLeft,
+    MEFloatingButtonPositionBottomRight,
+};
+
+
+@interface MEFloatingButton : UIView
+
+@property (nonatomic, assign) FloatingButtonAnimation animationType;
+
+@property (nonatomic, assign) MEFloatingButtonDisplayMode displayMode;
+
+@property (nonatomic, assign) MEFloatingButtonPosition position;
+
+@property (nonatomic, strong) UIImage *image;
+
+@property (nonatomic, strong) UIColor *backgroundColor;
+
+@property (nonatomic, strong) UIColor *tintColor;
+
+@property (nonatomic, strong) UIColor *outlineColor;
+
+@property (nonatomic) float outlineWidth;
+
+@property (nonatomic) float imagePadding;
+
+@property (nonatomic) float horizontalOffset;
+
+@property (nonatomic) float verticalOffset;
+
+@end
+
+
 
 /**
  A drop-in UITableView/UICollectionView superclass category for showing a floating button on top of it.
  */
 @interface UIScrollView (FloatingButton)
+
+@property (nonatomic, readonly) MEFloatingButton *floatingButton;
 
 /** 
  The floating button data source.
@@ -67,7 +106,7 @@ typedef NS_ENUM(NSInteger, FloatingButtonDisplayMode) {
  
  @param scrollView A scrollView subclass object informing the data source.
  @return YES if the floating button should hide. Default NO.
- @discussion When FloatingButtonDisplayModeAlways is selected as FloatingButtonDisplayMode, this method won't have any effect.
+ @discussion When MEFloatingButtonDisplayModeAlways is selected as MEFloatingButtonDisplayMode, this method won't have any effect.
  */
 - (BOOL)floatingButtonHideOnTap:(UIScrollView *)scrollView;
 
@@ -119,19 +158,19 @@ typedef NS_ENUM(NSInteger, FloatingButtonDisplayMode) {
  Asks the data source for the type of animation to be used when presenting the floating button.
  
  @param scrollView A scrollView subclass object informing the data source.
- @return FloatingButtonAnimationType object type.
- @discussion When this method is not implemented. Default value is FloatingButtonAnimationTypeFadeIn.
+ @return FloatingButtonAnimation object type.
+ @discussion When this method is not implemented. Default value is MEFloatingButtonAnimationFadeIn.
  */
-- (FloatingButtonAnimationType)animationTypeForFloatingButton:(UIScrollView *)scrollView;
+- (FloatingButtonAnimation)animationTypeForFloatingButton:(UIScrollView *)scrollView;
 
 /**
  Asks the data source for the display mode to be used with the floating button.
  
  @param scrollView A scrollView subclass object informing the data source.
- @return FloatingButtonDisplayMode object type.
- @discussion When this method is not implemented. Default value is FloatingButtonDisplayModeWhenScrolling.
+ @return MEFloatingButtonDisplayMode object type.
+ @discussion When this method is not implemented. Default value is MEFloatingButtonDisplayModeWhenScrolling.
  */
-- (FloatingButtonDisplayMode)displayModeForFloatingButton:(UIScrollView *)scrollView;
+- (MEFloatingButtonDisplayMode)displayModeForFloatingButton:(UIScrollView *)scrollView;
 
 @end
 
