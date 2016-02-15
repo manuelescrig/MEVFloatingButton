@@ -15,6 +15,7 @@
 
 @protocol MEFloatingButtonDelegate;
 
+// TODO: to be documented.
 
 typedef NS_ENUM(NSInteger, MEFloatingButtonDisplayMode) {
     MEFloatingButtonDisplayModeNone,
@@ -35,51 +36,88 @@ typedef NS_ENUM(NSInteger, MEFloatingButtonPosition) {
 };
 
 
+/**
+ A UIView object subclass that represents the button itself.
+ */
 @interface MEFloatingButton : UIView
 
-@property (nonatomic, assign, readonly) MEFloatingButtonDisplayMode displayMode;
+/**
+ Sets the display mode MEFloatingButtonDisplayMode for the MEFloatingButton.
+ @param displayMode A MEFloatingButtonDisplayMode type.
+ @discussion MEFloatingButtonDisplayModeAlways is the default value when this property is not assigned.
+ */
+@property (nonatomic, assign) MEFloatingButtonDisplayMode displayMode;
 
-@property (nonatomic, assign, readonly) MEFloatingButtonAnimation animationType;
+/**
+ Sets the display mode MEFloatingButtonDisplayMode for the MEFloatingButton.
+ @param displayMode A MEFloatingButtonDisplayMode type.
+ @discussion MEFloatingButtonDisplayModeAlways is the default value when this property is not assigned.
+ */
+@property (nonatomic, assign) MEFloatingButtonAnimation animationType;
 
-@property (nonatomic, assign, readonly) MEFloatingButtonPosition position;
+/**
+ Sets the display mode MEFloatingButtonDisplayMode for the MEFloatingButton.
+ @param displayMode A MEFloatingButtonDisplayMode type.
+ @discussion MEFloatingButtonDisplayModeAlways is the default value when this property is not assigned.
+ */
+@property (nonatomic, assign) MEFloatingButtonPosition position;
 
-@property (nonatomic, strong, readonly) UIColor *backgroundColor;
+/**
+ Sets the display mode MEFloatingButtonDisplayMode for the MEFloatingButton.
+ @param displayMode A MEFloatingButtonDisplayMode type.
+ @discussion MEFloatingButtonDisplayModeAlways is the default value when this property is not assigned.
+ */
+@property (nonatomic, strong) UIImage *image;
 
-@property (nonatomic, strong, readonly) UIImage *image;
+/**
+ Sets the display mode MEFloatingButtonDisplayMode for the MEFloatingButton.
+ @param displayMode A MEFloatingButtonDisplayMode type.
+ @discussion MEFloatingButtonDisplayModeAlways is the default value when this property is not assigned.
+ */
+@property (nonatomic, strong) UIColor *backgroundColor;
 
-@property (nonatomic, strong, readonly) UIColor *imageColor;
+/**
+ Sets the display mode MEFloatingButtonDisplayMode for the MEFloatingButton.
+ @param displayMode A MEFloatingButtonDisplayMode type.
+ @discussion MEFloatingButtonDisplayModeAlways is the default value when this property is not assigned.
+ */
+@property (nonatomic, strong) UIColor *imageColor;
 
-@property (nonatomic, strong, readonly) UIColor *outlineColor;
+/**
+ Sets the display mode MEFloatingButtonDisplayMode for the MEFloatingButton.
+ @param displayMode A MEFloatingButtonDisplayMode type.
+ @discussion MEFloatingButtonDisplayModeAlways is the default value when this property is not assigned.
+ */
+@property (nonatomic, strong) UIColor *outlineColor;
 
-@property (nonatomic, readonly) float outlineWidth;
+/**
+ Sets the display mode MEFloatingButtonDisplayMode for the MEFloatingButton.
+ @param displayMode A MEFloatingButtonDisplayMode type.
+ @discussion MEFloatingButtonDisplayModeAlways is the default value when this property is not assigned.
+ */
+@property (nonatomic) float outlineWidth;
 
-@property (nonatomic, readonly) float imagePadding;
+/**
+ Sets the display mode MEFloatingButtonDisplayMode for the MEFloatingButton.
+ @param displayMode A MEFloatingButtonDisplayMode type.
+ @discussion MEFloatingButtonDisplayModeAlways is the default value when this property is not assigned.
+ */
+@property (nonatomic) float imagePadding;
 
-@property (nonatomic, readonly) float horizontalOffset;
+/**
+ Sets the display mode MEFloatingButtonDisplayMode for the MEFloatingButton.
+ @param displayMode A MEFloatingButtonDisplayMode type.
+ @discussion MEFloatingButtonDisplayModeAlways is the default value when this property is not assigned.
+ */
+@property (nonatomic) float horizontalOffset;
 
-@property (nonatomic, readonly) float verticalOffset;
+/**
+ Sets the display mode MEFloatingButtonDisplayMode for the MEFloatingButton.
+ @param displayMode A MEFloatingButtonDisplayMode type.
+ @discussion MEFloatingButtonDisplayModeAlways is the default value when this property is not assigned.
+ */
+@property (nonatomic) float verticalOffset;
 
-- (void)setDisplayMode:(MEFloatingButtonDisplayMode)displayMode;
-
-- (void)setAnimationType:(MEFloatingButtonAnimation)animationType;
-
-- (void)setPosition:(MEFloatingButtonPosition)position;
-
-- (void)setImage:(UIImage *)image;
-
-- (void)setImageColor:(UIColor *)imageColor;
-
-- (void)setBackgroundColor:(UIColor *)backgroundColor;
-
-- (void)setOutlineColor:(UIColor *)outlineColor;
-
-- (void)setOutlineWidth:(float)outlineWidth;
-
-- (void)setImagePadding:(float)imagePadding;
-
-- (void)setHorizontalOffset:(float)horizontalOffset;
-
-- (void)setVerticalOffset:(float)verticalOffset;
 
 @end
 

@@ -51,8 +51,8 @@ typedef NS_ENUM(NSInteger, FloatingButtonState) {
     if (self) {
         
         // Default values
-        _displayMode = MEFloatingButtonDisplayModeAlways;
-        _animationType = MEFloatingButtonAnimationNone;
+        _displayMode = MEFloatingButtonDisplayModeAlways; // TODO: to be  re-implemented.
+        _animationType = MEFloatingButtonAnimationNone; // TODO: to be  re-implemented.
         _position = MEFloatingButtonPositionBottomCenter;
         _imageColor = [UIColor whiteColor];
         _backgroundColor = [UIColor blueColor];
