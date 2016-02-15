@@ -16,7 +16,7 @@
 @protocol MEFloatingButtonSource;
 @protocol MEFloatingButtonDelegate;
 
-typedef NS_ENUM(NSInteger, FloatingButtonAnimation) {
+typedef NS_ENUM(NSInteger, MEFloatingButtonAnimation) {
     MEFloatingButtonAnimationNone,
     MEFloatingButtonAnimationFadeIn,
     MEFloatingButtonAnimationFromBottom
@@ -36,7 +36,7 @@ typedef NS_ENUM(NSInteger, MEFloatingButtonPosition) {
 
 @interface MEFloatingButton : UIView
 
-@property (nonatomic, assign) FloatingButtonAnimation animationType;
+@property (nonatomic, assign) MEFloatingButtonAnimation animationType;
 
 @property (nonatomic, assign) MEFloatingButtonDisplayMode displayMode;
 
@@ -67,10 +67,7 @@ typedef NS_ENUM(NSInteger, MEFloatingButtonPosition) {
  */
 @interface UIScrollView (FloatingButton)
 
-@property (nonatomic, readonly) MEFloatingButton *floatingButton;
-
-
-/** 
+/**
  The floating button data source.
  */
 @property (nonatomic, weak) IBOutlet id <MEFloatingButtonSource> floatingButtonSource;
@@ -158,10 +155,10 @@ typedef NS_ENUM(NSInteger, MEFloatingButtonPosition) {
  Asks the data source for the type of animation to be used when presenting the floating button.
  
  @param scrollView A scrollView subclass object informing the data source.
- @return FloatingButtonAnimation object type.
+ @return MEFloatingButtonAnimation object type.
  @discussion When this method is not implemented. Default value is MEFloatingButtonAnimationFadeIn.
  */
-- (FloatingButtonAnimation)animationTypeForFloatingButton:(UIScrollView *)scrollView;
+- (MEFloatingButtonAnimation)animationTypeForFloatingButton:(UIScrollView *)scrollView;
 
 /**
  Asks the data source for the display mode to be used with the floating button.

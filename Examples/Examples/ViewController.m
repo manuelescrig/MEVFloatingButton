@@ -35,8 +35,6 @@ static NSString *CellIdentifier = @"CellIdentifier";
     self.tableView.floatingButtonDelegate = self;
     self.tableView.floatingButtonSource = self;
     
-
-    
     [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:CellIdentifier];
 }
 
@@ -121,7 +119,7 @@ static NSString *CellIdentifier = @"CellIdentifier";
     return 15;
 }
 
-- (FloatingButtonAnimation)animationTypeForFloatingButton:(UIScrollView *)scrollView {
+- (MEFloatingButtonAnimation)animationTypeForFloatingButton:(UIScrollView *)scrollView {
     return MEFloatingButtonAnimationFromBottom;
 }
 

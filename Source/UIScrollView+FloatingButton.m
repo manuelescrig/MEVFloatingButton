@@ -347,7 +347,7 @@ static float const kFloatingButtonDefaultOffset = 10.0f;
     return kFloatingButtonDefaultOffset;
 }
 
-- (FloatingButtonAnimation)me_animationType
+- (MEFloatingButtonAnimation)me_animationType
 {
     DLog(@"");
 

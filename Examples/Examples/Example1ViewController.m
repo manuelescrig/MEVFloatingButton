@@ -82,7 +82,7 @@ static NSString *CellIdentifier = @"CellIdentifier";
     return 15;
 }
 
-- (FloatingButtonAnimation)animationTypeForFloatingButton:(UIScrollView *)scrollView {
+- (MEFloatingButtonAnimation)animationTypeForFloatingButton:(UIScrollView *)scrollView {
     return MEFloatingButtonAnimationFromBottom;
 }
 
