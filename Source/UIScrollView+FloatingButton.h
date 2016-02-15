@@ -13,8 +13,14 @@
 
 #define DLog(s, ... ) NSLog(@"%@ | %@ | %@", [[NSString stringWithUTF8String:__FILE__] lastPathComponent], NSStringFromSelector(_cmd), [NSString stringWithFormat:(s), ##__VA_ARGS__] )
 
-@protocol MEFloatingButtonSource;
 @protocol MEFloatingButtonDelegate;
+
+
+typedef NS_ENUM(NSInteger, MEFloatingButtonDisplayMode) {
+    MEFloatingButtonDisplayModeNone,
+    MEFloatingButtonDisplayModeAlways,
+    MEFloatingButtonDisplayModeWhenScrolling
+};
 
 typedef NS_ENUM(NSInteger, MEFloatingButtonAnimation) {
     MEFloatingButtonAnimationNone,
@@ -22,44 +28,60 @@ typedef NS_ENUM(NSInteger, MEFloatingButtonAnimation) {
     MEFloatingButtonAnimationFromBottom
 };
 
-typedef NS_ENUM(NSInteger, MEFloatingButtonDisplayMode) {
-    MEFloatingButtonDisplayModeAlways,
-    MEFloatingButtonDisplayModeWhenScrolling
-};
-
 typedef NS_ENUM(NSInteger, MEFloatingButtonPosition) {
     MEFloatingButtonPositionBottomCenter,
     MEFloatingButtonPositionBottomLeft,
-    MEFloatingButtonPositionBottomRight,
+    MEFloatingButtonPositionBottomRight
 };
 
 
 @interface MEFloatingButton : UIView
 
-@property (nonatomic, assign) MEFloatingButtonAnimation animationType;
+@property (nonatomic, assign, readonly) MEFloatingButtonDisplayMode displayMode;
 
-@property (nonatomic, assign) MEFloatingButtonDisplayMode displayMode;
+@property (nonatomic, assign, readonly) MEFloatingButtonAnimation animationType;
 
-@property (nonatomic, assign) MEFloatingButtonPosition position;
+@property (nonatomic, assign, readonly) MEFloatingButtonPosition position;
 
-@property (nonatomic, strong) UIImage *image;
+@property (nonatomic, strong, readonly) UIColor *backgroundColor;
 
-@property (nonatomic, strong) UIColor *backgroundColor;
+@property (nonatomic, strong, readonly) UIImage *image;
 
-@property (nonatomic, strong) UIColor *tintColor;
+@property (nonatomic, strong, readonly) UIColor *imageColor;
 
-@property (nonatomic, strong) UIColor *outlineColor;
+@property (nonatomic, strong, readonly) UIColor *outlineColor;
 
-@property (nonatomic) float outlineWidth;
+@property (nonatomic, readonly) float outlineWidth;
 
-@property (nonatomic) float imagePadding;
+@property (nonatomic, readonly) float imagePadding;
 
-@property (nonatomic) float horizontalOffset;
+@property (nonatomic, readonly) float horizontalOffset;
 
-@property (nonatomic) float verticalOffset;
+@property (nonatomic, readonly) float verticalOffset;
+
+- (void)setDisplayMode:(MEFloatingButtonDisplayMode)displayMode;
+
+- (void)setAnimationType:(MEFloatingButtonAnimation)animationType;
+
+- (void)setPosition:(MEFloatingButtonPosition)position;
+
+- (void)setImage:(UIImage *)image;
+
+- (void)setImageColor:(UIColor *)imageColor;
+
+- (void)setBackgroundColor:(UIColor *)backgroundColor;
+
+- (void)setOutlineColor:(UIColor *)outlineColor;
+
+- (void)setOutlineWidth:(float)outlineWidth;
+
+- (void)setImagePadding:(float)imagePadding;
+
+- (void)setHorizontalOffset:(float)horizontalOffset;
+
+- (void)setVerticalOffset:(float)verticalOffset;
 
 @end
-
 
 
 /**
@@ -68,106 +90,12 @@ typedef NS_ENUM(NSInteger, MEFloatingButtonPosition) {
 @interface UIScrollView (FloatingButton)
 
 /**
- The floating button data source.
- */
-@property (nonatomic, weak) IBOutlet id <MEFloatingButtonSource> floatingButtonSource;
-
-/**
  The floating button delegate.
  */
 @property (nonatomic, weak) IBOutlet id <MEFloatingButtonDelegate> floatingButtonDelegate;
 
 
 - (void)setFloatingButtonView:(MEFloatingButton *)view;
-
-
-@end
-
-/**
- The object that acts as the data source of the floating button.
- @discussion The data source must adopt the MEFloatingButtonSource protocol. The data source is not retained. All data source methods are optional.
- */
-@protocol MEFloatingButtonSource <NSObject>
-@optional
-
-/**
- Asks the delegate to know if the floating button should be rendered and displayed. Default is YES.
- 
- @param scrollView A scrollView subclass object informing the the data source.
- @return YES if the floating button should show.
- */
-- (BOOL)floatingButtonShouldDisplay:(UIScrollView *)scrollView;
-
-/**
- Asks the data source to know if the floating button should be hidden when is tapped.
- 
- @param scrollView A scrollView subclass object informing the data source.
- @return YES if the floating button should hide. Default NO.
- @discussion When MEFloatingButtonDisplayModeAlways is selected as MEFloatingButtonDisplayMode, this method won't have any effect.
- */
-- (BOOL)floatingButtonHideOnTap:(UIScrollView *)scrollView;
-
-/**
- Asks the data source for the image to be used for the specified button state.
- 
- @param scrollView A scrollView subclass object informing the data source.
- @param state The state that uses the specified title. The possible values are described in UIControlState.
- @return An image for the floating button imageview.
- */
-- (UIImage *)buttonImageForFloatingButton:(UIScrollView *)scrollView forState:(UIControlState)state;
-
-/**
- Asks the data source for the color to be used for the button image.
- 
- @param scrollView A scrollView subclass object informing the data source.
- @return A color for the floating button image.
- @discussion When this method is not implemented, the image won't be rendered with another color.
- */
-- (UIColor *)buttonTintColorForFloatingButton:(UIScrollView *)scrollView;
-
-/**
- Asks the data source for the color to be used for the button background.
- 
- @param scrollView A scrollView subclass object informing the data source.
- @return A color for the floating button background.
- @discussion When this method is not implemented. Default value is [UIColor darkGrayColor].
- */
-- (UIColor *)buttonBackgroundColorForFloatingButton:(UIScrollView *)scrollView;
-
-/**
- Asks the data source for the padding size to be used around the button image.
- 
- @param scrollView A scrollView subclass object informing the data source.
- @return The size for the padding image inside the button.
- @discussion When this method is not implemented. Default value is 10.
- */
-- (CGFloat)buttonImagePaddingForFloatingButton:(UIScrollView *)scrollView;
-
-/**
- Asks the data source for a offset for vertical and horizontal alignment of the content. Default is 10.
- 
- @param scrollView A scrollView subclass object informing the delegate.
- @return The offset for vertical alignment.
- */
-- (CGFloat)verticalOffsetForFloatingButton:(UIScrollView *)scrollView;
-
-/**
- Asks the data source for the type of animation to be used when presenting the floating button.
- 
- @param scrollView A scrollView subclass object informing the data source.
- @return MEFloatingButtonAnimation object type.
- @discussion When this method is not implemented. Default value is MEFloatingButtonAnimationFadeIn.
- */
-- (MEFloatingButtonAnimation)animationTypeForFloatingButton:(UIScrollView *)scrollView;
-
-/**
- Asks the data source for the display mode to be used with the floating button.
- 
- @param scrollView A scrollView subclass object informing the data source.
- @return MEFloatingButtonDisplayMode object type.
- @discussion When this method is not implemented. Default value is MEFloatingButtonDisplayModeWhenScrolling.
- */
-- (MEFloatingButtonDisplayMode)displayModeForFloatingButton:(UIScrollView *)scrollView;
 
 @end
 

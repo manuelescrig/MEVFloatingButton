@@ -17,7 +17,7 @@
 
 static NSString *CellIdentifier = @"CellIdentifier";
 
-@interface ViewController () <MEFloatingButtonSource, MEFloatingButtonDelegate>
+@interface ViewController () <MEFloatingButtonDelegate>
 
 @end
 
@@ -29,11 +29,19 @@ static NSString *CellIdentifier = @"CellIdentifier";
     self.title = @"MEFloatingButton";
     
     MEFloatingButton *button = [[MEFloatingButton alloc] init];
-    button.backgroundColor = [UIColor orangeColor];
+    button.animationType = MEFloatingButtonAnimationNone;
+    button.displayMode = MEFloatingButtonDisplayModeWhenScrolling;
+    button.position = MEFloatingButtonPositionBottomCenter;
+    button.image = [UIImage imageNamed:@"UpArrow"];
+    button.imageColor = [UIColor greenColor];
+    button.backgroundColor = [UIColor purpleColor];
+    button.outlineColor = [UIColor darkGrayColor];
+    button.outlineWidth = 2.0f;
+    button.imagePadding = 20.0f;
+    button.horizontalOffset = 20.0f;
+    button.verticalOffset = -30.0f;
     [self.tableView setFloatingButtonView:button];
-    
-    self.tableView.floatingButtonDelegate = self;
-    self.tableView.floatingButtonSource = self;
+    [self.tableView setFloatingButtonDelegate:self];
     
     [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:CellIdentifier];
 }
@@ -53,7 +61,6 @@ static NSString *CellIdentifier = @"CellIdentifier";
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return 3;
 }
-
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
 
@@ -86,45 +93,6 @@ static NSString *CellIdentifier = @"CellIdentifier";
         default:
             break;
     }
-}
-
-
-#pragma mark - MEScrollToTopSource Methods
-
-- (BOOL)floatingButtonShouldDisplay:(UIScrollView *)scrollView {
-    return YES;
-}
-
-- (BOOL)floatingButtonHideOnTap:(UIScrollView *)scrollView {
-    return YES;
-}
-
-- (UIImage *)buttonImageForFloatingButton:(UIScrollView *)scrollView forState:(UIControlState)state {
-    return [UIImage imageNamed:@"UpArrow"];
-}
-
-- (UIColor *)buttonTintColorForFloatingButton:(UIScrollView *)scrollView {
-    return [UIColor whiteColor];
-}
-
-- (UIColor *)buttonBackgroundColorForFloatingButton:(UIScrollView *)scrollView {
-    return [UIColor colorWithRed:147/255.0 green:193/255.0 blue:49/255.0 alpha:1];
-}
-
-- (CGFloat)buttonImagePaddingForFloatingButton:(UIScrollView *)scrollView {
-    return 15;
-}
-
-- (CGFloat)verticalOffsetForFloatingButton:(UIScrollView *)scrollView {
-    return 15;
-}
-
-- (MEFloatingButtonAnimation)animationTypeForFloatingButton:(UIScrollView *)scrollView {
-    return MEFloatingButtonAnimationFromBottom;
-}
-
-- (MEFloatingButtonDisplayMode)displayModeForFloatingButton:(UIScrollView *)scrollView {
-    return MEFloatingButtonDisplayModeWhenScrolling;
 }
 
 

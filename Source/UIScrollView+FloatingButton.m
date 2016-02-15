@@ -15,6 +15,11 @@
 
 #pragma mark - MEFloatingButton
 
+static float const kMEFlatingButtonDefaultOutlineWidth = 0.0f;
+static float const kMEFlatingButtonDefaultImagePadding = 10.0f;
+static float const kMEFlatingButtonDefaultHorizontalOffset = 0.0f;
+static float const kMEFlatingButtonDefaultVerticalOffset = -20.0f;
+
 typedef NS_ENUM(NSInteger, FloatingButtonState) {
     FloatingButtonStateWillAppear,
     FloatingButtonStateDidAppear,
@@ -25,13 +30,10 @@ typedef NS_ENUM(NSInteger, FloatingButtonState) {
 
 @interface MEFloatingButton ()
 
-@property (nonatomic, readonly) UIView *contentView;
-@property (nonatomic, readonly) UIButton *button;
+@property (nonatomic, strong, readonly) UIView *contentView;
+@property (nonatomic, strong, readonly) UIButton *button;
 @property (nonatomic, strong) NSTimer *fadeOutTimer;
 @property (nonatomic, assign) FloatingButtonState buttonState;
-
-- (void)setupConstraints;
-- (void)prepareForReuse;
 
 @end
 
@@ -45,25 +47,101 @@ typedef NS_ENUM(NSInteger, FloatingButtonState) {
 
 - (instancetype)init
 {
-    DLog(@"");
-
     self =  [super init];
     if (self) {
+        
+        // Default values
+        _displayMode = MEFloatingButtonDisplayModeAlways;
+        _animationType = MEFloatingButtonAnimationNone;
+        _position = MEFloatingButtonPositionBottomCenter;
+        _imageColor = [UIColor whiteColor];
+        _backgroundColor = [UIColor blueColor];
+        _outlineColor = [UIColor blueColor];
+        _outlineWidth = kMEFlatingButtonDefaultOutlineWidth;
+        _imagePadding = kMEFlatingButtonDefaultImagePadding;
+        _horizontalOffset = kMEFlatingButtonDefaultHorizontalOffset;
+        _verticalOffset = kMEFlatingButtonDefaultVerticalOffset;
+        
         [self addSubview:self.contentView];
     }
     return self;
 }
 
+#pragma mark - Setters (Public)
 
-#pragma mark - Getters
+- (void)setDisplayMode:(MEFloatingButtonDisplayMode)displayMode {
+    if (displayMode == MEFloatingButtonDisplayModeNone ||
+        displayMode == MEFloatingButtonDisplayModeAlways ||
+        displayMode == MEFloatingButtonDisplayModeWhenScrolling) {
+        _displayMode = displayMode;
+    } else {
+        NSAssert(NO, @"You must assign a valid MEFloatingButtonDisplayMode type for -setDisplayMode:");
+    }
+}
+- (void)setAnimationType:(MEFloatingButtonAnimation)animationType {
+    if (animationType == MEFloatingButtonAnimationNone ||
+        animationType == MEFloatingButtonAnimationFadeIn ||
+        animationType == MEFloatingButtonAnimationFromBottom) {
+        _animationType = animationType;
+    } else {
+        NSAssert(NO, @"You must assign a valid MEFloatingButtonAnimation type for -setAnimationType:");
+    }
+}
+
+- (void)setPosition:(MEFloatingButtonPosition)position {
+    if (position == MEFloatingButtonPositionBottomCenter ||
+        position == MEFloatingButtonPositionBottomLeft ||
+        position == MEFloatingButtonPositionBottomRight) {
+        _position = position;
+    } else {
+        NSAssert(NO, @"You must assign a valid MEFloatingButtonPosition type for -setPosition:");
+    }
+}
+
+- (void)setImage:(UIImage *)image {
+    NSAssert(image != nil, @"You must assign a valid UIImage object for -setImage:");
+    _image = image;
+}
+
+- (void)setImageColor:(UIColor *)imageColor {
+    NSAssert(imageColor != nil, @"You must assign a valid UIColor object for -setImageColor:");
+    _imageColor = imageColor;
+}
+
+- (void)setBackgroundColor:(UIColor *)backgroundColor {
+    NSAssert(backgroundColor != nil, @"You must assign a valid UIColor object for -setBackgroundColor:");
+    _backgroundColor = backgroundColor;
+}
+
+- (void)setOutlineColor:(UIColor *)outlineColor {
+    NSAssert(outlineColor != nil, @"You must assign a valid UIColor object for -setOutlineColor:");
+    _outlineColor = outlineColor;
+}
+
+- (void)setOutlineWidth:(float)outlineWidth  {
+    if (outlineWidth) NSAssert(outlineWidth >= 0, @"You must assign a valid CGFloat object for -setOutlineWidth:");
+    _outlineWidth = outlineWidth;
+}
+
+- (void)setImagePadding:(float)imagePadding {
+    if (imagePadding) NSAssert(imagePadding >= 0, @"You must assign a valid CGFloat object for -setImagePadding:");
+    _imagePadding = imagePadding;
+}
+
+- (void)setHorizontalOffset:(float)horizontalOffset {
+    _horizontalOffset = horizontalOffset;
+}
+
+- (void)setVerticalOffset:(float)verticalOffset  {
+    _verticalOffset = verticalOffset;
+}
+
+#pragma mark - Getters (Private)
 
 - (UIView *)contentView
 {
-    DLog(@"");
-
     if (!_contentView) {
         _contentView = [[UIView alloc] init];
-        _contentView.backgroundColor = [UIColor redColor];
         _contentView.userInteractionEnabled = YES;
     }
     return _contentView;
@@ -71,15 +149,17 @@ typedef NS_ENUM(NSInteger, FloatingButtonState) {
 
 - (UIButton *)button
 {
-    DLog(@"");
-
     if (!_button) {
         _button = [[UIButton alloc] init];
-//        _button.backgroundColor = _backgroundColor;
+        _button.userInteractionEnabled = YES;
+        _button.backgroundColor =  _backgroundColor;
+        _button.tintColor = _imageColor;
+        _button.layer.borderColor = _outlineColor.CGColor;
+        _button.layer.borderWidth = _outlineWidth;
         _button.contentHorizontalAlignment = UIControlContentHorizontalAlignmentCenter;
         _button.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
+        _button.contentMode = UIViewContentModeCenter;
         _button.accessibilityIdentifier = @"floating button";
-        _button.userInteractionEnabled = YES;
         [_button addTarget:self action:@selector(didTapButton:) forControlEvents:UIControlEventTouchUpInside];
         [_contentView addSubview:_button];
     }
@@ -87,13 +167,10 @@ typedef NS_ENUM(NSInteger, FloatingButtonState) {
 }
 
 
-
-#pragma mark - Action Methods
+#pragma mark - Action Methods (Private)
 
 - (void)didTapButton:(id)sender
 {
-    DLog(@"");
-
     SEL selector = NSSelectorFromString(@"me_didTapDataButton:");
     
     if ([self.superview respondsToSelector:selector]) {
@@ -102,29 +179,37 @@ typedef NS_ENUM(NSInteger, FloatingButtonState) {
 }
 
 
-#pragma mark - Layout Configuration
+#pragma mark - Layout Methods (Private)
 
 - (void)setupConstraints
 {
-    DLog(@"");
+    DLog(@"MEFloatingButton");
 
     self.frame = self.superview.bounds;
-    [self.button.layer setCornerRadius:_button.frame.size.width/2];
-    [self.contentView setFrame:CGRectMake(0, 0, _button.frame.size.width, _button.frame.size.width)];
-    [self.contentView setCenter:CGPointMake(self.center.x, self.frame.size.height - self.button.frame.size.height - self.verticalOffset)];
+    _button.layer.cornerRadius = _button.frame.size.width/2;
+    _contentView.frame = CGRectMake(0, 0, _button.frame.size.width, _button.frame.size.width);
+    
+    switch (_position) {
+        case MEFloatingButtonPositionBottomCenter:
+            _contentView.center = CGPointMake(self.center.x, self.frame.size.height - (_button.frame.size.height/2) + _verticalOffset);
+            break;
+        case MEFloatingButtonPositionBottomRight:
+            _contentView.center = CGPointMake(self.frame.size.width - (_button.frame.size.width/2) + _horizontalOffset, self.frame.size.height - (_button.frame.size.height/2) + _verticalOffset);
+            break;
+        case MEFloatingButtonPositionBottomLeft:
+            _contentView.center = CGPointMake(self.frame.origin.x + (_button.frame.size.width/2) + _horizontalOffset, self.frame.size.height - (_button.frame.size.height/2) + _verticalOffset);
+            break;
+        default:
+            break;
+    }
 }
 
-- (void)prepareForReuse
-{
-    DLog(@"");
 
-    [self.contentView.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
-    _button = nil;
-}
+#pragma mark - Gestures Methods (Private)
 
 - (UIView *)hitTest:(CGPoint)point withEvent:(UIEvent *)event
 {
-    DLog(@"");
+    DLog(@"MEFloatingButton");
 
     UIView *hitView = [super hitTest:point withEvent:event];
     
@@ -146,22 +231,18 @@ typedef NS_ENUM(NSInteger, FloatingButtonState) {
 
 #pragma mark - UIScrollView+FloatingButton
 
-static char const *const kFloatingButtonSource = "floatingButtonSource";
 static char const *const kFloatingButtonDelegate = "floatingButtonDelegate";
 static char const *const kFloatingButtonView = "floatingButton";
 
 static NSString *const kObserverContentOffset = @"contentOffset";
 static NSString *const kObserverFrame = @"frame";
 
-static float const kFloatingButtonDefaultImagePadding = 10.0f;
-static float const kFloatingButtonDefaultOffset = 10.0f;
-
 
 @implementation UIScrollView (FloatingButton)
 
 + (void)load
 {
-    DLog(@"load");
+    DLog(@"");
     
     Method origMethod = class_getInstanceMethod([self class], NSSelectorFromString(@"dealloc"));
     Method newMethod = class_getInstanceMethod([self class], @selector(my_dealloc));
@@ -169,13 +250,13 @@ static float const kFloatingButtonDefaultOffset = 10.0f;
 }
 
 - (void)my_dealloc {
-    DLog(@"my_dealloc");
+    DLog(@"");
     
     @try {
         [self removeObserver:self forKeyPath:kObserverContentOffset context:nil];
         [self removeObserver:self forKeyPath:kObserverFrame context:nil];
     } @catch(id exception) {
-        //do nothing, obviously it wasn't attached because an exception was thrown
+        // Do nothing, obviously it wasn't attached because an exception was thrown
         DLog(@"exception - %@", exception);
     }
     
@@ -186,26 +267,9 @@ static float const kFloatingButtonDefaultOffset = 10.0f;
 
 #pragma mark - Setters (Public)
 
-- (void)setFloatingButtonSource:(id<MEFloatingButtonSource>)floatingButtonSource
-{
-    DLog(@"");
-
-    if (!floatingButtonSource) {
-        [self me_invalidateView];
-    }
-    
-    objc_setAssociatedObject(self, kFloatingButtonSource, floatingButtonSource, OBJC_ASSOCIATION_ASSIGN);
-    
-    [self me_validateView];
-}
-
 - (void)setFloatingButtonDelegate:(id<MEFloatingButtonDelegate>)floatingButtonDelegate
 {
     DLog(@"");
-
-    if (!floatingButtonDelegate) {
-        [self me_invalidateView];
-    }
     
     objc_setAssociatedObject(self, kFloatingButtonDelegate, floatingButtonDelegate, OBJC_ASSOCIATION_ASSIGN);
     
@@ -216,22 +280,15 @@ static float const kFloatingButtonDefaultOffset = 10.0f;
     [self addObserver:self forKeyPath:kObserverFrame options:NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld context:nil];
 }
 
-- (void)setFloatingButtonView:(MEFloatingButton *)view
+- (void)setFloatingButtonView:(MEFloatingButton *)floatingButton
 {
-    DLog(@"");
-    objc_setAssociatedObject(self, kFloatingButtonView, view, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    DLog(@"floatingButton = %@", floatingButton);
+    
+    objc_setAssociatedObject(self, kFloatingButtonView, floatingButton, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
-
 
 
 #pragma mark - Getters (Public)
-
-- (id<MEFloatingButtonSource>)floatingButtonSource
-{
-    DLog(@"");
-
-    return objc_getAssociatedObject(self, kFloatingButtonSource);
-}
 
 - (id<MEFloatingButtonDelegate>)floatingButtonDelegate
 {
@@ -245,126 +302,15 @@ static float const kFloatingButtonDefaultOffset = 10.0f;
 
 - (MEFloatingButton *)floatingButton
 {
-    DLog(@"");
+    MEFloatingButton *floatingButton = objc_getAssociatedObject(self, kFloatingButtonView);
 
-    MEFloatingButton *view = objc_getAssociatedObject(self, kFloatingButtonView);
+    if (floatingButton == nil) {
+        floatingButton = [[MEFloatingButton alloc] init];
 
-    if (view == nil) {
-        
-        view = [MEFloatingButton new];
-        view.hidden = YES;
-        [self setFloatingButtonView:view];
+        [self setFloatingButtonView:floatingButton];
     }
     
-    return view;
-}
-
-
-#pragma mark - DataSource Getters (Private)
-
-- (BOOL)me_shouldDisplay
-{
-    DLog(@"");
-
-    if (self.floatingButtonSource && [self.floatingButtonSource respondsToSelector:@selector(floatingButtonShouldDisplay:)]) {
-        return [self.floatingButtonSource floatingButtonShouldDisplay:self];
-    }
-    return YES;
-}
-
-- (BOOL)me_hideOnTap
-{
-    DLog(@"");
-
-    if (self.floatingButtonSource && [self.floatingButtonSource respondsToSelector:@selector(floatingButtonShouldDisplay:)]) {
-        return [self.floatingButtonSource floatingButtonHideOnTap:self];
-    }
-    return NO;
-}
-
-- (UIImage *)me_buttonImageForState:(UIControlState)state
-{
-    DLog(@"");
-
-    if (self.floatingButtonSource && [self.floatingButtonSource respondsToSelector:@selector(buttonImageForFloatingButton:forState:)]) {
-        UIImage *image = [self.floatingButtonSource buttonImageForFloatingButton:self forState:state];
-        if (image) NSAssert([image isKindOfClass:[UIImage class]], @"You must return a valid UIImage object for -buttonImageForFloatingButton:forState:");
-        return image;
-    }
-    return nil;
-}
-
-- (UIColor *)me_buttonTintColor
-{
-    DLog(@"");
-
-    if (self.floatingButtonSource && [self.floatingButtonSource respondsToSelector:@selector(buttonTintColorForFloatingButton:)]) {
-        UIColor *color = [self.floatingButtonSource buttonTintColorForFloatingButton:self];
-        if (color) NSAssert([color isKindOfClass:[UIColor class]], @"You must return a valid UIColor object for -buttonTintColorForFloatingButton:");
-        return color;
-    }
-    return nil;
-}
-
-- (UIColor *)me_buttonBackgroundColor
-{
-    DLog(@"");
-
-    
-   return [self floatingButton].backgroundColor;
-   
-    
-//    if (self.floatingButtonSource && [self.floatingButtonSource respondsToSelector:@selector(buttonBackgroundColorForFloatingButton:)]) {
-//        UIColor *color = [self.floatingButtonSource buttonBackgroundColorForFloatingButton:self];
-//        if (color) NSAssert([color isKindOfClass:[UIColor class]], @"You must return a valid UIColor object for -buttonBackgroundColorForFloatingButton:");
-//        return color;
-//    }
-//    return nil;
-}
-
-- (CGFloat)me_buttonImagePadding
-{
-    DLog(@"");
-
-    if (self.floatingButtonSource && [self.floatingButtonSource respondsToSelector:@selector(buttonImagePaddingForFloatingButton:)]) {
-        CGFloat size = [self.floatingButtonSource buttonImagePaddingForFloatingButton:self];
-        if (size) NSAssert(size >= 0, @"You must return a valid CGFloat object for -buttonImagePaddingForFloatingButton:");
-        return size;
-    }
-    return kFloatingButtonDefaultImagePadding;
-}
-
-
-- (CGFloat)me_verticalOffset
-{
-    DLog(@"");
-
-    if (self.floatingButtonSource && [self.floatingButtonSource respondsToSelector:@selector(verticalOffsetForFloatingButton:)]) {
-        CGFloat offset = [self.floatingButtonSource verticalOffsetForFloatingButton:self];
-        if (offset) NSAssert(offset >= 0, @"You must return a valid CGFloat object for -verticalOffsetForFloatingButton:");
-        return offset;
-    }
-    return kFloatingButtonDefaultOffset;
-}
-
-- (MEFloatingButtonAnimation)me_animationType
-{
-    DLog(@"");
-
-    if (self.floatingButtonSource && [self.floatingButtonSource respondsToSelector:@selector(animationTypeForFloatingButton:)]) {
-        return [self.floatingButtonSource animationTypeForFloatingButton:self];
-    }
-    return MEFloatingButtonAnimationFadeIn;
-}
-
-- (MEFloatingButtonDisplayMode)me_displayMode
-{
-    DLog(@"");
-
-    if (self.floatingButtonSource && [self.floatingButtonSource respondsToSelector:@selector(displayModeForFloatingButton:)]) {
-        return [self.floatingButtonSource displayModeForFloatingButton:self];
-    }
-    return MEFloatingButtonDisplayModeWhenScrolling;
+    return floatingButton;
 }
 
 
@@ -415,9 +361,9 @@ static float const kFloatingButtonDefaultOffset = 10.0f;
 - (void)me_didTapDataButton:(id)sender
 {
     DLog(@"self.floatingButtonDelegate = %@", self.floatingButtonDelegate);
-    if ([self me_hideOnTap] && self.floatingButton.displayMode != MEFloatingButtonDisplayModeAlways) {
-        [self me_hideFloatingButtonView];
-    }
+//    if ([self me_hideOnTap] && self.floatingButton.displayMode != MEFloatingButtonDisplayModeAlways) {
+//        [self me_hideFloatingButtonView];
+//    }
     
     if (self.floatingButtonDelegate && [self.floatingButtonDelegate respondsToSelector:@selector(floatingButton:didTapButton:)]) {
         [self.floatingButtonDelegate floatingButton:self didTapButton:sender];
@@ -431,66 +377,27 @@ static float const kFloatingButtonDefaultOffset = 10.0f;
 {
     DLog(@"me_validateView");
     
-    if ([self me_shouldDisplay]) {
-        
-        MEFloatingButton *view = self.floatingButton;
-        
+    MEFloatingButton *view = [self floatingButton];
+    if (view.displayMode != MEFloatingButtonDisplayModeNone) {
+       
         if (!view.superview) {
             // Send the view all the way to the back, in case a header and/or footer is present, as well as for sectionHeaders or any other content
             [self addSubview:view];
         }
         
-        // Removing view resetting the view and its constraints it very important to guarantee a good state
-        [view prepareForReuse];
-        
-        // Get the data from the data source
-        UIImage *buttonImage = [self me_buttonImageForState:UIControlStateNormal];
-        UIColor *buttonTintColor = [self me_buttonTintColor];
-        UIColor *buttonBackgroundColor = [self me_buttonBackgroundColor];
-        CGFloat buttonImagePadding = [self me_buttonImagePadding];
-        
         // Configure button
-        if (buttonImage) {
-            [view.button setFrame:CGRectMake(0, 0, buttonImage.size.width + buttonImagePadding*2, buttonImage.size.height + buttonImagePadding*2)];
-            [view.button setContentMode:UIViewContentModeCenter];
-            if (buttonTintColor) {
-                [view.button setImage:[buttonImage imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate] forState:UIControlStateNormal];
-                [view.button setImage:[[self me_buttonImageForState:UIControlStateHighlighted] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate] forState:UIControlStateHighlighted];
-                [view setTintColor:buttonTintColor];
+        if (view.image) {
+            [view.button setFrame:CGRectMake(0, 0, view.image.size.width + view.imagePadding*2, view.image.size.height + view.imagePadding*2)];
+            if (view.imageColor) {
+                [view.button setImage:[view.image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate] forState:UIControlStateNormal];
             } else {
-                [view.button setImage:buttonImage forState:UIControlStateNormal];
-                [view.button setImage:[self me_buttonImageForState:UIControlStateHighlighted] forState:UIControlStateHighlighted];
+                [view.button setImage:view.image forState:UIControlStateNormal];
             }
-            if (buttonBackgroundColor) {
-                [view.button setBackgroundColor:buttonBackgroundColor];
-            }
+        } else {
+            NSAssert(NO, @"You must assign a valid UIImage type for -setImage:");
         }
-        
-        // Configure offset
-        view.verticalOffset = [self me_verticalOffset];
-        
-        
-        // Configure floating button userInteraction permission
-        view.userInteractionEnabled = YES;
-        
-        // Configure animation type
-        view.animationType = [self me_animationType];
-        
-        // Configure display mode
-        view.displayMode = [self me_displayMode];
-        
-        [view setupConstraints];
-    }
-}
 
-- (void)me_invalidateView
-{
-    DLog(@"");
-    
-    if (self.floatingButton) {
-        [self.floatingButton prepareForReuse];
-        [self.floatingButton removeFromSuperview];
-        [self setFloatingButtonView:nil];
+        [view setupConstraints];
     }
 }
 
@@ -535,7 +442,6 @@ static float const kFloatingButtonDefaultOffset = 10.0f;
     if ([keyPath isEqualToString:kObserverFrame]) {
         DLog(@"kObserverFrame");
      
-        [self me_invalidateView];
         [self me_validateView];
 
     } else if ([keyPath isEqualToString:kObserverContentOffset]) {
