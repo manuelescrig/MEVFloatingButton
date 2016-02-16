@@ -22,7 +22,7 @@ static NSString *CellIdentifier = @"CellIdentifier";
     self.title = @"Example 2";
 
     MEFloatingButton *button = [[MEFloatingButton alloc] init];
-    button.displayMode = MEFloatingButtonDisplayModeAlways;
+    button.displayMode = MEFloatingButtonDisplayModeWhenScrolling;
     button.animationType = MEFloatingButtonAnimationNone;
     button.position = MEFloatingButtonPositionBottomLeft;
     button.horizontalOffset = 30.0f;

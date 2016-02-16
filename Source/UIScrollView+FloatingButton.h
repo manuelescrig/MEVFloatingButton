@@ -9,6 +9,7 @@
 //  Licence: MIT-Licence
 //
 
+#import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
 #define DLog(s, ... ) NSLog(@"%@ | %@ | %@", [[NSString stringWithUTF8String:__FILE__] lastPathComponent], NSStringFromSelector(_cmd), [NSString stringWithFormat:(s), ##__VA_ARGS__] )
