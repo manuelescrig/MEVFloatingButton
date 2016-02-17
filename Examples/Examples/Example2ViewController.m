@@ -25,9 +25,11 @@ static NSString *CellIdentifier = @"CellIdentifier";
     button.displayMode = MEFloatingButtonDisplayModeWhenScrolling;
     button.animationType = MEFloatingButtonAnimationNone;
     button.position = MEFloatingButtonPositionBottomLeft;
+    button.backgroundColor = [UIColor colorWithRed:0.5 green:0.5 blue:0.5 alpha:0.9];
     button.horizontalOffset = 30.0f;
     button.verticalOffset = -30.0f;
-    button.image = [UIImage imageNamed:@"UpArrow"];
+    button.image = [UIImage imageNamed:@"UpArrow2"];
+    button.rounded = NO;
     [self.tableView setFloatingButtonView:button];
     [self.tableView setFloatingButtonDelegate:self];
     
@@ -38,6 +40,27 @@ static NSString *CellIdentifier = @"CellIdentifier";
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
+- (void)viewWillAppear:(BOOL)animated {
+    DLog(@"");
+    
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    DLog(@"");
+    
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    DLog(@"");
+    
+}
+
+- (void)viewDidDisappear:(BOOL)animated {
+    DLog(@"");
+    
+}
+
 
 
 #pragma mark - Table view data source

@@ -52,6 +52,27 @@ static NSString *CellIdentifier = @"CellIdentifier";
 }
 
 
+- (void)viewWillAppear:(BOOL)animated {
+    DLog(@"");
+    
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    DLog(@"");
+    
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    DLog(@"");
+    
+}
+
+- (void)viewDidDisappear:(BOOL)animated {
+    DLog(@"");
+    
+}
+
+
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -66,6 +87,7 @@ static NSString *CellIdentifier = @"CellIdentifier";
 
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     cell.textLabel.text = [NSString stringWithFormat:@"Example [%zd]", indexPath.row];
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
     return cell;
 }
 

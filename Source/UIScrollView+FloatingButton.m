@@ -53,7 +53,7 @@ typedef NS_ENUM(NSInteger, MEFloatingButtonState) {
         
         // Set as hidden when is created
         self.hidden = YES;
-
+        
         // Default configuration
         _buttonState = MEFloatingButtonStateDidDisappear;
         _displayMode = MEFloatingButtonDisplayModeAlways;
@@ -67,7 +67,7 @@ typedef NS_ENUM(NSInteger, MEFloatingButtonState) {
         _horizontalOffset = kMEFlatingButtonDefaultHorizontalOffset;
         _verticalOffset = kMEFlatingButtonDefaultVerticalOffset;
         _rounded = YES;
-        
+
         [self addSubview:self.contentView];
     }
     return self;
@@ -249,32 +249,68 @@ static float const kFloatingButtonDefaultFadingDurationTime = 2.0f;
 
 @implementation UIScrollView (FloatingButton)
 
+
 + (void)load
 {
-    Method origMethod = class_getInstanceMethod([self class], NSSelectorFromString(@"dealloc"));
-    Method newMethod = class_getInstanceMethod([self class], @selector(my_dealloc));
-    method_exchangeImplementations(origMethod, newMethod);
+    
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+
+        Swizzle([self class], NSSelectorFromString(@"dealloc"), @selector(me_dealloc));
+        Swizzle([self class], @selector(viewWillDisappear:), @selector(me_viewWillDisappear:));
+        Swizzle([self class], @selector(willMoveToWindow:), @selector(me_willMoveToWindow:));
+    });
 }
 
-- (void)my_dealloc {
+#pragma mark - An a little bit of swizzling
+
+void Swizzle(Class c, SEL orig, SEL new)
+{
+    Method origMethod = class_getInstanceMethod(c, orig);
+    Method newMethod = class_getInstanceMethod(c, new);
+    if(class_addMethod(c, orig, method_getImplementation(newMethod), method_getTypeEncoding(newMethod)))
+        class_replaceMethod(c, new, method_getImplementation(origMethod), method_getTypeEncoding(origMethod));
+    else
+        method_exchangeImplementations(origMethod, newMethod);
+}
+
+- (void)me_dealloc
+{
+    DLog(@"");
     
     @try {
         [self removeObserver:self forKeyPath:kObserverContentOffset context:nil];
         [self removeObserver:self forKeyPath:kObserverFrame context:nil];
+        [self removeObserver:self forKeyPath:@"" context:nil];
     } @catch(id exception) {
         // Do nothing, obviously it wasn't attached because an exception was thrown
         DLog(@"exception - %@", exception);
     }
     
     // This calls original dealloc method
-    [self my_dealloc];
+    [self me_dealloc];
 }
 
-- (void)didMoveToSuperview
-{
-    DLog(@"self.floatingButton.displayMode = %d", self.floatingButton.displayMode);
-    
 
+- (void)me_viewWillDisappear:(BOOL)animated
+{
+    DLog(@"self.floatingButtonDelegate = %@", self.floatingButtonDelegate);
+
+    [self stopTimer];
+    
+    [self me_viewWillDisappear:animated];
+    
+}
+
+- (void)me_willMoveToWindow:(UIWindow *)newWindow
+{
+    DLog(@"self.floatingButtonDelegate = %@", self.floatingButtonDelegate);
+
+    if (newWindow == nil) {
+        [self stopTimer];
+    }
+    
+    [self me_willMoveToWindow:newWindow];
 }
 
 
@@ -483,41 +519,50 @@ static float const kFloatingButtonDefaultFadingDurationTime = 2.0f;
 
     if ([keyPath isEqualToString:kObserverFrame]) {
         DLog(@"kObserverFrame");
-     
+        DLog(@"kObserverFrame - change = %@", change);
+
         [self me_validateView];
 
     } else if ([keyPath isEqualToString:kObserverContentOffset]) {
         DLog(@"kObserverContentOffset - displayMode = %d", self.floatingButton.displayMode);
 
         if (!CGRectEqualToRect(self.floatingButton.frame, CGRectZero)) {
-            
-            switch (self.floatingButton.displayMode) {
-                case MEFloatingButtonDisplayModeAlways:
-                    [self me_showFloatingButtonView];
-                    [self me_repositionFloatingButtonViewFrame:((UITableView *)object).contentOffset];
-                    break;
-                    
-                case MEFloatingButtonDisplayModeWhenScrolling: {
-                    
-                    CGPoint new = [[change valueForKey:@"new"] CGPointValue];
-                    CGPoint old = [[change valueForKey:@"old"] CGPointValue];
-                    if (new.y != old.y) {
-                        self.floatingButton.scrollThreshold += 1;
-                        DLog(@"kObserverContentOffset - scrollThreshold = %f", self.floatingButton.scrollThreshold);
-                        if (self.floatingButton.scrollThreshold > 10) {
-                            self.floatingButton.scrollThreshold = 0;
-                            
-                            [self me_showFloatingButtonView];
+
+            if (self.window) {
+               
+                DLog(@"kObserverContentOffset - self.window = %@", self.window);
+                DLog(@"kObserverContentOffset - self.frame = %@", NSStringFromCGRect(self.frame));
+                DLog(@"kObserverContentOffset - self.bounds = %@", NSStringFromCGRect(self.bounds));
+             
+                switch (self.floatingButton.displayMode) {
+                    case MEFloatingButtonDisplayModeAlways:
+                        [self me_showFloatingButtonView];
+                        [self me_repositionFloatingButtonViewFrame:((UITableView *)object).contentOffset];
+                        break;
+                        
+                    case MEFloatingButtonDisplayModeWhenScrolling: {
+                        
+                        CGPoint new = [[change valueForKey:@"new"] CGPointValue];
+                        CGPoint old = [[change valueForKey:@"old"] CGPointValue];
+                        if (new.y != old.y) {
+                            self.floatingButton.scrollThreshold += 1;
+                            DLog(@"kObserverContentOffset - scrollThreshold = %f", self.floatingButton.scrollThreshold);
+                            if (self.floatingButton.scrollThreshold > 10) {
+                                self.floatingButton.scrollThreshold = 0;
+                                
+                                [self me_showFloatingButtonView];
+                            }
                         }
-                    }
-                    
-                    [self stopTimer];
-                    [self startTimer];
-                    [self me_repositionFloatingButtonViewFrame:((UITableView *)object).contentOffset];
-                } break;
-                    
-                default:
-                    break;
+                        
+                        [self stopTimer];
+                        [self startTimer];
+                        [self me_repositionFloatingButtonViewFrame:((UITableView *)object).contentOffset];
+                    } break;
+                        
+                    default:
+                        break;
+                }
+
             }
         }
     }

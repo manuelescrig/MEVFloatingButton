@@ -30,10 +30,9 @@ static NSString *CellIdentifier = @"CellIdentifier";
     button.backgroundColor = [UIColor purpleColor];
     button.outlineColor = [UIColor darkGrayColor];
     button.outlineWidth = 2.0f;
-    button.imagePadding = 20.0f;
+    button.imagePadding = 15.0f;
     button.horizontalOffset = 20.0f;
     button.verticalOffset = -30.0f;
-    button.rounded = NO;
     [self.tableView setFloatingButtonView:button];
     [self.tableView setFloatingButtonDelegate:self];
 
