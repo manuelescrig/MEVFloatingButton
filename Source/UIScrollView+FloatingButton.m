@@ -66,7 +66,8 @@ typedef NS_ENUM(NSInteger, MEFloatingButtonState) {
         _imagePadding = kMEFlatingButtonDefaultImagePadding;
         _horizontalOffset = kMEFlatingButtonDefaultHorizontalOffset;
         _verticalOffset = kMEFlatingButtonDefaultVerticalOffset;
-
+        _rounded = YES;
+        
         [self addSubview:self.contentView];
     }
     return self;
@@ -141,6 +142,10 @@ typedef NS_ENUM(NSInteger, MEFloatingButtonState) {
     _verticalOffset = verticalOffset;
 }
 
+- (void)setRounded:(BOOL)rounded {
+    _rounded = rounded;
+}
+
 #pragma mark - Getters (Private)
 
 - (UIView *)contentView
@@ -188,10 +193,11 @@ typedef NS_ENUM(NSInteger, MEFloatingButtonState) {
 
 - (void)setupConstraints
 {
+    if ([self isRounded]) {
+        _button.layer.cornerRadius = _button.frame.size.width/2;
+    }
     self.frame = self.superview.bounds;
-    _button.layer.cornerRadius = _button.frame.size.width/2;
     _contentView.frame = CGRectMake(0, 0, _button.frame.size.width, _button.frame.size.width);
-    
     switch (_position) {
         case MEFloatingButtonPositionBottomCenter:
             _contentView.center = CGPointMake(self.center.x, self.frame.size.height - (_button.frame.size.height/2) + _verticalOffset);
