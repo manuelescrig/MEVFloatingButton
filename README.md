@@ -28,6 +28,11 @@ For more info check the Examples project.
 
 Manuel Escrig Ventura, [@manuelescrig](https://twitter.com/manuelescrig)
 
+## Credits
+Icons made by Elegant Themes from www.flaticon.com 
+
+
 ## License
 
 MEFloatingButton is available under the MIT License. See the LICENSE file for more info.
+
