@@ -25,7 +25,7 @@ static NSString *CellIdentifier = @"CellIdentifier";
     button.animationType = MEFloatingButtonAnimationNone;
     button.displayMode = MEFloatingButtonDisplayModeAlways;
     button.position = MEFloatingButtonPositionBottomRight;
-    button.image = [UIImage imageNamed:@"UpArrow"];
+    button.image = [UIImage imageNamed:@"Icon1"];
     button.imageColor = [UIColor blackColor];
     button.backgroundColor = [UIColor redColor];
     button.outlineColor = [UIColor blackColor];
@@ -33,7 +33,7 @@ static NSString *CellIdentifier = @"CellIdentifier";
     button.imagePadding = 20.0f;
     button.horizontalOffset = -30.0f;
     button.verticalOffset = -30.0f;
-    button.rounded = NO;
+    button.rounded = YES;
 
     [self.tableView setFloatingButtonView:button];
     [self.tableView setFloatingButtonDelegate:self];

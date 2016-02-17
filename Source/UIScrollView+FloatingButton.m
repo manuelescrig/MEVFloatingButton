@@ -13,7 +13,6 @@
 #import <objc/runtime.h>
 #import <objc/message.h>
 
-#pragma mark - MEFloatingButton
 
 static float const kMEFlatingButtonDefaultOutlineWidth = 0.0f;
 static float const kMEFlatingButtonDefaultImagePadding = 10.0f;
@@ -44,7 +43,7 @@ typedef NS_ENUM(NSInteger, MEFloatingButtonState) {
 @synthesize contentView = _contentView;
 @synthesize button = _button;
 
-#pragma mark - Initialization Methods
+#pragma mark - Initialization (private)
 
 - (instancetype)init
 {
@@ -250,6 +249,8 @@ static float const kFloatingButtonDefaultFadingDurationTime = 2.0f;
 @implementation UIScrollView (FloatingButton)
 
 
+#pragma mark - Initialization (private)
+
 + (void)load
 {
     
@@ -262,7 +263,8 @@ static float const kFloatingButtonDefaultFadingDurationTime = 2.0f;
     });
 }
 
-#pragma mark - An a little bit of swizzling
+
+#pragma mark - An a little bit of swizzling (private)
 
 void Swizzle(Class c, SEL orig, SEL new)
 {
@@ -562,7 +564,6 @@ void Swizzle(Class c, SEL orig, SEL new)
                     default:
                         break;
                 }
-
             }
         }
     }

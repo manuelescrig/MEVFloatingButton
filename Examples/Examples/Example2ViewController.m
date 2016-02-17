@@ -28,7 +28,7 @@ static NSString *CellIdentifier = @"CellIdentifier";
     button.backgroundColor = [UIColor colorWithRed:0.5 green:0.5 blue:0.5 alpha:0.9];
     button.horizontalOffset = 30.0f;
     button.verticalOffset = -30.0f;
-    button.image = [UIImage imageNamed:@"UpArrow2"];
+    button.image = [UIImage imageNamed:@"Icon2"];
     button.rounded = NO;
     [self.tableView setFloatingButtonView:button];
     [self.tableView setFloatingButtonDelegate:self];
