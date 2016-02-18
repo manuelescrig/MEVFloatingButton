@@ -34,6 +34,7 @@ typedef NS_ENUM(NSInteger, MEFloatingButtonState) {
 @property (nonatomic, strong) NSTimer *fadeOutTimer;
 @property (nonatomic, assign) MEFloatingButtonState buttonState;
 @property (nonatomic, assign) float scrollThreshold;
+@property (nonatomic, assign) BOOL visible;
 
 @end
 
@@ -145,6 +146,7 @@ typedef NS_ENUM(NSInteger, MEFloatingButtonState) {
     _rounded = rounded;
 }
 
+
 #pragma mark - Getters (Private)
 
 - (UIView *)contentView
@@ -192,10 +194,8 @@ typedef NS_ENUM(NSInteger, MEFloatingButtonState) {
 
 - (void)setupConstraints
 {
-    if ([self isRounded]) {
-        _button.layer.cornerRadius = _button.frame.size.width/2;
-    }
     self.frame = self.superview.bounds;
+    
     _contentView.frame = CGRectMake(0, 0, _button.frame.size.width, _button.frame.size.width);
     switch (_position) {
         case MEFloatingButtonPositionBottomCenter:
@@ -241,6 +241,7 @@ static char const *const kFloatingButtonDelegate = "floatingButtonDelegate";
 static char const *const kFloatingButtonView = "floatingButton";
 
 static NSString *const kObserverContentOffset = @"contentOffset";
+static NSString *const kObserverContentSize = @"contentSize";
 static NSString *const kObserverFrame = @"frame";
 
 static float const kFloatingButtonDefaultFadingDurationTime = 2.0f;
@@ -253,13 +254,11 @@ static float const kFloatingButtonDefaultFadingDurationTime = 2.0f;
 
 + (void)load
 {
-    
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-
         Swizzle([self class], NSSelectorFromString(@"dealloc"), @selector(me_dealloc));
-        Swizzle([self class], @selector(viewWillDisappear:), @selector(me_viewWillDisappear:));
         Swizzle([self class], @selector(willMoveToWindow:), @selector(me_willMoveToWindow:));
+        Swizzle([self class], @selector(didMoveToWindow), @selector(me_didMoveToWindow));
     });
 }
 
@@ -282,8 +281,8 @@ void Swizzle(Class c, SEL orig, SEL new)
     
     @try {
         [self removeObserver:self forKeyPath:kObserverContentOffset context:nil];
+        [self removeObserver:self forKeyPath:kObserverContentSize context:nil];
         [self removeObserver:self forKeyPath:kObserverFrame context:nil];
-        [self removeObserver:self forKeyPath:@"" context:nil];
     } @catch(id exception) {
         // Do nothing, obviously it wasn't attached because an exception was thrown
         DLog(@"exception - %@", exception);
@@ -294,27 +293,65 @@ void Swizzle(Class c, SEL orig, SEL new)
 }
 
 
-- (void)me_viewWillDisappear:(BOOL)animated
-{
-    DLog(@"self.floatingButtonDelegate = %@", self.floatingButtonDelegate);
-
-    [self stopTimer];
-    
-    [self me_viewWillDisappear:animated];
-    
-}
-
 - (void)me_willMoveToWindow:(UIWindow *)newWindow
 {
-    DLog(@"self.floatingButtonDelegate = %@", self.floatingButtonDelegate);
+    DLog(@"newWindow = %@ - %@", newWindow, self.floatingButtonDelegate);
 
-    if (newWindow == nil) {
+    if (!newWindow) {
+        self.floatingButton.visible = NO;
         [self stopTimer];
     }
     
     [self me_willMoveToWindow:newWindow];
 }
 
+- (void)me_didMoveToWindow
+{
+    DLog(@"self.floatingButtonDelegate = %@", self.floatingButtonDelegate);
+
+    if (self.floatingButtonDelegate) {
+        self.floatingButton.visible = YES;
+    }
+    
+    [self me_didMoveToWindow];
+}
+
+
+//- (void)didAddSubview:(UIView *)subview
+//{
+//    DLog(@"subview = %@", subview);
+//    DLog(@"self.floatingButtonDelegate = %@", self.floatingButtonDelegate);
+//}
+//
+//- (void)willRemoveSubview:(UIView *)subview
+//{
+//    DLog(@"subview = %@", subview);
+//    DLog(@"self.floatingButtonDelegate = %@", self.floatingButtonDelegate);
+//}
+//
+//- (void)willMoveToSuperview:(UIView *)newSuperview
+//{
+//    DLog(@"subview = %@", newSuperview);
+//    DLog(@"self.floatingButtonDelegate = %@", self.floatingButtonDelegate);
+//}
+//
+//- (void)didMoveToSuperview
+//{
+//    DLog(@"self.floatingButtonDelegate = %@", self.floatingButtonDelegate);
+//}
+//
+//
+//- (void)bringSubviewToFront:(UIView *)view
+//{
+//    DLog(@"subview = %@", view);
+//    DLog(@"self.floatingButtonDelegate = %@", self.floatingButtonDelegate);
+//}
+//
+//- (void)sendSubviewToBack:(UIView *)view
+//{
+//    DLog(@"subview = %@", view);
+//    DLog(@"self.floatingButtonDelegate = %@", self.floatingButtonDelegate);
+//}
 
 #pragma mark - Setters (Public)
 
@@ -322,10 +359,9 @@ void Swizzle(Class c, SEL orig, SEL new)
 {
     objc_setAssociatedObject(self, kFloatingButtonDelegate, floatingButtonDelegate, OBJC_ASSOCIATION_ASSIGN);
     
-    // Add observer to be notified when scrolling
+    // Add observers
     [self addObserver:self forKeyPath:kObserverContentOffset options:NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld context:nil];
-    
-    // Add observer to be notified when frame changes
+    [self addObserver:self forKeyPath:kObserverContentSize options:NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld context:nil];
     [self addObserver:self forKeyPath:kObserverFrame options:NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld context:nil];
 }
 
@@ -450,6 +486,9 @@ void Swizzle(Class c, SEL orig, SEL new)
             } else {
                 [view.button setImage:view.image forState:UIControlStateNormal];
             }
+            if ([view isRounded]) {
+                view.button.layer.cornerRadius = view.button.frame.size.width/2;
+            }
         } else {
             NSAssert(NO, @"You must assign a valid UIImage type for -setImage:");
         }
@@ -517,22 +556,20 @@ void Swizzle(Class c, SEL orig, SEL new)
 
 -(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
-    DLog(@"self.floatingButtonDelegate = %@", self.floatingButtonDelegate);
-
+    if (self.window) {
+        DLog(@"keyPath = %@ - %@", keyPath, self.floatingButtonDelegate);
+        DLog(@"change = %@", change);
+    }
+    
     if ([keyPath isEqualToString:kObserverFrame]) {
-        DLog(@"kObserverFrame");
-        DLog(@"kObserverFrame - change = %@", change);
-
         [self me_validateView];
-
+        
     } else if ([keyPath isEqualToString:kObserverContentOffset]) {
-        DLog(@"kObserverContentOffset - displayMode = %d", self.floatingButton.displayMode);
 
         if (!CGRectEqualToRect(self.floatingButton.frame, CGRectZero)) {
 
             if (self.window) {
                
-                DLog(@"kObserverContentOffset - self.window = %@", self.window);
                 DLog(@"kObserverContentOffset - self.frame = %@", NSStringFromCGRect(self.frame));
                 DLog(@"kObserverContentOffset - self.bounds = %@", NSStringFromCGRect(self.bounds));
              

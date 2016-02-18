@@ -14,6 +14,9 @@
 		C4344C981C58C97300CA397D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C4344C961C58C97300CA397D /* LaunchScreen.storyboard */; };
 		C4344CA31C58C97300CA397D /* ExamplesTests.m in Sources */ = {isa = PBXBuildFile; fileRef = C4344CA21C58C97300CA397D /* ExamplesTests.m */; };
 		C4344CAE1C58C97300CA397D /* ExamplesUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = C4344CAD1C58C97300CA397D /* ExamplesUITests.m */; };
+		C44D2BF31C75D0F900CAD0A5 /* Example4ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C44D2BF21C75D0F900CAD0A5 /* Example4ViewController.m */; };
+		C44D2BF41C75D0F900CAD0A5 /* Example4ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C44D2BF21C75D0F900CAD0A5 /* Example4ViewController.m */; };
+		C44D2BF51C75D0F900CAD0A5 /* Example4ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C44D2BF21C75D0F900CAD0A5 /* Example4ViewController.m */; };
 		C489BFEE1C6A204800850AC1 /* Example1ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C489BFED1C6A204800850AC1 /* Example1ViewController.m */; };
 		C489BFEF1C6A204800850AC1 /* Example1ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C489BFED1C6A204800850AC1 /* Example1ViewController.m */; };
 		C489BFF01C6A204800850AC1 /* Example1ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C489BFED1C6A204800850AC1 /* Example1ViewController.m */; };
@@ -61,6 +64,8 @@
 		C4344CA91C58C97300CA397D /* ExamplesUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ExamplesUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		C4344CAD1C58C97300CA397D /* ExamplesUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ExamplesUITests.m; sourceTree = "<group>"; };
 		C4344CAF1C58C97300CA397D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		C44D2BF11C75D0F900CAD0A5 /* Example4ViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Example4ViewController.h; sourceTree = "<group>"; };
+		C44D2BF21C75D0F900CAD0A5 /* Example4ViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Example4ViewController.m; sourceTree = "<group>"; };
 		C489BFEC1C6A204800850AC1 /* Example1ViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Example1ViewController.h; sourceTree = "<group>"; };
 		C489BFED1C6A204800850AC1 /* Example1ViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Example1ViewController.m; sourceTree = "<group>"; };
 		C489BFF11C6A20CD00850AC1 /* Example2ViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Example2ViewController.h; sourceTree = "<group>"; };
@@ -130,6 +135,8 @@
 				C489BFF21C6A20CD00850AC1 /* Example2ViewController.m */,
 				C489BFF61C6A20E600850AC1 /* Example3ViewController.h */,
 				C489BFF71C6A20E600850AC1 /* Example3ViewController.m */,
+				C44D2BF11C75D0F900CAD0A5 /* Example4ViewController.h */,
+				C44D2BF21C75D0F900CAD0A5 /* Example4ViewController.m */,
 				C4344C941C58C97300CA397D /* Assets.xcassets */,
 				C4344C961C58C97300CA397D /* LaunchScreen.storyboard */,
 				C4344C991C58C97300CA397D /* Info.plist */,
@@ -305,6 +312,7 @@
 			files = (
 				C489BFF31C6A20CD00850AC1 /* Example2ViewController.m in Sources */,
 				C4344C901C58C97300CA397D /* ViewController.m in Sources */,
+				C44D2BF31C75D0F900CAD0A5 /* Example4ViewController.m in Sources */,
 				C4344C8D1C58C97300CA397D /* AppDelegate.m in Sources */,
 				C489BFEE1C6A204800850AC1 /* Example1ViewController.m in Sources */,
 				C4344C8A1C58C97300CA397D /* main.m in Sources */,
@@ -321,6 +329,7 @@
 				C489BFEF1C6A204800850AC1 /* Example1ViewController.m in Sources */,
 				C489BFF91C6A20E600850AC1 /* Example3ViewController.m in Sources */,
 				C489BFF41C6A20CD00850AC1 /* Example2ViewController.m in Sources */,
+				C44D2BF41C75D0F900CAD0A5 /* Example4ViewController.m in Sources */,
 				C4BDA2EA1C5A64E600C7E1EB /* UIScrollView+FloatingButton.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -333,6 +342,7 @@
 				C489BFF01C6A204800850AC1 /* Example1ViewController.m in Sources */,
 				C489BFFA1C6A20E600850AC1 /* Example3ViewController.m in Sources */,
 				C489BFF51C6A20CD00850AC1 /* Example2ViewController.m in Sources */,
+				C44D2BF51C75D0F900CAD0A5 /* Example4ViewController.m in Sources */,
 				C4BDA2EB1C5A64E600C7E1EB /* UIScrollView+FloatingButton.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

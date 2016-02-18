@@ -14,6 +14,7 @@
 #import "Example1ViewController.h"
 #import "Example2ViewController.h"
 #import "Example3ViewController.h"
+#import "Example4ViewController.h"
 
 static NSString *CellIdentifier = @"CellIdentifier";
 
@@ -80,14 +81,13 @@ static NSString *CellIdentifier = @"CellIdentifier";
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 3;
+    return 4;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
 
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     cell.textLabel.text = [NSString stringWithFormat:@"Example [%zd]", indexPath.row];
-    cell.selectionStyle = UITableViewCellSelectionStyleNone;
     return cell;
 }
 
@@ -112,6 +112,10 @@ static NSString *CellIdentifier = @"CellIdentifier";
             [self.navigationController pushViewController:viewController animated:YES];
         }    break;
             
+        case 3:  {
+            Example4ViewController *viewController = [Example4ViewController new];
+            [self presentViewController:[[UINavigationController alloc] initWithRootViewController:viewController] animated:YES completion:nil];
+        }    break;
         default:
             break;
     }
