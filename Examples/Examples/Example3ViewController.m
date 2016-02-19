@@ -10,7 +10,7 @@
 
 static NSString *CellIdentifier = @"CellIdentifier";
 
-@interface Example3ViewController () <MEFloatingButtonDelegate>
+@interface Example3ViewController () <MEVFloatingButtonDelegate>
 
 @end
 
@@ -21,10 +21,10 @@ static NSString *CellIdentifier = @"CellIdentifier";
     
     self.title = @"Example 3";
 
-    MEFloatingButton *button = [[MEFloatingButton alloc] init];
-    button.animationType = MEFloatingButtonAnimationFromBottom;
-    button.displayMode = MEFloatingButtonDisplayModeAlways;
-    button.position = MEFloatingButtonPositionBottomCenter;
+    MEVFloatingButton *button = [[MEVFloatingButton alloc] init];
+    button.animationType = MEVFloatingButtonAnimationFromBottom;
+    button.displayMode = MEVFloatingButtonDisplayModeAlways;
+    button.position = MEVFloatingButtonPositionBottomCenter;
     button.image = [UIImage imageNamed:@"Icon3"];
     button.imageColor = [UIColor greenColor];
     button.backgroundColor = [UIColor purpleColor];

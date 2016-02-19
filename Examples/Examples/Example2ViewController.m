@@ -10,7 +10,7 @@
 
 static NSString *CellIdentifier = @"CellIdentifier";
 
-@interface Example2ViewController () <MEFloatingButtonDelegate>
+@interface Example2ViewController () <MEVFloatingButtonDelegate>
 
 @end
 
@@ -21,15 +21,16 @@ static NSString *CellIdentifier = @"CellIdentifier";
     
     self.title = @"Example 2";
 
-    MEFloatingButton *button = [[MEFloatingButton alloc] init];
-    button.displayMode = MEFloatingButtonDisplayModeWhenScrolling;
-    button.animationType = MEFloatingButtonAnimationNone;
-    button.position = MEFloatingButtonPositionBottomLeft;
+    MEVFloatingButton *button = [[MEVFloatingButton alloc] init];
+    button.displayMode = MEVFloatingButtonDisplayModeWhenScrolling;
+    button.animationType = MEVFloatingButtonAnimationNone;
+    button.position = MEVFloatingButtonPositionBottomLeft;
     button.backgroundColor = [UIColor colorWithRed:0.5 green:0.5 blue:0.5 alpha:0.9];
     button.horizontalOffset = 30.0f;
     button.verticalOffset = -30.0f;
     button.image = [UIImage imageNamed:@"Icon2"];
     button.rounded = NO;
+    button.hideOnTap = YES;
     [self.tableView setFloatingButtonView:button];
     [self.tableView setFloatingButtonDelegate:self];
     

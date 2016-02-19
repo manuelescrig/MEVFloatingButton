@@ -2,7 +2,7 @@
 //  UIScrollView+FloatingButton.m
 //  A drop-in UITableView/UICollectionView/UIScrollView superclass category for showing a floating button on top of it.
 //
-//  https://github.com/manuelescrig/MEFloatingButton
+//  https://github.com/manuelescrig/MEVFloatingButton
 //
 //  Created by Manuel Escrig Ventura on 27/01/16.
 //  Copyright © 2016 Manuel Escrig Ventura. All rights reserved.
@@ -27,20 +27,19 @@ typedef NS_ENUM(NSInteger, MEFloatingButtonState) {
 };
 
 
-@interface MEFloatingButton ()
+@interface MEVFloatingButton ()
 
 @property (nonatomic, strong, readonly) UIView *contentView;
 @property (nonatomic, strong, readonly) UIButton *button;
 @property (nonatomic, strong) NSTimer *fadeOutTimer;
 @property (nonatomic, assign) MEFloatingButtonState buttonState;
 @property (nonatomic, assign) float scrollThreshold;
-@property (nonatomic, assign) BOOL visible;
 
 @end
 
-#pragma mark - MEFloatingButton
+#pragma mark - MEVFloatingButton
 
-@implementation MEFloatingButton
+@implementation MEVFloatingButton
 @synthesize contentView = _contentView;
 @synthesize button = _button;
 
@@ -56,9 +55,9 @@ typedef NS_ENUM(NSInteger, MEFloatingButtonState) {
         
         // Default configuration
         _buttonState = MEFloatingButtonStateDidDisappear;
-        _displayMode = MEFloatingButtonDisplayModeAlways;
-        _animationType = MEFloatingButtonAnimationNone; 
-        _position = MEFloatingButtonPositionBottomCenter;
+        _displayMode = MEVFloatingButtonDisplayModeAlways;
+        _animationType = MEVFloatingButtonAnimationNone;
+        _position = MEVFloatingButtonPositionBottomCenter;
         _imageColor = [UIColor whiteColor];
         _backgroundColor = [UIColor blueColor];
         _outlineColor = [UIColor blueColor];
@@ -67,7 +66,8 @@ typedef NS_ENUM(NSInteger, MEFloatingButtonState) {
         _horizontalOffset = kMEFlatingButtonDefaultHorizontalOffset;
         _verticalOffset = kMEFlatingButtonDefaultVerticalOffset;
         _rounded = YES;
-
+        _hideOnTap = NO;
+        
         [self addSubview:self.contentView];
     }
     return self;
@@ -76,32 +76,32 @@ typedef NS_ENUM(NSInteger, MEFloatingButtonState) {
 
 #pragma mark - Setters (Public)
 
-- (void)setDisplayMode:(MEFloatingButtonDisplayMode)displayMode {
-    if (displayMode == MEFloatingButtonDisplayModeNone ||
-        displayMode == MEFloatingButtonDisplayModeAlways ||
-        displayMode == MEFloatingButtonDisplayModeWhenScrolling) {
+- (void)setDisplayMode:(MEVFloatingButtonDisplayMode)displayMode {
+    if (displayMode == MEVFloatingButtonDisplayModeNone ||
+        displayMode == MEVFloatingButtonDisplayModeAlways ||
+        displayMode == MEVFloatingButtonDisplayModeWhenScrolling) {
         _displayMode = displayMode;
     } else {
-        NSAssert(NO, @"You must assign a valid MEFloatingButtonDisplayMode type for -setDisplayMode:");
+        NSAssert(NO, @"You must assign a valid MEVFloatingButtonDisplayMode type for -setDisplayMode:");
     }
 }
-- (void)setAnimationType:(MEFloatingButtonAnimation)animationType {
-    if (animationType == MEFloatingButtonAnimationNone ||
+- (void)setAnimationType:(MEVFloatingButtonAnimation)animationType {
+    if (animationType == MEVFloatingButtonAnimationNone ||
         animationType == MEFloatingButtonAnimationFadeIn ||
-        animationType == MEFloatingButtonAnimationFromBottom) {
+        animationType == MEVFloatingButtonAnimationFromBottom) {
         _animationType = animationType;
     } else {
-        NSAssert(NO, @"You must assign a valid MEFloatingButtonAnimation type for -setAnimationType:");
+        NSAssert(NO, @"You must assign a valid MEVFloatingButtonAnimation type for -setAnimationType:");
     }
 }
 
-- (void)setPosition:(MEFloatingButtonPosition)position {
-    if (position == MEFloatingButtonPositionBottomCenter ||
-        position == MEFloatingButtonPositionBottomLeft ||
-        position == MEFloatingButtonPositionBottomRight) {
+- (void)setPosition:(MEVFloatingButtonPosition)position {
+    if (position == MEVFloatingButtonPositionBottomCenter ||
+        position == MEVFloatingButtonPositionBottomLeft ||
+        position == MEVFloatingButtonPositionBottomRight) {
         _position = position;
     } else {
-        NSAssert(NO, @"You must assign a valid MEFloatingButtonPosition type for -setPosition:");
+        NSAssert(NO, @"You must assign a valid MEVFloatingButtonPosition type for -setPosition:");
     }
 }
 
@@ -183,7 +183,7 @@ typedef NS_ENUM(NSInteger, MEFloatingButtonState) {
 
 - (void)didTapButton:(id)sender
 {
-    SEL selector = NSSelectorFromString(@"me_didTapDataButton:");
+    SEL selector = NSSelectorFromString(@"mev_didTapDataButton:");
     
     if ([self.superview respondsToSelector:selector]) {
         [self.superview performSelector:selector withObject:sender afterDelay:0.0f];
@@ -199,13 +199,13 @@ typedef NS_ENUM(NSInteger, MEFloatingButtonState) {
     
     _contentView.frame = CGRectMake(0, 0, _button.frame.size.width, _button.frame.size.width);
     switch (_position) {
-        case MEFloatingButtonPositionBottomCenter:
+        case MEVFloatingButtonPositionBottomCenter:
             _contentView.center = CGPointMake(self.center.x, self.frame.size.height - (_button.frame.size.height/2) + _verticalOffset);
             break;
-        case MEFloatingButtonPositionBottomRight:
+        case MEVFloatingButtonPositionBottomRight:
             _contentView.center = CGPointMake(self.frame.size.width - (_button.frame.size.width/2) + _horizontalOffset, self.frame.size.height - (_button.frame.size.height/2) + _verticalOffset);
             break;
-        case MEFloatingButtonPositionBottomLeft:
+        case MEVFloatingButtonPositionBottomLeft:
             _contentView.center = CGPointMake(self.frame.origin.x + (_button.frame.size.width/2) + _horizontalOffset, self.frame.size.height - (_button.frame.size.height/2) + _verticalOffset);
             break;
         default:
@@ -262,9 +262,9 @@ static float const kFloatingButtonDefaultFromBottomAnimationTime = 0.6f;
     dispatch_once(&onceToken, ^{
         
         // Swizzle
-        Swizzle([self class], NSSelectorFromString(@"dealloc"), @selector(me_dealloc));
-        Swizzle([self class], @selector(willMoveToWindow:), @selector(me_willMoveToWindow:));
-        Swizzle([self class], @selector(didMoveToWindow), @selector(me_didMoveToWindow));
+        Swizzle([self class], NSSelectorFromString(@"dealloc"), @selector(mev_dealloc));
+        Swizzle([self class], @selector(willMoveToWindow:), @selector(mev_willMoveToWindow:));
+        Swizzle([self class], @selector(didMoveToWindow), @selector(mev_didMoveToWindow));
     });
 }
 
@@ -281,7 +281,7 @@ void Swizzle(Class c, SEL orig, SEL new)
         method_exchangeImplementations(origMethod, newMethod);
 }
 
-- (void)me_dealloc
+- (void)mev_dealloc
 {
     DLog(@"");
     
@@ -295,42 +295,38 @@ void Swizzle(Class c, SEL orig, SEL new)
     }
     
     // This calls original dealloc method
-    [self me_dealloc];
+    [self mev_dealloc];
 }
 
 
-- (void)me_willMoveToWindow:(UIWindow *)newWindow
+- (void)mev_willMoveToWindow:(UIWindow *)newWindow
 {
     DLog(@"newWindow = %@ - %@", newWindow, self.floatingButtonDelegate);
 
     if (!newWindow) {
-        self.floatingButton.visible = NO;
-        [self stopTimer];
+        [self mev_stopTimer];
+        [self mev_didDisappear];
     }
     
-    [self me_willMoveToWindow:newWindow];
+    [self mev_willMoveToWindow:newWindow];
 }
 
-- (void)me_didMoveToWindow
+- (void)mev_didMoveToWindow
 {
     DLog(@"self.floatingButtonDelegate = %@", self.floatingButtonDelegate);
-
-    if (self.floatingButtonDelegate) {
-        self.floatingButton.visible = YES;
-    }
     
-    [self me_didMoveToWindow];
+    [self mev_didMoveToWindow];
 }
 
 
 #pragma mark - Setters (Public)
 
-- (void)setFloatingButtonDelegate:(id<MEFloatingButtonDelegate>)floatingButtonDelegate
+- (void)setFloatingButtonDelegate:(id<MEVFloatingButtonDelegate>)floatingButtonDelegate
 {
     objc_setAssociatedObject(self, kFloatingButtonDelegate, floatingButtonDelegate, OBJC_ASSOCIATION_ASSIGN);
 }
 
-- (void)setFloatingButtonView:(MEFloatingButton *)floatingButton
+- (void)setFloatingButtonView:(MEVFloatingButton *)floatingButton
 {
     objc_setAssociatedObject(self, kFloatingButtonView, floatingButton, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
     
@@ -343,7 +339,7 @@ void Swizzle(Class c, SEL orig, SEL new)
 
 #pragma mark - Getters (Public)
 
-- (id<MEFloatingButtonDelegate>)floatingButtonDelegate
+- (id<MEVFloatingButtonDelegate>)floatingButtonDelegate
 {
     return objc_getAssociatedObject(self, kFloatingButtonDelegate);
 }
@@ -351,12 +347,12 @@ void Swizzle(Class c, SEL orig, SEL new)
 
 #pragma mark - Getters (Private)
 
-- (MEFloatingButton *)floatingButton
+- (MEVFloatingButton *)floatingButton
 {
-    MEFloatingButton *floatingButton = objc_getAssociatedObject(self, kFloatingButtonView);
+    MEVFloatingButton *floatingButton = objc_getAssociatedObject(self, kFloatingButtonView);
 
     if (floatingButton == nil) {
-        floatingButton = [[MEFloatingButton alloc] init];
+        floatingButton = [[MEVFloatingButton alloc] init];
 
         [self setFloatingButtonView:floatingButton];
     }
@@ -367,7 +363,7 @@ void Swizzle(Class c, SEL orig, SEL new)
 
 #pragma mark - Delegate Events (Private)
 
-- (void)me_willAppear
+- (void)mev_willAppear
 {
     DLog(@"self.floatingButtonDelegate = %@", self.floatingButtonDelegate);
     self.floatingButton.buttonState = MEFloatingButtonStateWillAppear;
@@ -378,7 +374,7 @@ void Swizzle(Class c, SEL orig, SEL new)
     }
 }
 
-- (void)me_didAppear
+- (void)mev_didAppear
 {
     DLog(@"self.floatingButtonDelegate = %@", self.floatingButtonDelegate);
     self.floatingButton.buttonState = MEFloatingButtonStateDidAppear;
@@ -388,7 +384,7 @@ void Swizzle(Class c, SEL orig, SEL new)
     }
 }
 
-- (void)me_willDisappear
+- (void)mev_willDisappear
 {
     DLog(@"self.floatingButtonDelegate = %@", self.floatingButtonDelegate);
     self.floatingButton.buttonState = MEFloatingButtonStateWillDisappear;
@@ -398,25 +394,23 @@ void Swizzle(Class c, SEL orig, SEL new)
     }
 }
 
-- (void)me_didDisappear
+- (void)mev_didDisappear
 {
     DLog(@"self.floatingButtonDelegate = %@", self.floatingButtonDelegate);
     self.floatingButton.buttonState = MEFloatingButtonStateDidDisappear;
     self.floatingButton.hidden = YES;
-
-    [self stopTimer];
     
     if (self.floatingButtonDelegate && [self.floatingButtonDelegate respondsToSelector:@selector(floatingButtonDidDisappear:)]) {
         [self.floatingButtonDelegate floatingButtonDidDisappear:self];
     }
 }
 
-- (void)me_didTapDataButton:(id)sender
+- (void)mev_didTapDataButton:(id)sender
 {
     DLog(@"self.floatingButtonDelegate = %@", self.floatingButtonDelegate);
-//    if ([self me_hideOnTap] && self.floatingButton.displayMode != MEFloatingButtonDisplayModeAlways) {
-//        [self me_hideFloatingButtonView];
-//    }
+    if (self.floatingButton.displayMode != MEVFloatingButtonDisplayModeAlways && [self.floatingButton isHideOntap]) {
+        [self mev_hideFloatingButtonView];
+    }
     
     if (self.floatingButtonDelegate && [self.floatingButtonDelegate respondsToSelector:@selector(floatingButton:didTapButton:)]) {
         [self.floatingButtonDelegate floatingButton:self didTapButton:sender];
@@ -426,22 +420,22 @@ void Swizzle(Class c, SEL orig, SEL new)
 
 #pragma mark - Layout Methods (Private)
 
-- (BOOL)me_canDisplay
+- (BOOL)mev_canDisplay
 {
     BOOL canDisplay = NO;
     
-    if ([self.floatingButton displayMode] != MEFloatingButtonDisplayModeNone) {
+    if ([self.floatingButton displayMode] != MEVFloatingButtonDisplayModeNone) {
         canDisplay = YES;
     }
     
     return canDisplay;
 }
 
-- (void)me_validateView
+- (void)mev_validateView
 {
-    if ([self me_canDisplay]) {
+    if ([self mev_canDisplay]) {
        
-        MEFloatingButton *view = [self floatingButton];
+        MEVFloatingButton *view = [self floatingButton];
         
         if (!view.superview) {
             // Send the view all the way to the back, in case a header and/or footer is present, as well as for sectionHeaders or any other content
@@ -463,61 +457,67 @@ void Swizzle(Class c, SEL orig, SEL new)
             NSAssert(NO, @"You must assign a valid UIImage type for -setImage:");
         }
         
-        if (view.displayMode == MEFloatingButtonDisplayModeAlways) {
-            [self me_showFloatingButtonView];
+        if (view.displayMode == MEVFloatingButtonDisplayModeAlways) {
+            [self mev_showFloatingButtonView];
         }
         
         [view setupConstraints];
     }
 }
 
--(void)me_showFloatingButtonView
+-(void)mev_showFloatingButtonView
 {
-    DLog(@"");
-
-    // State
-    [self me_willAppear];
+    DLog(@"self.floatingButton.buttonState = %d", self.floatingButton.buttonState);
     
-    switch (self.floatingButton.animationType) {
-        case MEFloatingButtonAnimationNone:
-            [self fadeInView:NO];
-            break;
-        case MEFloatingButtonAnimationFadeIn:
-            [self fadeInView:YES];
-            break;
-        case MEFloatingButtonAnimationFromBottom:
-            [self animateInView];
-            break;
-            
-        default:
-            break;
+    if (self.floatingButton.buttonState == MEFloatingButtonStateDidDisappear) {
+      
+        [self mev_willAppear];
+
+        switch (self.floatingButton.animationType) {
+            case MEVFloatingButtonAnimationNone:
+                [self mev_fadeInView:NO];
+                break;
+            case MEFloatingButtonAnimationFadeIn:
+                [self mev_fadeInView:YES];
+                break;
+            case MEVFloatingButtonAnimationFromBottom:
+                [self mev_animateInView];
+                break;
+                
+            default:
+                break;
+        }
     }
 }
 
--(void)me_hideFloatingButtonView
+-(void)mev_hideFloatingButtonView
 {
-    DLog(@"");
-    
-    // State
-    [self me_willDisappear];
-    
-    switch (self.floatingButton.animationType) {
-        case MEFloatingButtonAnimationNone:
-            [self fadeOutView:NO];
-            break;
-        case MEFloatingButtonAnimationFadeIn:
-            [self fadeOutView:YES];
-            break;
-        case MEFloatingButtonAnimationFromBottom:
-            [self animateOutView];
-            break;
-            
-        default:
-            break;
+    DLog(@"self.floatingButton.buttonState = %d", self.floatingButton.buttonState);
+
+    [self mev_stopTimer];
+
+    if (self.floatingButton.buttonState == MEFloatingButtonStateDidAppear) {
+        
+        [self mev_willDisappear];
+
+        switch (self.floatingButton.animationType) {
+            case MEVFloatingButtonAnimationNone:
+                [self mev_fadeOutView:NO];
+                break;
+            case MEFloatingButtonAnimationFadeIn:
+                [self mev_fadeOutView:YES];
+                break;
+            case MEVFloatingButtonAnimationFromBottom:
+                [self mev_animateOutView];
+                break;
+                
+            default:
+                break;
+        }
     }
 }
 
-- (void)me_repositionFloatingButtonViewFrame:(CGPoint)point
+- (void)mev_repositionFloatingButtonViewFrame:(CGPoint)point
 {
     DLog(@"");
 
@@ -530,7 +530,7 @@ void Swizzle(Class c, SEL orig, SEL new)
 
 #pragma mark - Timer Methods (Private)
 
-- (void)stopTimer
+- (void)mev_stopTimer
 {
     DLog(@"");
     
@@ -538,16 +538,16 @@ void Swizzle(Class c, SEL orig, SEL new)
     self.floatingButton.fadeOutTimer = nil;
 }
 
-- (void)startTimer
+- (void)mev_startTimer
 {
     DLog(@"");
     
-    self.floatingButton.fadeOutTimer = [NSTimer scheduledTimerWithTimeInterval:kFloatingButtonDefaultTime target:self selector:@selector(me_hideFloatingButtonView) userInfo:nil repeats:YES];
+    self.floatingButton.fadeOutTimer = [NSTimer scheduledTimerWithTimeInterval:kFloatingButtonDefaultTime target:self selector:@selector(mev_hideFloatingButtonView) userInfo:nil repeats:YES];
 }
 
 #pragma mark - Animation Methods (Private)
 
-- (void)fadeInView:(BOOL)animated
+- (void)mev_fadeInView:(BOOL)animated
 {
     DLog(@"");
     
@@ -555,11 +555,11 @@ void Swizzle(Class c, SEL orig, SEL new)
                      animations:^{
                          [self.floatingButton setAlpha:1];
                      } completion:^(BOOL finished) {
-                         [self me_didAppear];
+                         [self mev_didAppear];
                      }];
 }
 
-- (void)fadeOutView:(BOOL)animated
+- (void)mev_fadeOutView:(BOOL)animated
 {
     DLog(@"");
     
@@ -567,16 +567,16 @@ void Swizzle(Class c, SEL orig, SEL new)
                      animations:^{
                          [self.floatingButton setAlpha:0.0];
                      } completion:^(BOOL finished) {
-                         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0.2 * NSEC_PER_SEC), dispatch_get_main_queue(), ^(void){
-                             [self me_didDisappear];
-                         });
                      }];
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW,  animated ? (kFloatingButtonDefaultFadingAnimationTime-0.4) : 0 * NSEC_PER_SEC), dispatch_get_main_queue(), ^(void){
+        [self mev_didDisappear];
+    });
 }
 
-- (void)animateInView
+- (void)mev_animateInView
 {
     DLog(@"");
-    
+
     CGRect frame = self.floatingButton.frame;
     CGPoint finalPosition = CGPointMake(0, self.frame.size.height - self.floatingButton.frame.size.height - self.floatingButton.verticalOffset);
     CGPoint previousPosition = CGPointMake(finalPosition.x, finalPosition.y + self.floatingButton.frame.size.height + self.floatingButton.verticalOffset);
@@ -586,11 +586,11 @@ void Swizzle(Class c, SEL orig, SEL new)
                      animations:^{
                          [self.floatingButton setFrame:CGRectMake(finalPosition.x, finalPosition.y, frame.size.width, frame.size.height)];
                      } completion:^(BOOL finished) {
-                         [self me_didAppear];
+                         [self mev_didAppear];
                      }];
 }
 
-- (void)animateOutView
+- (void)mev_animateOutView
 {
     DLog(@"");
     
@@ -601,39 +601,30 @@ void Swizzle(Class c, SEL orig, SEL new)
                      animations:^{
                          [self.floatingButton setFrame:frame];
                      } completion:^(BOOL finished) {
-                         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0.2 * NSEC_PER_SEC), dispatch_get_main_queue(), ^(void){
-                             [self me_didDisappear];
-                         });
                      }];
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (kFloatingButtonDefaultFromBottomAnimationTime-0.4) * NSEC_PER_SEC), dispatch_get_main_queue(), ^(void){
+        [self mev_didDisappear];
+    });
 }
 
 #pragma mark - KVO Methods (Private)
 
 -(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
-    if (self.window) {
-        DLog(@"keyPath = %@ - %@", keyPath, self.floatingButtonDelegate);
-        DLog(@"change = %@", change);
-    }
-    
     if ([keyPath isEqualToString:kObserverFrame]) {
-        [self me_validateView];
-        
+        [self mev_validateView];
     } else if ([keyPath isEqualToString:kObserverContentOffset]) {
 
         if (!CGRectEqualToRect(self.floatingButton.frame, CGRectZero)) {
 
             if (self.window) {
-               
-                DLog(@"kObserverContentOffset - self.frame = %@", NSStringFromCGRect(self.frame));
-                DLog(@"kObserverContentOffset - self.bounds = %@", NSStringFromCGRect(self.bounds));
-             
+
                 switch (self.floatingButton.displayMode) {
-                    case MEFloatingButtonDisplayModeAlways:
-                        [self me_repositionFloatingButtonViewFrame:((UITableView *)object).contentOffset];
+                    case MEVFloatingButtonDisplayModeAlways:
+                        [self mev_repositionFloatingButtonViewFrame:((UITableView *)object).contentOffset];
                         break;
                         
-                    case MEFloatingButtonDisplayModeWhenScrolling: {
+                    case MEVFloatingButtonDisplayModeWhenScrolling: {
                         
                         CGPoint new = [[change valueForKey:@"new"] CGPointValue];
                         CGPoint old = [[change valueForKey:@"old"] CGPointValue];
@@ -642,13 +633,15 @@ void Swizzle(Class c, SEL orig, SEL new)
                             DLog(@"kObserverContentOffset - scrollThreshold = %f", self.floatingButton.scrollThreshold);
                             if (self.floatingButton.scrollThreshold > 10) {
                                 self.floatingButton.scrollThreshold = 0;
-                                [self me_showFloatingButtonView];
+                                [self mev_showFloatingButtonView];
                             }
                         }
                         
-                        [self stopTimer];
-                        [self startTimer];
-                        [self me_repositionFloatingButtonViewFrame:((UITableView *)object).contentOffset];
+                        if (self.floatingButton.buttonState != MEFloatingButtonStateDidDisappear) {
+                            [self mev_stopTimer];
+                            [self mev_startTimer];
+                            [self mev_repositionFloatingButtonViewFrame:((UITableView *)object).contentOffset];
+                        }
                     } break;
                         
                     default:
