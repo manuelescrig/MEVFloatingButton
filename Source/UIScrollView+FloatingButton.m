@@ -57,7 +57,7 @@ typedef NS_ENUM(NSInteger, MEFloatingButtonState) {
         // Default configuration
         _buttonState = MEFloatingButtonStateDidDisappear;
         _displayMode = MEFloatingButtonDisplayModeAlways;
-        _animationType = MEFloatingButtonAnimationNone; // TODO: to be  re-implemented.
+        _animationType = MEFloatingButtonAnimationNone; 
         _position = MEFloatingButtonPositionBottomCenter;
         _imageColor = [UIColor whiteColor];
         _backgroundColor = [UIColor blueColor];
@@ -72,6 +72,7 @@ typedef NS_ENUM(NSInteger, MEFloatingButtonState) {
     }
     return self;
 }
+
 
 #pragma mark - Setters (Public)
 
@@ -244,7 +245,10 @@ static NSString *const kObserverContentOffset = @"contentOffset";
 static NSString *const kObserverContentSize = @"contentSize";
 static NSString *const kObserverFrame = @"frame";
 
-static float const kFloatingButtonDefaultFadingDurationTime = 2.0f;
+static float const kFloatingButtonDefaultTime = 2.0f;
+
+static float const kFloatingButtonDefaultFadingAnimationTime = 0.3f;
+static float const kFloatingButtonDefaultFromBottomAnimationTime = 0.6f;
 
 
 @implementation UIScrollView (FloatingButton)
@@ -256,6 +260,8 @@ static float const kFloatingButtonDefaultFadingDurationTime = 2.0f;
 {
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
+        
+        // Swizzle
         Swizzle([self class], NSSelectorFromString(@"dealloc"), @selector(me_dealloc));
         Swizzle([self class], @selector(willMoveToWindow:), @selector(me_willMoveToWindow:));
         Swizzle([self class], @selector(didMoveToWindow), @selector(me_didMoveToWindow));
@@ -317,57 +323,21 @@ void Swizzle(Class c, SEL orig, SEL new)
 }
 
 
-//- (void)didAddSubview:(UIView *)subview
-//{
-//    DLog(@"subview = %@", subview);
-//    DLog(@"self.floatingButtonDelegate = %@", self.floatingButtonDelegate);
-//}
-//
-//- (void)willRemoveSubview:(UIView *)subview
-//{
-//    DLog(@"subview = %@", subview);
-//    DLog(@"self.floatingButtonDelegate = %@", self.floatingButtonDelegate);
-//}
-//
-//- (void)willMoveToSuperview:(UIView *)newSuperview
-//{
-//    DLog(@"subview = %@", newSuperview);
-//    DLog(@"self.floatingButtonDelegate = %@", self.floatingButtonDelegate);
-//}
-//
-//- (void)didMoveToSuperview
-//{
-//    DLog(@"self.floatingButtonDelegate = %@", self.floatingButtonDelegate);
-//}
-//
-//
-//- (void)bringSubviewToFront:(UIView *)view
-//{
-//    DLog(@"subview = %@", view);
-//    DLog(@"self.floatingButtonDelegate = %@", self.floatingButtonDelegate);
-//}
-//
-//- (void)sendSubviewToBack:(UIView *)view
-//{
-//    DLog(@"subview = %@", view);
-//    DLog(@"self.floatingButtonDelegate = %@", self.floatingButtonDelegate);
-//}
-
 #pragma mark - Setters (Public)
 
 - (void)setFloatingButtonDelegate:(id<MEFloatingButtonDelegate>)floatingButtonDelegate
 {
     objc_setAssociatedObject(self, kFloatingButtonDelegate, floatingButtonDelegate, OBJC_ASSOCIATION_ASSIGN);
-    
-    // Add observers
-    [self addObserver:self forKeyPath:kObserverContentOffset options:NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld context:nil];
-    [self addObserver:self forKeyPath:kObserverContentSize options:NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld context:nil];
-    [self addObserver:self forKeyPath:kObserverFrame options:NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld context:nil];
 }
 
 - (void)setFloatingButtonView:(MEFloatingButton *)floatingButton
 {
     objc_setAssociatedObject(self, kFloatingButtonView, floatingButton, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    
+    // Add observers
+    [self addObserver:self forKeyPath:kObserverContentOffset options:NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld context:nil];
+    [self addObserver:self forKeyPath:kObserverContentSize options:NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld context:nil];
+    [self addObserver:self forKeyPath:kObserverFrame options:NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld context:nil];
 }
 
 
@@ -508,8 +478,20 @@ void Swizzle(Class c, SEL orig, SEL new)
     // State
     [self me_willAppear];
     
-
-    [self me_didAppear];
+    switch (self.floatingButton.animationType) {
+        case MEFloatingButtonAnimationNone:
+            [self fadeInView:NO];
+            break;
+        case MEFloatingButtonAnimationFadeIn:
+            [self fadeInView:YES];
+            break;
+        case MEFloatingButtonAnimationFromBottom:
+            [self animateInView];
+            break;
+            
+        default:
+            break;
+    }
 }
 
 -(void)me_hideFloatingButtonView
@@ -519,8 +501,20 @@ void Swizzle(Class c, SEL orig, SEL new)
     // State
     [self me_willDisappear];
     
-
-    [self me_didDisappear];
+    switch (self.floatingButton.animationType) {
+        case MEFloatingButtonAnimationNone:
+            [self fadeOutView:NO];
+            break;
+        case MEFloatingButtonAnimationFadeIn:
+            [self fadeOutView:YES];
+            break;
+        case MEFloatingButtonAnimationFromBottom:
+            [self animateOutView];
+            break;
+            
+        default:
+            break;
+    }
 }
 
 - (void)me_repositionFloatingButtonViewFrame:(CGPoint)point
@@ -548,9 +542,70 @@ void Swizzle(Class c, SEL orig, SEL new)
 {
     DLog(@"");
     
-    self.floatingButton.fadeOutTimer = [NSTimer scheduledTimerWithTimeInterval:kFloatingButtonDefaultFadingDurationTime target:self selector:@selector(me_hideFloatingButtonView) userInfo:nil repeats:YES];
+    self.floatingButton.fadeOutTimer = [NSTimer scheduledTimerWithTimeInterval:kFloatingButtonDefaultTime target:self selector:@selector(me_hideFloatingButtonView) userInfo:nil repeats:YES];
 }
 
+#pragma mark - Animation Methods (Private)
+
+- (void)fadeInView:(BOOL)animated
+{
+    DLog(@"");
+    
+    [UIView animateWithDuration:animated ? kFloatingButtonDefaultFadingAnimationTime : 0.0f
+                     animations:^{
+                         [self.floatingButton setAlpha:1];
+                     } completion:^(BOOL finished) {
+                         [self me_didAppear];
+                     }];
+}
+
+- (void)fadeOutView:(BOOL)animated
+{
+    DLog(@"");
+    
+    [UIView animateWithDuration:animated ? kFloatingButtonDefaultFadingAnimationTime : 0.0f
+                     animations:^{
+                         [self.floatingButton setAlpha:0.0];
+                     } completion:^(BOOL finished) {
+                         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0.2 * NSEC_PER_SEC), dispatch_get_main_queue(), ^(void){
+                             [self me_didDisappear];
+                         });
+                     }];
+}
+
+- (void)animateInView
+{
+    DLog(@"");
+    
+    CGRect frame = self.floatingButton.frame;
+    CGPoint finalPosition = CGPointMake(0, self.frame.size.height - self.floatingButton.frame.size.height - self.floatingButton.verticalOffset);
+    CGPoint previousPosition = CGPointMake(finalPosition.x, finalPosition.y + self.floatingButton.frame.size.height + self.floatingButton.verticalOffset);
+    [self.floatingButton setFrame:CGRectMake(previousPosition.x, previousPosition.y, frame.size.width, frame.size.height)];
+    
+    [UIView animateWithDuration:kFloatingButtonDefaultFromBottomAnimationTime
+                     animations:^{
+                         [self.floatingButton setFrame:CGRectMake(finalPosition.x, finalPosition.y, frame.size.width, frame.size.height)];
+                     } completion:^(BOOL finished) {
+                         [self me_didAppear];
+                     }];
+}
+
+- (void)animateOutView
+{
+    DLog(@"");
+    
+    CGRect frame = self.floatingButton.frame;
+    frame.origin.y += self.floatingButton.frame.size.height + self.floatingButton.verticalOffset;
+    
+    [UIView animateWithDuration:kFloatingButtonDefaultFromBottomAnimationTime
+                     animations:^{
+                         [self.floatingButton setFrame:frame];
+                     } completion:^(BOOL finished) {
+                         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0.2 * NSEC_PER_SEC), dispatch_get_main_queue(), ^(void){
+                             [self me_didDisappear];
+                         });
+                     }];
+}
 
 #pragma mark - KVO Methods (Private)
 
@@ -575,7 +630,6 @@ void Swizzle(Class c, SEL orig, SEL new)
              
                 switch (self.floatingButton.displayMode) {
                     case MEFloatingButtonDisplayModeAlways:
-                        [self me_showFloatingButtonView];
                         [self me_repositionFloatingButtonViewFrame:((UITableView *)object).contentOffset];
                         break;
                         
@@ -588,7 +642,6 @@ void Swizzle(Class c, SEL orig, SEL new)
                             DLog(@"kObserverContentOffset - scrollThreshold = %f", self.floatingButton.scrollThreshold);
                             if (self.floatingButton.scrollThreshold > 10) {
                                 self.floatingButton.scrollThreshold = 0;
-                                
                                 [self me_showFloatingButtonView];
                             }
                         }

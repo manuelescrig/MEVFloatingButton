@@ -23,7 +23,7 @@ static NSString *CellIdentifier = @"CellIdentifier";
     self.title = @"Example 4";
     
     MEFloatingButton *button = [[MEFloatingButton alloc] init];
-    button.animationType = MEFloatingButtonAnimationNone;
+    button.animationType = MEFloatingButtonAnimationFadeIn;
     button.displayMode = MEFloatingButtonDisplayModeAlways;
     button.position = MEFloatingButtonPositionBottomRight;
     button.image = [UIImage imageNamed:@"Icon3"];

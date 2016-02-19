@@ -30,7 +30,7 @@ static NSString *CellIdentifier = @"CellIdentifier";
     self.title = @"MEFloatingButton";
     
     MEFloatingButton *button = [[MEFloatingButton alloc] init];
-    button.animationType = MEFloatingButtonAnimationNone;
+    button.animationType = MEFloatingButtonAnimationFromBottom;
     button.displayMode = MEFloatingButtonDisplayModeWhenScrolling;
     button.position = MEFloatingButtonPositionBottomCenter;
     button.image = [UIImage imageNamed:@"Icon0"];
