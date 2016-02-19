@@ -34,13 +34,14 @@ static NSString *CellIdentifier = @"CellIdentifier";
     button.displayMode = MEVFloatingButtonDisplayModeWhenScrolling;
     button.position = MEVFloatingButtonPositionBottomCenter;
     button.image = [UIImage imageNamed:@"Icon0"];
-    button.imageColor = [UIColor greenColor];
-    button.backgroundColor = [UIColor purpleColor];
+    button.imageColor = [UIColor groupTableViewBackgroundColor];
+    button.backgroundColor = [UIColor darkGrayColor];
     button.outlineColor = [UIColor darkGrayColor];
-    button.outlineWidth = 2.0f;
+    button.outlineWidth = 0.0f;
     button.imagePadding = 20.0f;
     button.horizontalOffset = 20.0f;
     button.verticalOffset = -30.0f;
+    button.hideOnTap = YES;
     [self.tableView setFloatingButtonView:button];
     [self.tableView setFloatingButtonDelegate:self];
     
@@ -81,7 +82,7 @@ static NSString *CellIdentifier = @"CellIdentifier";
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 4;
+    return 40;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
