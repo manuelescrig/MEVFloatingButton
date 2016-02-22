@@ -76,22 +76,28 @@ Add delegate and delegate methods.
 
 ### Step 3
 
+Create a `MEVFloatingButton`object.
+```
+MEVFloatingButton *button = [[MEVFloatingButton alloc] init];
+button.animationType = MEVFloatingButtonAnimationFromBottom;
+button.displayMode = MEVFloatingButtonDisplayModeWhenScrolling;
+button.position = MEVFloatingButtonPositionBottomCenter;
+button.image = [UIImage imageNamed:@"Icon0"];
+button.imageColor = [UIColor groupTableViewBackgroundColor];
+button.backgroundColor = [UIColor darkGrayColor];
+button.outlineColor = [UIColor darkGrayColor];
+button.outlineWidth = 0.0f;
+button.imagePadding = 20.0f;
+button.horizontalOffset = 20.0f;
+button.verticalOffset = -30.0f;
+button.rounded = YES;
+button.hideWhenScrollToTop = YES;
+```
+Set the object to your UIScrollView/UITableView/UICollectionView.
+```
+[self.tableView setFloatingButtonView:button];
+```
 
-   MEVFloatingButton *button = [[MEVFloatingButton alloc] init];
-    button.animationType = MEVFloatingButtonAnimationFromBottom;
-    button.displayMode = MEVFloatingButtonDisplayModeWhenScrolling;
-    button.position = MEVFloatingButtonPositionBottomCenter;
-    button.image = [UIImage imageNamed:@"Icon0"];
-    button.imageColor = [UIColor groupTableViewBackgroundColor];
-    button.backgroundColor = [UIColor darkGrayColor];
-    button.outlineColor = [UIColor darkGrayColor];
-    button.outlineWidth = 0.0f;
-    button.imagePadding = 20.0f;
-    button.horizontalOffset = 20.0f;
-    button.verticalOffset = -30.0f;
-    button.rounded = YES;
-    button.hideWhenScrollToTop = YES;
-    [self.tableView setFloatingButtonView:button];
 ## Sample Project
 
 For more info check the Examples project. Everything is there.
