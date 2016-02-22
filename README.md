@@ -22,12 +22,79 @@ Requires iOS SDK version > 8.0
 
 
 ## Installation
+### CocoaPods
+Comming soon.
+
+### Manual 
+
+Simply include `UIScrollView+FloatingButton.h` and `UIScrollView+FloatingButton.m` from `Source` folder in your App’s Xcode project. 
 
 
-## Usage
+## How to use
+### Step 1
+
+```
+#import "UIScrollView+FloatingButton.h"
+```
+
+### Step 2
+
+Add delegate and delegate methods.
+```
+@interface ViewController () <MEVFloatingButtonDelegate>
+```
+
+```
+#pragma mark - MEScrollToTopDelegate Methods
+
+/*! @abstract Tells the delegate that the action button was tapped.
+ @param scrollView A scrollView subclass informing the delegate.
+ @param button the button tapped by the user
+ */
+- (void)floatingButton:(UIScrollView *)scrollView didTapButton:(UIButton *)button;
+
+/*! @abstract Tells the delegate that the floating button will appear.
+ @param scrollView A scrollView subclass informing the delegate.
+ */
+- (void)floatingButtonWillAppear:(UIScrollView *)scrollView;
+
+/*! @abstract Tells the delegate that the floating button did appear.
+ @param scrollView A scrollView subclass informing the delegate.
+ */
+- (void)floatingButtonDidAppear:(UIScrollView *)scrollView;
+
+/*! @abstract Tells the delegate that the floating button will disappear.
+ @param scrollView A scrollView subclass informing the delegate.
+ */
+- (void)floatingButtonWillDisappear:(UIScrollView *)scrollView;
+
+/*! @abstract Tells the delegate that the floating button did disappear.
+ @param scrollView A scrollView subclass informing the delegate.
+ */
+- (void)floatingButtonDidDisappear:(UIScrollView *)scrollView;
+```
+
+### Step 3
 
 
-For more info check the Examples project.
+   MEVFloatingButton *button = [[MEVFloatingButton alloc] init];
+    button.animationType = MEVFloatingButtonAnimationFromBottom;
+    button.displayMode = MEVFloatingButtonDisplayModeWhenScrolling;
+    button.position = MEVFloatingButtonPositionBottomCenter;
+    button.image = [UIImage imageNamed:@"Icon0"];
+    button.imageColor = [UIColor groupTableViewBackgroundColor];
+    button.backgroundColor = [UIColor darkGrayColor];
+    button.outlineColor = [UIColor darkGrayColor];
+    button.outlineWidth = 0.0f;
+    button.imagePadding = 20.0f;
+    button.horizontalOffset = 20.0f;
+    button.verticalOffset = -30.0f;
+    button.rounded = YES;
+    button.hideWhenScrollToTop = YES;
+    [self.tableView setFloatingButtonView:button];
+## Sample Project
+
+For more info check the Examples project. Everything is there.
 
 ## Author
 
