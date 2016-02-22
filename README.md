@@ -1,5 +1,5 @@
 # MEFloatingButton
-An iOS **drop-in** UITableView/UICollectionView/UIScrollView superclass **category** for showing a floating button on top of it.
+An iOS **drop-in** UITableView/UICollectionView/UIScrollView superclass **category** for showing a customizable floating button on top of it.
 
 [![Platform](http://img.shields.io/badge/platform-ios-blue.svg?style=flat
 )](https://developer.apple.com/iphone/index.action)
