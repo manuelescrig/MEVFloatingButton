@@ -12,8 +12,6 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
-#define DLog(s, ... ) NSLog(@"%@ | %@ | %@", [[NSString stringWithUTF8String:__FILE__] lastPathComponent], NSStringFromSelector(_cmd), [NSString stringWithFormat:(s), ##__VA_ARGS__] )
-
 @protocol MEVFloatingButtonDelegate;
 
 /*! @enum MEVFloatingButtonDisplayMode
@@ -83,17 +81,41 @@ typedef NS_ENUM(NSInteger, MEVFloatingButtonPosition) {
  */
 @property (nonatomic, strong) UIImage *image;
 
+/*! @abstract Sets the image color for the MEVFloatingButton.
+ @param imageColor An UIColor object.
+ @discussion [UIColor whiteColor] is the default color when this property is not assigned.
+ */
+@property (nonatomic, strong) UIColor *imageColor;
+
 /*! @abstract Sets the background color for the MEVFloatingButton.
  @param backgroundColor An UIColor object.
  @discussion [UIColor blueColor] is the default color when this property is not assigned.
  */
 @property (nonatomic, strong) UIColor *backgroundColor;
 
-/*! @abstract Sets the image color for the MEVFloatingButton.
- @param imageColor An UIColor object.
- @discussion [UIColor whiteColor] is the default color when this property is not assigned.
+/*! @abstract Sets the shadow color for the MEVFloatingButton.
+ @param shadowColor An UIColor object.
+ @discussion [UIColor clearColor] is the default color when this property is not assigned.
  */
-@property (nonatomic, strong) UIColor *imageColor;
+@property (nonatomic, strong) UIColor *shadowColor;
+
+/*! @abstract Sets the shadow offset for the MEVFloatingButton.
+ @param shadowOffset A CGSize struct indicating the offset.
+ @discussion CGSizeMake(0, 0) is the default value when this property is not assigned.
+ */
+@property (nonatomic) CGSize shadowOffset;
+
+/*! @abstract Sets the opacity shadow for the MEVFloatingButton.
+ @param shadowOpacity A float indicating the shadow opacity.
+ @discussion 1.0f is the default value when this property is not assigned.
+ */
+@property (nonatomic) float shadowOpacity;
+
+/*! @abstract Sets the radious shadow for the MEVFloatingButton.
+ @param shadowRadius A float indicating the shadow radius.
+ @discussion 1.0f is the default value when this property is not assigned.
+ */
+@property (nonatomic) float shadowRadius;
 
 /*! @abstract Sets the outline color for the MEVFloatingButton.
  @param outlineColor An UIColor object.
@@ -127,12 +149,13 @@ typedef NS_ENUM(NSInteger, MEVFloatingButtonPosition) {
 
 /*! @abstract Indicates if the MEVFloatingButton should be either square or rounded.
  @param rounded A BOOL value.
- @discussion Default value is YES.
+ @discussion Default value is NO.
  */
 @property (nonatomic, getter=isRounded) BOOL rounded;
 
 /*! @abstract Indicates if the MEVFloatingButton will be hidden when on the scroll view is scroll to top.
  @param hideWhenScrollToTop A BOOL value.
+ @discussion Default value is NO.
  */
 @property (nonatomic, getter=isHideWhenScrollToTop) BOOL hideWhenScrollToTop;
 

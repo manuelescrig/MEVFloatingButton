@@ -60,12 +60,16 @@ typedef NS_ENUM(NSInteger, MEFloatingButtonState) {
         _position = MEVFloatingButtonPositionBottomCenter;
         _imageColor = [UIColor whiteColor];
         _backgroundColor = [UIColor blueColor];
+        _shadowColor = [UIColor clearColor];
+        _shadowOffset = CGSizeMake(0, 0);
+        _shadowOpacity = 1;
+        _shadowRadius = 1;
         _outlineColor = [UIColor blueColor];
         _outlineWidth = kMEFlatingButtonDefaultOutlineWidth;
         _imagePadding = kMEFlatingButtonDefaultImagePadding;
         _horizontalOffset = kMEFlatingButtonDefaultHorizontalOffset;
         _verticalOffset = kMEFlatingButtonDefaultVerticalOffset;
-        _rounded = YES;
+        _rounded = NO;
         _hideWhenScrollToTop = NO;
         
         [self addSubview:self.contentView];
@@ -166,6 +170,11 @@ typedef NS_ENUM(NSInteger, MEFloatingButtonState) {
         _button.userInteractionEnabled = YES;
         _button.backgroundColor =  _backgroundColor;
         _button.tintColor = _imageColor;
+        _button.layer.masksToBounds = NO;
+        _button.layer.shadowColor = _shadowColor.CGColor;
+        _button.layer.shadowOffset = _shadowOffset;
+        _button.layer.shadowOpacity = _shadowOpacity;
+        _button.layer.shadowRadius = _shadowRadius;
         _button.layer.borderColor = _outlineColor.CGColor;
         _button.layer.borderWidth = _outlineWidth;
         _button.contentHorizontalAlignment = UIControlContentHorizontalAlignmentCenter;
@@ -283,15 +292,12 @@ void Swizzle(Class c, SEL orig, SEL new)
 
 - (void)mev_dealloc
 {
-    DLog(@"");
-    
     @try {
         [self removeObserver:self forKeyPath:kObserverContentOffset context:nil];
         [self removeObserver:self forKeyPath:kObserverContentSize context:nil];
         [self removeObserver:self forKeyPath:kObserverFrame context:nil];
     } @catch(id exception) {
         // Do nothing, obviously it wasn't attached because an exception was thrown
-        DLog(@"exception - %@", exception);
     }
     
     // This calls original dealloc method
@@ -301,8 +307,6 @@ void Swizzle(Class c, SEL orig, SEL new)
 
 - (void)mev_willMoveToWindow:(UIWindow *)newWindow
 {
-    DLog(@"newWindow = %@ - %@", newWindow, self.floatingButtonDelegate);
-
     if (!newWindow) {
         [self mev_stopTimer];
         [self mev_didDisappear];
@@ -313,8 +317,6 @@ void Swizzle(Class c, SEL orig, SEL new)
 
 - (void)mev_didMoveToWindow
 {
-    DLog(@"self.floatingButtonDelegate = %@", self.floatingButtonDelegate);
-    
     [self mev_didMoveToWindow];
 }
 
@@ -365,7 +367,6 @@ void Swizzle(Class c, SEL orig, SEL new)
 
 - (void)mev_willAppear
 {
-    DLog(@"self.floatingButtonDelegate = %@", self.floatingButtonDelegate);
     self.floatingButton.buttonState = MEFloatingButtonStateWillAppear;
     self.floatingButton.hidden = NO;
 
@@ -376,7 +377,6 @@ void Swizzle(Class c, SEL orig, SEL new)
 
 - (void)mev_didAppear
 {
-    DLog(@"self.floatingButtonDelegate = %@", self.floatingButtonDelegate);
     self.floatingButton.buttonState = MEFloatingButtonStateDidAppear;
 
     if (self.floatingButtonDelegate && [self.floatingButtonDelegate respondsToSelector:@selector(floatingButtonDidAppear:)]) {
@@ -386,7 +386,6 @@ void Swizzle(Class c, SEL orig, SEL new)
 
 - (void)mev_willDisappear
 {
-    DLog(@"self.floatingButtonDelegate = %@", self.floatingButtonDelegate);
     self.floatingButton.buttonState = MEFloatingButtonStateWillDisappear;
 
     if (self.floatingButtonDelegate && [self.floatingButtonDelegate respondsToSelector:@selector(floatingButtonWillDisappear:)]) {
@@ -396,7 +395,6 @@ void Swizzle(Class c, SEL orig, SEL new)
 
 - (void)mev_didDisappear
 {
-    DLog(@"self.floatingButtonDelegate = %@", self.floatingButtonDelegate);
     self.floatingButton.buttonState = MEFloatingButtonStateDidDisappear;
     self.floatingButton.hidden = YES;
     
@@ -407,8 +405,6 @@ void Swizzle(Class c, SEL orig, SEL new)
 
 - (void)mev_didTapDataButton:(id)sender
 {
-    DLog(@"self.floatingButtonDelegate = %@", self.floatingButtonDelegate);
-    
     if (self.floatingButtonDelegate && [self.floatingButtonDelegate respondsToSelector:@selector(floatingButton:didTapButton:)]) {
         [self.floatingButtonDelegate floatingButton:self didTapButton:sender];
     }
@@ -464,8 +460,6 @@ void Swizzle(Class c, SEL orig, SEL new)
 
 -(void)mev_showFloatingButtonView
 {
-    DLog(@"self.floatingButton.buttonState = %d", self.floatingButton.buttonState);
-    
     if (self.floatingButton.buttonState == MEFloatingButtonStateDidDisappear) {
       
         [self mev_willAppear];
@@ -489,8 +483,6 @@ void Swizzle(Class c, SEL orig, SEL new)
 
 -(void)mev_hideFloatingButtonView
 {
-    DLog(@"self.floatingButton.buttonState = %d", self.floatingButton.buttonState);
-
     [self mev_stopTimer];
 
     if (self.floatingButton.buttonState == MEFloatingButtonStateDidAppear) {
@@ -516,8 +508,6 @@ void Swizzle(Class c, SEL orig, SEL new)
 
 - (void)mev_repositionFloatingButtonViewFrame:(CGPoint)point
 {
-    DLog(@"");
-
     [self bringSubviewToFront:self.floatingButton];
     
     CGRect fixedFrame = self.floatingButton.frame;
@@ -529,16 +519,12 @@ void Swizzle(Class c, SEL orig, SEL new)
 
 - (void)mev_stopTimer
 {
-    DLog(@"");
-    
     [self.floatingButton.fadeOutTimer invalidate];
     self.floatingButton.fadeOutTimer = nil;
 }
 
 - (void)mev_startTimer
 {
-    DLog(@"");
-    
     self.floatingButton.fadeOutTimer = [NSTimer scheduledTimerWithTimeInterval:kFloatingButtonDefaultTime target:self selector:@selector(mev_hideFloatingButtonView) userInfo:nil repeats:YES];
 }
 
@@ -546,8 +532,6 @@ void Swizzle(Class c, SEL orig, SEL new)
 
 - (void)mev_fadeInView:(BOOL)animated
 {
-    DLog(@"");
-    
     [UIView animateWithDuration:animated ? kFloatingButtonDefaultFadingAnimationTime : 0.0f
                      animations:^{
                          [self.floatingButton setAlpha:1];
@@ -558,8 +542,6 @@ void Swizzle(Class c, SEL orig, SEL new)
 
 - (void)mev_fadeOutView:(BOOL)animated
 {
-    DLog(@"");
-    
     [UIView animateWithDuration:animated ? kFloatingButtonDefaultFadingAnimationTime : 0.0f
                      animations:^{
                          [self.floatingButton setAlpha:0.0];
@@ -572,8 +554,6 @@ void Swizzle(Class c, SEL orig, SEL new)
 
 - (void)mev_animateInView
 {
-    DLog(@"");
-
     CGRect frame = self.floatingButton.frame;
     CGPoint finalPosition = CGPointMake(0, self.frame.size.height - self.floatingButton.frame.size.height - self.floatingButton.verticalOffset);
     CGPoint previousPosition = CGPointMake(finalPosition.x, finalPosition.y + self.floatingButton.frame.size.height + self.floatingButton.verticalOffset);
@@ -589,8 +569,6 @@ void Swizzle(Class c, SEL orig, SEL new)
 
 - (void)mev_animateOutView
 {
-    DLog(@"");
-    
     CGRect frame = self.floatingButton.frame;
     frame.origin.y += self.floatingButton.frame.size.height + self.floatingButton.verticalOffset;
     
@@ -615,12 +593,8 @@ void Swizzle(Class c, SEL orig, SEL new)
 
         if (!CGRectEqualToRect(self.floatingButton.frame, CGRectZero) && self.window) {
             
-            
-            DLog(@"kObserverContentOffset - self.contentOffset.y = %f", self.contentOffset.y);
-
             if ([self.floatingButton isHideWhenScrollToTop] && self.contentOffset.y <= 0) {
                 [self mev_hideFloatingButtonView];
-                
                 
             } else {
                 
@@ -635,7 +609,6 @@ void Swizzle(Class c, SEL orig, SEL new)
                         CGPoint old = [[change valueForKey:@"old"] CGPointValue];
                         if (new.y != old.y) {
                             self.floatingButton.scrollThreshold += 1;
-                            DLog(@"kObserverContentOffset - scrollThreshold = %f", self.floatingButton.scrollThreshold);
                             if (self.floatingButton.scrollThreshold > 10) {
                                 self.floatingButton.scrollThreshold = 0;
                                 [self mev_showFloatingButtonView];
@@ -652,7 +625,6 @@ void Swizzle(Class c, SEL orig, SEL new)
                     default:
                         break;
                 }
-                
             }
         }
     }

@@ -34,6 +34,11 @@ static NSString *CellIdentifier = @"CellIdentifier";
     button.imagePadding = 15.0f;
     button.horizontalOffset = -30.0f;
     button.verticalOffset = -30.0f;
+    button.rounded = YES;
+    button.shadowColor = [UIColor lightGrayColor];
+    button.shadowOffset = CGSizeMake(3, 3);
+    button.shadowOpacity = 0.6f;
+    button.shadowRadius = 3.0f;
     [self.tableView setFloatingButtonView:button];
     [self.tableView setFloatingButtonDelegate:self];
     
