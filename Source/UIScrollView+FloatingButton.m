@@ -66,7 +66,7 @@ typedef NS_ENUM(NSInteger, MEFloatingButtonState) {
         _horizontalOffset = kMEFlatingButtonDefaultHorizontalOffset;
         _verticalOffset = kMEFlatingButtonDefaultVerticalOffset;
         _rounded = YES;
-        _hideOnTap = NO;
+        _hideWhenScrollToTop = NO;
         
         [self addSubview:self.contentView];
     }
@@ -408,9 +408,6 @@ void Swizzle(Class c, SEL orig, SEL new)
 - (void)mev_didTapDataButton:(id)sender
 {
     DLog(@"self.floatingButtonDelegate = %@", self.floatingButtonDelegate);
-    if (self.floatingButton.displayMode != MEVFloatingButtonDisplayModeAlways && [self.floatingButton isHideOntap]) {
-        [self mev_hideFloatingButtonView];
-    }
     
     if (self.floatingButtonDelegate && [self.floatingButtonDelegate respondsToSelector:@selector(floatingButton:didTapButton:)]) {
         [self.floatingButtonDelegate floatingButton:self didTapButton:sender];
@@ -613,12 +610,20 @@ void Swizzle(Class c, SEL orig, SEL new)
 {
     if ([keyPath isEqualToString:kObserverFrame]) {
         [self mev_validateView];
+        
     } else if ([keyPath isEqualToString:kObserverContentOffset]) {
 
-        if (!CGRectEqualToRect(self.floatingButton.frame, CGRectZero)) {
+        if (!CGRectEqualToRect(self.floatingButton.frame, CGRectZero) && self.window) {
+            
+            
+            DLog(@"kObserverContentOffset - self.contentOffset.y = %f", self.contentOffset.y);
 
-            if (self.window) {
-
+            if ([self.floatingButton isHideWhenScrollToTop] && self.contentOffset.y <= 0) {
+                [self mev_hideFloatingButtonView];
+                
+                
+            } else {
+                
                 switch (self.floatingButton.displayMode) {
                     case MEVFloatingButtonDisplayModeAlways:
                         [self mev_repositionFloatingButtonViewFrame:((UITableView *)object).contentOffset];
@@ -647,6 +652,7 @@ void Swizzle(Class c, SEL orig, SEL new)
                     default:
                         break;
                 }
+                
             }
         }
     }

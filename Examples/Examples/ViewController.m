@@ -41,7 +41,7 @@ static NSString *CellIdentifier = @"CellIdentifier";
     button.imagePadding = 20.0f;
     button.horizontalOffset = 20.0f;
     button.verticalOffset = -30.0f;
-    button.hideOnTap = YES;
+    button.hideWhenScrollToTop = NO;
     [self.tableView setFloatingButtonView:button];
     [self.tableView setFloatingButtonDelegate:self];
     

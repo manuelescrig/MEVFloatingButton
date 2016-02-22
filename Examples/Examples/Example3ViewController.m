@@ -25,11 +25,12 @@ static NSString *CellIdentifier = @"CellIdentifier";
     button.animationType = MEVFloatingButtonAnimationFromBottom;
     button.displayMode = MEVFloatingButtonDisplayModeAlways;
     button.position = MEVFloatingButtonPositionBottomCenter;
-    button.image = [UIImage imageNamed:@"Icon3"];
-    button.imageColor = [UIColor greenColor];
-    button.backgroundColor = [UIColor purpleColor];
-    button.outlineColor = [UIColor darkGrayColor];
-    button.outlineWidth = 2.0f;
+    button.image = [UIImage imageNamed:@"Icon6"];
+    button.imageColor = [UIColor cyanColor];
+    button.backgroundColor = [UIColor magentaColor];
+    button.outlineColor = [UIColor cyanColor];
+    button.outlineWidth = 0.0f;
+    button.rounded = YES;
     button.imagePadding = 15.0f;
     button.horizontalOffset = 20.0f;
     button.verticalOffset = -30.0f;
@@ -71,7 +72,7 @@ static NSString *CellIdentifier = @"CellIdentifier";
 
 - (void)floatingButton:(UIScrollView *)scrollView didTapButton:(UIButton *)button {
     NSLog(@"didTapButton");
-    [self.tableView setContentOffset:CGPointMake(0, -self.tableView.contentInset.top) animated:YES];
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 - (void)floatingButtonWillAppear:(UIScrollView *)scrollView {

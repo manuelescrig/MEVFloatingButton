@@ -131,11 +131,10 @@ typedef NS_ENUM(NSInteger, MEVFloatingButtonPosition) {
  */
 @property (nonatomic, getter=isRounded) BOOL rounded;
 
-/*! @abstract Indicates if the MEVFloatingButton will be hidden when on tap.
- @param hideOnTap A BOOL value.
- @discussion Default value is NO. This will make effect only when the MEVFloatingButtonDisplayMode selected is MEVFloatingButtonDisplayModeWhenScrolling.
+/*! @abstract Indicates if the MEVFloatingButton will be hidden when on the scroll view is scroll to top.
+ @param hideWhenScrollToTop A BOOL value.
  */
-@property (nonatomic, getter=isHideOntap) BOOL hideOnTap;
+@property (nonatomic, getter=isHideWhenScrollToTop) BOOL hideWhenScrollToTop;
 
 @end
 

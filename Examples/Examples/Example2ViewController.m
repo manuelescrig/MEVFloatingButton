@@ -30,7 +30,7 @@ static NSString *CellIdentifier = @"CellIdentifier";
     button.verticalOffset = -30.0f;
     button.image = [UIImage imageNamed:@"Icon2"];
     button.rounded = NO;
-    button.hideOnTap = YES;
+    button.hideWhenScrollToTop = YES;
     [self.tableView setFloatingButtonView:button];
     [self.tableView setFloatingButtonDelegate:self];
     
