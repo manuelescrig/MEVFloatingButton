@@ -118,7 +118,7 @@ For more info check the **Examples** project. Everything is there.
 
 Manuel Escrig Ventura, [@manuelescrig](https://twitter.com/manuelescrig)
 
-Portfolio,  [ventura.media](https//ventura.media)
+Portfolio,  [ventura.media](https://ventura.media)
 
 ## Credits
 Icons made by Elegant Themes from www.flaticon.com 
