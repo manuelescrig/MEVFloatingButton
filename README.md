@@ -13,6 +13,7 @@ An iOS **drop-in** UITableView/UICollectionView/UIScrollView superclass **catego
 * Different display modes.
 * Different positions.
 * Customizable icon.
+* Delegate methods.
 
 
 ## Demo Screens
