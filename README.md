@@ -97,6 +97,11 @@ Set the object to your UIScrollView/UITableView/UICollectionView.
 ```
 [self.tableView setFloatingButtonView:button];
 ```
+Set the delegate.
+```
+[self.tableView setFloatingButtonDelegate:self]
+```
+
 
 ## Sample Project
 
