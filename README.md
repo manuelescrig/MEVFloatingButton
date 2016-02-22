@@ -8,11 +8,12 @@ An iOS drop-in UITableView/UICollectionView/UIScrollView superclass category for
 [![License](http://img.shields.io/badge/license-MIT-lightgrey.svg?style=flat
 )](http://mit-license.org)
 
-## Demo Screensthots
-![example1](https://cloud.githubusercontent.com/assets/1849990/13180508/0d9cefb0-d729-11e5-955b-3501592c055f.gif)
-![example2](https://cloud.githubusercontent.com/assets/1849990/13180509/0d9d84fc-d729-11e5-8745-5ccb235c29dd.gif)
-![example3](https://cloud.githubusercontent.com/assets/1849990/13180506/0d9c53d4-d729-11e5-8b29-87e902aca74c.gif)
-![example4](https://cloud.githubusercontent.com/assets/1849990/13180507/0d9c5640-d729-11e5-8674-037b1b48b36c.gif)
+
+## Demo Screens
+![feb 22 2016 14 16](https://cloud.githubusercontent.com/assets/1849990/13219261/29aef4a8-d96f-11e5-8632-85b31c3c1c1f.gif)
+![feb 22 2016 14 17](https://cloud.githubusercontent.com/assets/1849990/13219263/29d8c3b4-d96f-11e5-9d12-502363e77759.gif)
+![feb 22 2016 14 18](https://cloud.githubusercontent.com/assets/1849990/13219262/29d78f94-d96f-11e5-8d01-0805ef799160.gif)
+![feb 22 2016 14 21](https://cloud.githubusercontent.com/assets/1849990/13219329/9efde354-d96f-11e5-88a5-4175729e471e.gif)
 
 
 ## Requirements
