@@ -9,10 +9,10 @@ An iOS **drop-in** UITableView/UICollectionView/UIScrollView superclass **catego
 )](http://mit-license.org)
 
 ### Features
-* Different animation types MEVFloatingButtonAnimationNonem/MEFloatingButtonAnimationFadeIn/MEVFloatingButtonAnimationFromBottom.
-* Different display modes MEVFloatingButtonDisplayModeNone/MEVFloatingButtonDisplayModeAlways/MEVFloatingButtonDisplayModeWhenScrolling.
-* Different position MEVFloatingButtonPositionBottomCenter/MEVFloatingButtonPositionBottomLeft/MEVFloatingButtonPositionBottomRight.
-* Customizable icon/color/actions.
+* Multiple animation types.
+* Different display modes.
+* Different positions.
+* Customizable icon.
 
 
 ## Demo Screens
