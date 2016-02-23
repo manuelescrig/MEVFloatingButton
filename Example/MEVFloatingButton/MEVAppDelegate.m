@@ -7,12 +7,16 @@
 //
 
 #import "MEVAppDelegate.h"
+#import "MEVViewController.h"
 
 @implementation MEVAppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    // Override point for customization after application launch.
+    MEVViewController *viewController = [[MEVViewController alloc] init];
+    self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+    self.window.rootViewController = [[UINavigationController alloc] initWithRootViewController:viewController];
+    [self.window makeKeyAndVisible];
     return YES;
 }
 

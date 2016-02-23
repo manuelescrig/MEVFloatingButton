@@ -22,7 +22,14 @@
 		6003F5BA195388D20070C39A /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 6003F5B8195388D20070C39A /* InfoPlist.strings */; };
 		6003F5BC195388D20070C39A /* Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = 6003F5BB195388D20070C39A /* Tests.m */; };
 		777F168BBC68393BB5F4F78C /* Pods_MEVFloatingButton_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 419949C4815252592392460E /* Pods_MEVFloatingButton_Example.framework */; };
-		873B8AEB1B1F5CCA007FD442 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 873B8AEA1B1F5CCA007FD442 /* Main.storyboard */; };
+		C41BEB011C7CA7B90044AA35 /* MEVExample1ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C41BEAFA1C7CA7B90044AA35 /* MEVExample1ViewController.m */; };
+		C41BEB021C7CA7B90044AA35 /* MEVExample1ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C41BEAFA1C7CA7B90044AA35 /* MEVExample1ViewController.m */; };
+		C41BEB031C7CA7B90044AA35 /* MEVExample2ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C41BEAFC1C7CA7B90044AA35 /* MEVExample2ViewController.m */; };
+		C41BEB041C7CA7B90044AA35 /* MEVExample2ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C41BEAFC1C7CA7B90044AA35 /* MEVExample2ViewController.m */; };
+		C41BEB051C7CA7B90044AA35 /* MEVExample3ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C41BEAFE1C7CA7B90044AA35 /* MEVExample3ViewController.m */; };
+		C41BEB061C7CA7B90044AA35 /* MEVExample3ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C41BEAFE1C7CA7B90044AA35 /* MEVExample3ViewController.m */; };
+		C41BEB071C7CA7B90044AA35 /* MEVExample4ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C41BEB001C7CA7B90044AA35 /* MEVExample4ViewController.m */; };
+		C41BEB081C7CA7B90044AA35 /* MEVExample4ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C41BEB001C7CA7B90044AA35 /* MEVExample4ViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -61,8 +68,15 @@
 		606FC2411953D9B200FFA9A0 /* Tests-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Tests-Prefix.pch"; sourceTree = "<group>"; };
 		6C43AB9952EA1B9F31D1D43D /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
 		7C1B9420CD00A013A8C2F0D2 /* Pods_MEVFloatingButton_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MEVFloatingButton_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		873B8AEA1B1F5CCA007FD442 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		9335916ED66D97115D36CD39 /* Pods-MEVFloatingButton_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MEVFloatingButton_Tests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-MEVFloatingButton_Tests/Pods-MEVFloatingButton_Tests.debug.xcconfig"; sourceTree = "<group>"; };
+		C41BEAF91C7CA7B90044AA35 /* MEVExample1ViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MEVExample1ViewController.h; sourceTree = "<group>"; };
+		C41BEAFA1C7CA7B90044AA35 /* MEVExample1ViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MEVExample1ViewController.m; sourceTree = "<group>"; };
+		C41BEAFB1C7CA7B90044AA35 /* MEVExample2ViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MEVExample2ViewController.h; sourceTree = "<group>"; };
+		C41BEAFC1C7CA7B90044AA35 /* MEVExample2ViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MEVExample2ViewController.m; sourceTree = "<group>"; };
+		C41BEAFD1C7CA7B90044AA35 /* MEVExample3ViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MEVExample3ViewController.h; sourceTree = "<group>"; };
+		C41BEAFE1C7CA7B90044AA35 /* MEVExample3ViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MEVExample3ViewController.m; sourceTree = "<group>"; };
+		C41BEAFF1C7CA7B90044AA35 /* MEVExample4ViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MEVExample4ViewController.h; sourceTree = "<group>"; };
+		C41BEB001C7CA7B90044AA35 /* MEVExample4ViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MEVExample4ViewController.m; sourceTree = "<group>"; };
 		C938F6A3FFC888E57EDD9090 /* Pods-MEVFloatingButton_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MEVFloatingButton_Tests.release.xcconfig"; path = "Pods/Target Support Files/Pods-MEVFloatingButton_Tests/Pods-MEVFloatingButton_Tests.release.xcconfig"; sourceTree = "<group>"; };
 		E05BBC03E67E3663F6C0B38E /* Pods-MEVFloatingButton_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MEVFloatingButton_Example.debug.xcconfig"; path = "Pods/Target Support Files/Pods-MEVFloatingButton_Example/Pods-MEVFloatingButton_Example.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -132,9 +146,16 @@
 			children = (
 				6003F59C195388D20070C39A /* MEVAppDelegate.h */,
 				6003F59D195388D20070C39A /* MEVAppDelegate.m */,
-				873B8AEA1B1F5CCA007FD442 /* Main.storyboard */,
 				6003F5A5195388D20070C39A /* MEVViewController.h */,
 				6003F5A6195388D20070C39A /* MEVViewController.m */,
+				C41BEAF91C7CA7B90044AA35 /* MEVExample1ViewController.h */,
+				C41BEAFA1C7CA7B90044AA35 /* MEVExample1ViewController.m */,
+				C41BEAFB1C7CA7B90044AA35 /* MEVExample2ViewController.h */,
+				C41BEAFC1C7CA7B90044AA35 /* MEVExample2ViewController.m */,
+				C41BEAFD1C7CA7B90044AA35 /* MEVExample3ViewController.h */,
+				C41BEAFE1C7CA7B90044AA35 /* MEVExample3ViewController.m */,
+				C41BEAFF1C7CA7B90044AA35 /* MEVExample4ViewController.h */,
+				C41BEB001C7CA7B90044AA35 /* MEVExample4ViewController.m */,
 				6003F5A8195388D20070C39A /* Images.xcassets */,
 				6003F594195388D20070C39A /* Supporting Files */,
 			);
@@ -276,7 +297,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				873B8AEB1B1F5CCA007FD442 /* Main.storyboard in Resources */,
 				6003F5A9195388D20070C39A /* Images.xcassets in Resources */,
 				6003F598195388D20070C39A /* InfoPlist.strings in Resources */,
 			);
@@ -390,9 +410,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C41BEB031C7CA7B90044AA35 /* MEVExample2ViewController.m in Sources */,
+				C41BEB071C7CA7B90044AA35 /* MEVExample4ViewController.m in Sources */,
 				6003F59E195388D20070C39A /* MEVAppDelegate.m in Sources */,
 				6003F5A7195388D20070C39A /* MEVViewController.m in Sources */,
+				C41BEB051C7CA7B90044AA35 /* MEVExample3ViewController.m in Sources */,
 				6003F59A195388D20070C39A /* main.m in Sources */,
+				C41BEB011C7CA7B90044AA35 /* MEVExample1ViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -401,6 +425,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				6003F5BC195388D20070C39A /* Tests.m in Sources */,
+				C41BEB061C7CA7B90044AA35 /* MEVExample3ViewController.m in Sources */,
+				C41BEB041C7CA7B90044AA35 /* MEVExample2ViewController.m in Sources */,
+				C41BEB081C7CA7B90044AA35 /* MEVExample4ViewController.m in Sources */,
+				C41BEB021C7CA7B90044AA35 /* MEVExample1ViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -467,7 +495,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -500,7 +528,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
@@ -519,6 +547,7 @@
 				MODULE_NAME = ExampleApp;
 				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.demo.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -535,6 +564,7 @@
 				MODULE_NAME = ExampleApp;
 				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.demo.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
