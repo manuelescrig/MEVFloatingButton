@@ -1,0 +1,14 @@
+PODS:
+  - MEVFloatingButton (0.1.0)
+
+DEPENDENCIES:
+  - MEVFloatingButton (from `../`)
+
+EXTERNAL SOURCES:
+  MEVFloatingButton:
+    :path: ../
+
+SPEC CHECKSUMS:
+  MEVFloatingButton: 759e1c733922480933a543e918184e10fa95be91
+
+COCOAPODS: 0.39.0

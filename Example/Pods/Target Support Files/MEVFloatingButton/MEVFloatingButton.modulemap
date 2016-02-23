@@ -1,0 +1,6 @@
+framework module MEVFloatingButton {
+  umbrella header "MEVFloatingButton-umbrella.h"
+
+  export *
+  module * { export * }
+}

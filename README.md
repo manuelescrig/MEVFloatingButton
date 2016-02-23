@@ -1,27 +1,30 @@
-# MEFloatingButton
+# MEVFloatingButton
 An iOS **drop-in** UITableView/UICollectionView/UIScrollView superclass **category** for showing a customizable floating button on top of it.
 
-[![Platform](http://img.shields.io/badge/platform-ios-blue.svg?style=flat
-)](https://developer.apple.com/iphone/index.action)
-[![Language](http://img.shields.io/badge/language-objective--c-blue.svg?style=flat
-)](https://developer.apple.com/library/mac/documentation/Cocoa/Conceptual/ProgrammingWithObjectiveC/Introduction/Introduction.html)
-[![License](http://img.shields.io/badge/license-MIT-lightgrey.svg?style=flat
-)](http://mit-license.org)
+[![CI Status](http://img.shields.io/travis/Manuel Escrig Ventura/MEVFloatingButton.svg?style=flat)](https://travis-ci.org/Manuel Escrig Ventura/MEVFloatingButton)
+[![Version](https://img.shields.io/cocoapods/v/MEVFloatingButton.svg?style=flat)](http://cocoapods.org/pods/MEVFloatingButton)
+[![License](https://img.shields.io/cocoapods/l/MEVFloatingButton.svg?style=flat)](http://cocoapods.org/pods/MEVFloatingButton)
+[![Platform](https://img.shields.io/cocoapods/p/MEVFloatingButton.svg?style=flat)](http://cocoapods.org/pods/MEVFloatingButton)
+[![Platform](http://img.shields.io/badge/platform-ios-blue.svg?style=flat)](https://developer.apple.com/iphone/index.action)
+[![Language](http://img.shields.io/badge/language-objective--c-blue.svg?style=flat)](https://developer.apple.com/library/mac/documentation/Cocoa/Conceptual/ProgrammingWithObjectiveC/Introduction/Introduction.html)
 
-### Features
+## Features
 * Multiple animation types.
 * Different display modes.
-* Different positions.
-* Customizable icon.
-* Delegate methods.
+* Different screen positions.
+* Customizable button icon.
+* Multiple delegate methods.
 
+## Demo
+ ![feb 22 2016 14 16](https://cloud.githubusercontent.com/assets/1849990/13219261/29aef4a8-d96f-11e5-8632-85b31c3c1c1f.gif)
+ ![feb 22 2016 14 17](https://cloud.githubusercontent.com/assets/1849990/13219263/29d8c3b4-d96f-11e5-9d12-502363e77759.gif)
+ ![feb 22 2016 14 18](https://cloud.githubusercontent.com/assets/1849990/13219262/29d78f94-d96f-11e5-8d01-0805ef799160.gif)
+ ![feb 22 2016 14 21](https://cloud.githubusercontent.com/assets/1849990/13219329/9efde354-d96f-11e5-88a5-4175729e471e.gif)
+ 
+ 
+## Usage
 
-## Demo Screens
-![feb 22 2016 14 16](https://cloud.githubusercontent.com/assets/1849990/13219261/29aef4a8-d96f-11e5-8632-85b31c3c1c1f.gif)
-![feb 22 2016 14 17](https://cloud.githubusercontent.com/assets/1849990/13219263/29d8c3b4-d96f-11e5-9d12-502363e77759.gif)
-![feb 22 2016 14 18](https://cloud.githubusercontent.com/assets/1849990/13219262/29d78f94-d96f-11e5-8d01-0805ef799160.gif)
-![feb 22 2016 14 21](https://cloud.githubusercontent.com/assets/1849990/13219329/9efde354-d96f-11e5-88a5-4175729e471e.gif)
-
+To run the example project, clone the repo, and run `pod install` from the Example directory first.
 
 ## Requirements
 
@@ -29,29 +32,32 @@ Requires iOS SDK version > 8.0
 
 
 ## Installation
-### CocoaPods
-Comming soon.
 
-### Manual 
+### CocoaPods 
 
-Simply include `UIScrollView+FloatingButton.h` and `UIScrollView+FloatingButton.m` from `Source` folder in your App’s Xcode project. 
+MEVFloatingButton is available through [CocoaPods](http://cocoapods.org). To install
+it, simply add the following line to your Podfile:
 
+```ruby
+pod "MEVFloatingButton"
+```
 
 ## How to use
 ### Step 1
 
-```
+```objective-c.
 #import "UIScrollView+FloatingButton.h"
 ```
 
 ### Step 2
 
 Add delegate and delegate methods.
-```
+
+```objective-c.
 @interface ViewController () <MEVFloatingButtonDelegate>
 ```
 
-```
+```objective-c.
 #pragma mark - MEScrollToTopDelegate Methods
 
 /*! @abstract Tells the delegate that the action button was tapped.
@@ -84,7 +90,8 @@ Add delegate and delegate methods.
 ### Step 3
 
 Create a `MEVFloatingButton`object.
-```
+
+```objective-c.
 MEVFloatingButton *button = [[MEVFloatingButton alloc] init];
 button.animationType = MEVFloatingButtonAnimationFromBottom;
 button.displayMode = MEVFloatingButtonDisplayModeWhenScrolling;
@@ -100,12 +107,16 @@ button.verticalOffset = -30.0f;
 button.rounded = YES;
 button.hideWhenScrollToTop = YES;
 ```
+
 Set the object to your UIScrollView/UITableView/UICollectionView.
-```
+
+```objective-c.
 [self.tableView setFloatingButtonView:button];
 ```
+
 Set the delegate.
-```
+
+```objective-c.
 [self.tableView setFloatingButtonDelegate:self]
 ```
 
@@ -114,17 +125,20 @@ Set the delegate.
 
 For more info check the **Examples** project. Everything is there.
 
+
+### Manual 
+
+Simply include `UIScrollView+FloatingButton.h` and `UIScrollView+FloatingButton.m` from `Source` folder in your App’s Xcode project. 
+
+
 ## Author
 
-Manuel Escrig Ventura, [@manuelescrig](https://twitter.com/manuelescrig)
-
-Portfolio,  [ventura.media](https://ventura.media)
+Manuel Escrig Ventura, manuel.escrig@gmail.com
 
 ## Credits
-Icons made by Elegant Themes from www.flaticon.com 
 
+Icons made by Elegant Themes from www.flaticon.com 
 
 ## License
 
-MEFloatingButton is available under the MIT License. See the LICENSE file for more info.
-
+MEVFloatingButton is available under the MIT license. See the LICENSE file for more info.
