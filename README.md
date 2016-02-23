@@ -40,10 +40,14 @@ it, simply add the following line to your Podfile:
 pod "MEVFloatingButton"
 ```
 
+### Manual 
+
+Simply include `UIScrollView+FloatingButton.h` and `UIScrollView+FloatingButton.m` from `Source` folder in your App’s Xcode project. 
+
 ## How to use
 ### Step 1
 
-```objective-c.
+```objective-c
 #import "UIScrollView+FloatingButton.h"
 ```
 
@@ -51,11 +55,11 @@ pod "MEVFloatingButton"
 
 Add delegate and delegate methods.
 
-```objective-c.
+```objective-c
 @interface ViewController () <MEVFloatingButtonDelegate>
 ```
 
-```objective-c.
+```objective-c
 #pragma mark - MEScrollToTopDelegate Methods
 
 /*! @abstract Tells the delegate that the action button was tapped.
@@ -89,7 +93,7 @@ Add delegate and delegate methods.
 
 Create a `MEVFloatingButton`object.
 
-```objective-c.
+```objective-c
 MEVFloatingButton *button = [[MEVFloatingButton alloc] init];
 button.animationType = MEVFloatingButtonAnimationFromBottom;
 button.displayMode = MEVFloatingButtonDisplayModeWhenScrolling;
@@ -108,13 +112,13 @@ button.hideWhenScrollToTop = YES;
 
 Set the object to your UIScrollView/UITableView/UICollectionView.
 
-```objective-c.
+```objective-c
 [self.tableView setFloatingButtonView:button];
 ```
 
 Set the delegate.
 
-```objective-c.
+```objective-c
 [self.tableView setFloatingButtonDelegate:self]
 ```
 
@@ -122,11 +126,6 @@ Set the delegate.
 ## Sample Project
 
 For more info check the **Examples** project. Everything is there.
-
-
-### Manual 
-
-Simply include `UIScrollView+FloatingButton.h` and `UIScrollView+FloatingButton.m` from `Source` folder in your App’s Xcode project. 
 
 
 ## Author
