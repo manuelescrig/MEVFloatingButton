@@ -1,5 +1,5 @@
 PODS:
-  - MEVFloatingButton (0.1.0)
+  - MEVFloatingButton (0.3.0)
 
 DEPENDENCIES:
   - MEVFloatingButton (from `../`)
@@ -9,6 +9,6 @@ EXTERNAL SOURCES:
     :path: ../
 
 SPEC CHECKSUMS:
-  MEVFloatingButton: 759e1c733922480933a543e918184e10fa95be91
+  MEVFloatingButton: f73bf5c34a844af04b24eac2feacc0721d046f9a
 
 COCOAPODS: 0.39.0
