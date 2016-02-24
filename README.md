@@ -31,7 +31,7 @@ Requires iOS SDK version > 8.0
 
 ## Installation
 
-### CocoaPods 
+#### CocoaPods 
 
 MEVFloatingButton is available through [CocoaPods](http://cocoapods.org). To install
 it, simply add the following line to your Podfile:
@@ -40,18 +40,18 @@ it, simply add the following line to your Podfile:
 pod "MEVFloatingButton"
 ```
 
-### Manual 
+#### Manual 
 
-Simply include `UIScrollView+FloatingButton.h` and `UIScrollView+FloatingButton.m` from `Source` folder in your App’s Xcode project. 
+Simply include `UIScrollView+FloatingButton.h` and `UIScrollView+FloatingButton.m` from `/Pod/Classes/` folder in your App’s Xcode project. 
 
 ## How to use
-### Step 1
+#### Step 1
 
 ```objective-c
 #import "UIScrollView+FloatingButton.h"
 ```
 
-### Step 2
+#### Step 2
 
 Add delegate and delegate methods.
 
@@ -89,7 +89,7 @@ Add delegate and delegate methods.
 - (void)floatingButtonDidDisappear:(UIScrollView *)scrollView;
 ```
 
-### Step 3
+#### Step 3
 
 Create a `MEVFloatingButton`object.
 
