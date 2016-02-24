@@ -130,7 +130,7 @@ For more info check the **Examples** project. Everything is there.
 
 ## Author
 
-Manuel Escrig Ventura, manuel.escrig@gmail.com
+Manuel Escrig Ventura, manuelescrig@gmail.com
 
 ## Credits
 
