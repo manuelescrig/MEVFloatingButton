@@ -14,7 +14,7 @@
             buildForArchiving = "YES">
             <BuildableReference
                BuildableIdentifier = 'primary'
-               BlueprintIdentifier = '7824DB7B1B0B2456E71262D8'
+               BlueprintIdentifier = '6460B85FAF4019EBB3CD76C2'
                BlueprintName = 'MEVFloatingButton'
                ReferencedContainer = 'container:Pods.xcodeproj'
                BuildableName = 'MEVFloatingButton.framework'>

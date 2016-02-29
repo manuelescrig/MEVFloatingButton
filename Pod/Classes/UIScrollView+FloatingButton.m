@@ -351,15 +351,7 @@ void Swizzle(Class c, SEL orig, SEL new)
 
 - (MEVFloatingButton *)floatingButton
 {
-    MEVFloatingButton *floatingButton = objc_getAssociatedObject(self, kFloatingButtonView);
-
-    if (floatingButton == nil) {
-        floatingButton = [[MEVFloatingButton alloc] init];
-
-        [self setFloatingButtonView:floatingButton];
-    }
-    
-    return floatingButton;
+   return objc_getAssociatedObject(self, kFloatingButtonView);
 }
 
 
@@ -417,7 +409,7 @@ void Swizzle(Class c, SEL orig, SEL new)
 {
     BOOL canDisplay = NO;
     
-    if ([self.floatingButton displayMode] != MEVFloatingButtonDisplayModeNone) {
+    if ([self.floatingButton displayMode] != MEVFloatingButtonDisplayModeNone && [self floatingButton]) {
         canDisplay = YES;
     }
     
