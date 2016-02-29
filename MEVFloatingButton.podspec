@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = "MEVFloatingButton"
-  s.version          = "0.3.0"
+  s.version          = "0.5.0"
   s.summary          = "An iOS drop-in UITableView/UICollectionView/UIScrollView superclass category for showing a customizable floating button on top of it."
 
 # This description is used to generate tags and improve search results.
