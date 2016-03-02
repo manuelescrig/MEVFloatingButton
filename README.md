@@ -14,11 +14,8 @@ An iOS **drop-in** UITableView/UICollectionView/UIScrollView superclass **catego
 * Multiple delegate methods.
 
 ## Demo
- ![feb 22 2016 14 16](https://cloud.githubusercontent.com/assets/1849990/13219261/29aef4a8-d96f-11e5-8632-85b31c3c1c1f.gif)
- ![feb 22 2016 14 17](https://cloud.githubusercontent.com/assets/1849990/13219263/29d8c3b4-d96f-11e5-9d12-502363e77759.gif)
- ![feb 22 2016 14 18](https://cloud.githubusercontent.com/assets/1849990/13219262/29d78f94-d96f-11e5-8d01-0805ef799160.gif)
- ![feb 22 2016 14 21](https://cloud.githubusercontent.com/assets/1849990/13219329/9efde354-d96f-11e5-88a5-4175729e471e.gif)
- 
+ ![feb 22 2016 14 17](https://cloud.githubusercontent.com/assets/1849990/13462466/db001be6-e087-11e5-92a1-79c8ecefb715.gif)
+
  [Demo App](https://appetize.io/app/rkaym9brp1yva59ejat5xdh9yc) 
  
 ## Usage
