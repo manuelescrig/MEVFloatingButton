@@ -27,26 +27,9 @@ static NSString *CellIdentifier = @"CellIdentifier";
 {
     [super viewDidLoad];
 
-    
     self.title = @"MEVFloatingButton";
-    
-    MEVFloatingButton *button = [[MEVFloatingButton alloc] init];
-    button.animationType = MEVFloatingButtonAnimationFromBottom;
-    button.displayMode = MEVFloatingButtonDisplayModeWhenScrolling;
-    button.position = MEVFloatingButtonPositionBottomCenter;
-    button.image = [UIImage imageNamed:@"Icon0"];
-    button.imageColor = [UIColor groupTableViewBackgroundColor];
-    button.backgroundColor = [UIColor darkGrayColor];
-    button.outlineColor = [UIColor darkGrayColor];
-    button.outlineWidth = 0.0f;
-    button.imagePadding = 20.0f;
-    button.horizontalOffset = 20.0f;
-    button.verticalOffset = -30.0f;
-    button.rounded = YES;
-    button.hideWhenScrollToTop = YES;
-    [self.tableView setFloatingButtonView:button];
-    [self.tableView setFloatingButtonDelegate:self];
-    
+
+    [self.tableView setBackgroundColor:[UIColor colorWithRed:236/255.0f green:236/255.0f blue:236/255.0f alpha:1]];
     [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:CellIdentifier];
 
 }
@@ -64,13 +47,15 @@ static NSString *CellIdentifier = @"CellIdentifier";
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 40;
+    return 4;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-    cell.textLabel.text = [NSString stringWithFormat:@"Example [%zd]", indexPath.row];
+    [cell setBackgroundColor:[UIColor colorWithRed:236/255.0f green:236/255.0f blue:236/255.0f alpha:1]];
+    cell.textLabel.text = [NSString stringWithFormat:@"Example %zd", indexPath.row+1];
+    cell.textLabel.textColor = [UIColor colorWithRed:44/255.0f green:62/255.0f blue:80/255.0f alpha:1];
     return cell;
 }
 
@@ -105,28 +90,6 @@ static NSString *CellIdentifier = @"CellIdentifier";
 }
 
 
-#pragma mark - MEScrollToTopDelegate Methods
-
-- (void)floatingButton:(UIScrollView *)scrollView didTapButton:(UIButton *)button {
-    NSLog(@"didTapButton");
-    [self.tableView setContentOffset:CGPointMake(0, -self.tableView.contentInset.top) animated:YES];
-}
-
-- (void)floatingButtonWillAppear:(UIScrollView *)scrollView {
-    NSLog(@"floatingButtonWillAppear");
-}
-
-- (void)floatingButtonDidAppear:(UIScrollView *)scrollView {
-    NSLog(@"floatingButtonDidAppear");
-}
-
-- (void)floatingButtonWillDisappear:(UIScrollView *)scrollView {
-    NSLog(@"floatingButtonWillDisappear");
-}
-
-- (void)floatingButtonDidDisappear:(UIScrollView *)scrollView; {
-    NSLog(@"floatingButtonDidDisappear");
-}
 
 
 @end

@@ -26,7 +26,7 @@ static NSString *CellIdentifier = @"CellIdentifier";
     button.displayMode = MEVFloatingButtonDisplayModeWhenScrolling;
     button.animationType = MEVFloatingButtonAnimationNone;
     button.position = MEVFloatingButtonPositionBottomLeft;
-    button.backgroundColor = [UIColor colorWithRed:0.5 green:0.5 blue:0.5 alpha:0.9];
+    button.backgroundColor = [UIColor colorWithRed:233/255.0f green:212/255.0f blue:96/255.0f alpha:0.9];
     button.horizontalOffset = 30.0f;
     button.verticalOffset = -30.0f;
     button.image = [UIImage imageNamed:@"Icon2"];
@@ -35,6 +35,7 @@ static NSString *CellIdentifier = @"CellIdentifier";
     [self.tableView setFloatingButtonView:button];
     [self.tableView setFloatingButtonDelegate:self];
     
+    [self.tableView setBackgroundColor:[UIColor colorWithRed:236/255.0f green:236/255.0f blue:236/255.0f alpha:1]];
     [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:CellIdentifier];
 }
 
@@ -54,7 +55,9 @@ static NSString *CellIdentifier = @"CellIdentifier";
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    [cell setBackgroundColor:[UIColor colorWithRed:236/255.0f green:236/255.0f blue:236/255.0f alpha:1]];
     cell.textLabel.text = [NSString stringWithFormat:@"Cell section [%zd] row [%zd]", indexPath.section, indexPath.row];
+    cell.textLabel.textColor = [UIColor colorWithRed:44/255.0f green:62/255.0f blue:80/255.0f alpha:1];
     return cell;
 }
 

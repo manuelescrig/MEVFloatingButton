@@ -28,9 +28,8 @@ static NSString *CellIdentifier = @"CellIdentifier";
     button.displayMode = MEVFloatingButtonDisplayModeAlways;
     button.position = MEVFloatingButtonPositionBottomRight;
     button.image = [UIImage imageNamed:@"Icon3"];
-    button.imageColor = [UIColor greenColor];
-    button.backgroundColor = [UIColor purpleColor];
-    button.outlineColor = [UIColor darkGrayColor];
+    button.imageColor = [UIColor colorWithRed:43/255.0f green:204/255.0f blue:113/255.0f alpha:1];
+    button.backgroundColor = [UIColor colorWithRed:154/255.0f green:18/255.0f blue:197/255.0f alpha:1];
     button.outlineWidth = 0.0f;
     button.imagePadding = 15.0f;
     button.horizontalOffset = -30.0f;
@@ -65,6 +64,7 @@ static NSString *CellIdentifier = @"CellIdentifier";
     
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     cell.textLabel.text = [NSString stringWithFormat:@"Cell section [%zd] row [%zd]", indexPath.section, indexPath.row];
+    cell.textLabel.textColor = [UIColor colorWithRed:44/255.0f green:62/255.0f blue:80/255.0f alpha:1];
     return cell;
 }
 
@@ -81,7 +81,7 @@ static NSString *CellIdentifier = @"CellIdentifier";
 
 - (void)floatingButton:(UIScrollView *)scrollView didTapButton:(UIButton *)button {
     NSLog(@"didTapButton");
-    [self.tableView setContentOffset:CGPointMake(0, -self.tableView.contentInset.top) animated:YES];
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (void)floatingButtonWillAppear:(UIScrollView *)scrollView {

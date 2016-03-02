@@ -24,20 +24,22 @@ static NSString *CellIdentifier = @"CellIdentifier";
 
     MEVFloatingButton *button = [[MEVFloatingButton alloc] init];
     button.animationType = MEVFloatingButtonAnimationFromBottom;
-    button.displayMode = MEVFloatingButtonDisplayModeAlways;
+    button.displayMode = MEVFloatingButtonDisplayModeWhenScrolling;
     button.position = MEVFloatingButtonPositionBottomCenter;
-    button.image = [UIImage imageNamed:@"Icon6"];
-    button.imageColor = [UIColor cyanColor];
-    button.backgroundColor = [UIColor magentaColor];
-    button.outlineColor = [UIColor cyanColor];
+    button.image = [UIImage imageNamed:@"Icon0"];
+    button.imageColor = [UIColor groupTableViewBackgroundColor];
+    button.backgroundColor = [UIColor colorWithRed:236/255.0f green:100/255.0f blue:75/255.0f alpha:1];
+    button.outlineColor = [UIColor darkGrayColor];
     button.outlineWidth = 0.0f;
-    button.rounded = YES;
-    button.imagePadding = 15.0f;
+    button.imagePadding = 10.0f;
     button.horizontalOffset = 20.0f;
     button.verticalOffset = -30.0f;
+    button.rounded = YES;
+    button.hideWhenScrollToTop = YES;
     [self.tableView setFloatingButtonView:button];
     [self.tableView setFloatingButtonDelegate:self];
 
+    [self.tableView setBackgroundColor:[UIColor colorWithRed:236/255.0f green:236/255.0f blue:236/255.0f alpha:1]];
     [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:CellIdentifier];
 }
 
@@ -56,7 +58,9 @@ static NSString *CellIdentifier = @"CellIdentifier";
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    [cell setBackgroundColor:[UIColor colorWithRed:236/255.0f green:236/255.0f blue:236/255.0f alpha:1]];
     cell.textLabel.text = [NSString stringWithFormat:@"Cell section [%zd] row [%zd]", indexPath.section, indexPath.row];
+    cell.textLabel.textColor = [UIColor colorWithRed:44/255.0f green:62/255.0f blue:80/255.0f alpha:1];
     return cell;
 }
 
@@ -73,7 +77,7 @@ static NSString *CellIdentifier = @"CellIdentifier";
 
 - (void)floatingButton:(UIScrollView *)scrollView didTapButton:(UIButton *)button {
     NSLog(@"didTapButton");
-    [self.navigationController popViewControllerAnimated:YES];
+    [self.tableView setContentOffset:CGPointMake(0, -self.tableView.contentInset.top) animated:YES];
 }
 
 - (void)floatingButtonWillAppear:(UIScrollView *)scrollView {
