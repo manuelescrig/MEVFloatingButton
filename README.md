@@ -19,7 +19,7 @@ An iOS **drop-in** UITableView/UICollectionView/UIScrollView superclass **catego
  ![feb 22 2016 14 18](https://cloud.githubusercontent.com/assets/1849990/13219262/29d78f94-d96f-11e5-8d01-0805ef799160.gif)
  ![feb 22 2016 14 21](https://cloud.githubusercontent.com/assets/1849990/13219329/9efde354-d96f-11e5-88a5-4175729e471e.gif)
  
- [Demo App](https://appetize.io/app/7thznpc6w08ugm9a7qy1kvp4w4) 
+ [Demo App](https://appetize.io/app/rkaym9brp1yva59ejat5xdh9yc) 
  
 ## Usage
 
