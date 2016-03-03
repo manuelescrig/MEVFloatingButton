@@ -8,6 +8,7 @@
 
 #import "MEVExample1ViewController.h"
 #import "UIScrollView+FloatingButton.h"
+#import "MEVExample4ViewController.h"
 
 static NSString *CellIdentifier = @"CellIdentifier";
 
@@ -76,7 +77,8 @@ static NSString *CellIdentifier = @"CellIdentifier";
 
 - (void)floatingButton:(UIScrollView *)scrollView didTapButton:(UIButton *)button {
     NSLog(@"didTapButton");
-    [self.tableView setContentOffset:CGPointMake(0, -self.tableView.contentInset.top) animated:YES];
+    MEVExample4ViewController *viewController = [MEVExample4ViewController new];
+    [self presentViewController:[[UINavigationController alloc] initWithRootViewController:viewController] animated:YES completion:nil];
 }
 
 - (void)floatingButtonWillAppear:(UIScrollView *)scrollView {

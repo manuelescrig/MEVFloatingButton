@@ -291,7 +291,7 @@ void Swizzle(Class c, SEL orig, SEL new)
 }
 
 - (void)mev_dealloc
-{
+{    
     @try {
         [self removeObserver:self forKeyPath:kObserverContentOffset context:nil];
         [self removeObserver:self forKeyPath:kObserverContentSize context:nil];
@@ -308,8 +308,11 @@ void Swizzle(Class c, SEL orig, SEL new)
 - (void)mev_willMoveToWindow:(UIWindow *)newWindow
 {
     if (!newWindow) {
-        [self mev_stopTimer];
-        [self mev_didDisappear];
+        if (self.floatingButton.displayMode != MEVFloatingButtonDisplayModeAlways &&
+            self.floatingButton.displayMode != MEVFloatingButtonDisplayModeNone) {
+            [self mev_stopTimer];
+            [self mev_didDisappear];
+        }
     }
     
     [self mev_willMoveToWindow:newWindow];

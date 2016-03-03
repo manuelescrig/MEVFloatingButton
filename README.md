@@ -1,5 +1,5 @@
 # MEVFloatingButton
-An iOS **drop-in** UITableView/UICollectionView/UIScrollView superclass **category** for showing a customizable floating button on top of it. MEVFloatingButton is also compatible with ASCollectionView/ASTableView from [AsynDisplayKit](https://github.com/facebook/AsyncDisplayKit). 
+An iOS **drop-in** UITableView, UICollectionView, UIScrollView superclass **category** for showing a customizable floating button on top of it. MEVFloatingButton is also compatible with ASCollectionView/ASTableView from [AsynDisplayKit](https://github.com/facebook/AsyncDisplayKit). 
 
 [![Version](https://img.shields.io/cocoapods/v/MEVFloatingButton.svg?style=flat)](http://cocoapods.org/pods/MEVFloatingButton)
 [![License](https://img.shields.io/cocoapods/l/MEVFloatingButton.svg?style=flat)](http://cocoapods.org/pods/MEVFloatingButton)
