@@ -15,7 +15,7 @@ An iOS **drop-in** UITableView, UICollectionView, UIScrollView superclass **cate
 * Customizable button icon.
 * Multiple delegate methods.
 
-
+## Demo
 [Demo App](https://appetize.io/app/rkaym9brp1yva59ejat5xdh9yc)
 
 ## Usage
