@@ -1,4 +1,4 @@
-# MEVFloatingButton
+## MEVFloatingButton
 An iOS **drop-in** UITableView, UICollectionView, UIScrollView superclass **category** for showing a customizable floating button on top of it. MEVFloatingButton is also compatible with ASCollectionView/ASTableView from [AsynDisplayKit](https://github.com/facebook/AsyncDisplayKit). 
 
 [![Version](https://img.shields.io/cocoapods/v/MEVFloatingButton.svg?style=flat)](http://cocoapods.org/pods/MEVFloatingButton)
@@ -8,28 +8,28 @@ An iOS **drop-in** UITableView, UICollectionView, UIScrollView superclass **cate
 
  <p align="center">![feb 22 2016 14 17](https://cloud.githubusercontent.com/assets/1849990/13462466/db001be6-e087-11e5-92a1-79c8ecefb715.gif)</p>
  
-#### Features
+### Features
 * Multiple animation types.
 * Different display modes.
 * Different screen positions.
 * Customizable button icon.
 * Multiple delegate methods.
 
-#### Demo
+### Demo
 [Demo App](https://appetize.io/app/rkaym9brp1yva59ejat5xdh9yc)
 
-#### Usage
+### Usage
 
 To run the example project, clone the repo, and run `pod install` from the Example directory first.
 
-#### Requirements
+### Requirements
 
 Requires iOS SDK version > 8.0
 
 
-## Installation
+### Installation
 
-#### CocoaPods 
+##### CocoaPods 
 
 MEVFloatingButton is available through [CocoaPods](http://cocoapods.org). To install
 it, simply add the following line to your Podfile:
@@ -38,18 +38,18 @@ it, simply add the following line to your Podfile:
 pod 'MEVFloatingButton'
 ```
 
-#### Manual 
+##### Manual 
 
 Simply include `UIScrollView+FloatingButton.h` and `UIScrollView+FloatingButton.m` from `/Pod/Classes/` folder in your App’s Xcode project. 
 
-## How to use
-#### Step 1
+### How to use
+##### Step 1
 
 ```objective-c
 #import "UIScrollView+FloatingButton.h"
 ```
 
-#### Step 2
+##### Step 2
 
 Add delegate and delegate methods.
 
@@ -87,7 +87,7 @@ Add delegate and delegate methods.
 - (void)floatingButtonDidDisappear:(UIScrollView *)scrollView;
 ```
 
-#### Step 3
+##### Step 3
 
 Create a `MEVFloatingButton`object.
 
@@ -121,19 +121,19 @@ Set the delegate.
 ```
 
 
-## Sample Project
+### Sample Project
 
 For more info check the **Examples** project. Everything is there.
 
 
-## Author
+### Author
 
 Manuel Escrig Ventura, manuelescrig@gmail.com
 
-## Credits
+### Credits
 
 Icons made by Elegant Themes from www.flaticon.com 
 
-## License
+### License
 
 MEVFloatingButton is available under the MIT license. See the LICENSE file for more info.
