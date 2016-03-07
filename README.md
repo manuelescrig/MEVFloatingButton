@@ -6,6 +6,8 @@ An iOS **drop-in** UITableView, UICollectionView, UIScrollView superclass **cate
 [![Platform](https://img.shields.io/cocoapods/p/MEVFloatingButton.svg?style=flat)](http://cocoapods.org/pods/MEVFloatingButton)
 [![Language](http://img.shields.io/badge/language-objective--c-blue.svg?style=flat)](https://developer.apple.com/library/mac/documentation/Cocoa/Conceptual/ProgrammingWithObjectiveC/Introduction/Introduction.html)
 
+ <p align="center">![feb 22 2016 14 17](https://cloud.githubusercontent.com/assets/1849990/13462466/db001be6-e087-11e5-92a1-79c8ecefb715.gif)</p>
+ 
 ## Features
 * Multiple animation types.
 * Different display modes.
@@ -13,12 +15,9 @@ An iOS **drop-in** UITableView, UICollectionView, UIScrollView superclass **cate
 * Customizable button icon.
 * Multiple delegate methods.
 
-## Demo
- <p align="center">![feb 22 2016 14 17](https://cloud.githubusercontent.com/assets/1849990/13462466/db001be6-e087-11e5-92a1-79c8ecefb715.gif)
 
 [Demo App](https://appetize.io/app/rkaym9brp1yva59ejat5xdh9yc)
-</p>
- 
+
 ## Usage
 
 To run the example project, clone the repo, and run `pod install` from the Example directory first.
