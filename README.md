@@ -1,4 +1,5 @@
-## MEVFloatingButton
+### MEVFloatingButton
+---
 An iOS **drop-in** UITableView, UICollectionView, UIScrollView superclass **category** for showing a customizable floating button on top of it. MEVFloatingButton is also compatible with ASCollectionView/ASTableView from [AsynDisplayKit](https://github.com/facebook/AsyncDisplayKit). 
 
 [![Version](https://img.shields.io/cocoapods/v/MEVFloatingButton.svg?style=flat)](http://cocoapods.org/pods/MEVFloatingButton)
@@ -8,26 +9,27 @@ An iOS **drop-in** UITableView, UICollectionView, UIScrollView superclass **cate
 
  <p align="center">![feb 22 2016 14 17](https://cloud.githubusercontent.com/assets/1849990/13462466/db001be6-e087-11e5-92a1-79c8ecefb715.gif)</p>
  
-### Features
+#### Features
 * Multiple animation types.
 * Different display modes.
 * Different screen positions.
 * Customizable button icon.
 * Multiple delegate methods.
 
-### Demo
+#### Demo
 [Demo App](https://appetize.io/app/rkaym9brp1yva59ejat5xdh9yc)
 
-### Usage
+#### Usage
 
 To run the example project, clone the repo, and run `pod install` from the Example directory first.
 
-### Requirements
+#### Requirements
 
 Requires iOS SDK version > 8.0
 
 
 ### Installation
+---
 
 ##### CocoaPods 
 
@@ -43,6 +45,7 @@ pod 'MEVFloatingButton'
 Simply include `UIScrollView+FloatingButton.h` and `UIScrollView+FloatingButton.m` from `/Pod/Classes/` folder in your App’s Xcode project. 
 
 ### How to use
+---
 ##### Step 1
 
 ```objective-c
@@ -60,30 +63,10 @@ Add delegate and delegate methods.
 ```objective-c
 #pragma mark - MEScrollToTopDelegate Methods
 
-/*! @abstract Tells the delegate that the action button was tapped.
- @param scrollView A scrollView subclass informing the delegate.
- @param button the button tapped by the user
- */
 - (void)floatingButton:(UIScrollView *)scrollView didTapButton:(UIButton *)button;
-
-/*! @abstract Tells the delegate that the floating button will appear.
- @param scrollView A scrollView subclass informing the delegate.
- */
 - (void)floatingButtonWillAppear:(UIScrollView *)scrollView;
-
-/*! @abstract Tells the delegate that the floating button did appear.
- @param scrollView A scrollView subclass informing the delegate.
- */
 - (void)floatingButtonDidAppear:(UIScrollView *)scrollView;
-
-/*! @abstract Tells the delegate that the floating button will disappear.
- @param scrollView A scrollView subclass informing the delegate.
- */
 - (void)floatingButtonWillDisappear:(UIScrollView *)scrollView;
-
-/*! @abstract Tells the delegate that the floating button did disappear.
- @param scrollView A scrollView subclass informing the delegate.
- */
 - (void)floatingButtonDidDisappear:(UIScrollView *)scrollView;
 ```
 
