@@ -1,5 +1,4 @@
 # MEVFloatingButton
----
 An iOS **drop-in** UITableView, UICollectionView, UIScrollView superclass **category** for showing a customizable floating button on top of it. 
 
 [![Version](https://img.shields.io/cocoapods/v/MEVFloatingButton.svg?style=flat)](http://cocoapods.org/pods/MEVFloatingButton)
@@ -9,17 +8,17 @@ An iOS **drop-in** UITableView, UICollectionView, UIScrollView superclass **cate
 
  <p align="center">![feb 22 2016 14 17](https://cloud.githubusercontent.com/assets/1849990/13462466/db001be6-e087-11e5-92a1-79c8ecefb715.gif)</p>
  
-#### Features
+## Features
 * Multiple animation types.
 * Different display modes.
 * Different screen positions.
 * Customizable button icon.
 * Multiple delegate methods.
 
-#### Demo
+## Demo
 [Demo App](https://appetize.io/app/rkaym9brp1yva59ejat5xdh9yc)
 
-#### Usage
+## Usage
 
 To run the example project, clone the repo, and run `pod install` from the Example directory first.
 
@@ -28,7 +27,7 @@ To run the example project, clone the repo, and run `pod install` from the Examp
 Requires iOS SDK version > 8.0
 
 
-### Installation
+#### Installation
 ---
 
 ##### CocoaPods 
@@ -44,7 +43,7 @@ pod 'MEVFloatingButton'
 
 Simply include `UIScrollView+FloatingButton.h` and `UIScrollView+FloatingButton.m` from `/Pod/Classes/` folder in your App’s Xcode project. 
 
-### How to use
+#### How to use
 ---
 ##### Step 1
 
@@ -104,22 +103,22 @@ Set the delegate.
 ```
 
 
-### Sample Project
+## Sample Project
 
 For more info check the **Examples** project. Everything is there.
 
-### Change Log
+## Change Log
 
 See [Changelog.md](https://github.com/manuelescrig/MEVFloatingButton/blob/master/CHANGELOG.md)
 
-### Author
+## Author
 
 Manuel Escrig Ventura, manuelescrig@gmail.com
 
-### Credits
+## Credits
 
 Icons made by Elegant Themes from www.flaticon.com 
 
-### License
+## License
 
 MEVFloatingButton is available under the MIT license. See the LICENSE file for more info.
