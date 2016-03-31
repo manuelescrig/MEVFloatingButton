@@ -1,4 +1,4 @@
-### MEVFloatingButton
+# MEVFloatingButton
 ---
 An iOS **drop-in** UITableView, UICollectionView, UIScrollView superclass **category** for showing a customizable floating button on top of it. 
 
@@ -110,7 +110,7 @@ For more info check the **Examples** project. Everything is there.
 
 ### Change Log
 
-See [Changelog.md](https://github.com/ViccAlexander/Chameleon/blob/master/CHANGELOG.md)
+See [Changelog.md](https://github.com/manuelescrig/MEVFloatingButton/blob/master/CHANGELOG.md)
 
 ### Author
 
