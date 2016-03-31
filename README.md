@@ -108,6 +108,9 @@ Set the delegate.
 
 For more info check the **Examples** project. Everything is there.
 
+### Change Log
+
+See [Changelog.md](https://github.com/ViccAlexander/Chameleon/blob/master/CHANGELOG.md)
 
 ### Author
 
