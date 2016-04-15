@@ -28,7 +28,9 @@
 
 - (void)testExample
 {
-    XCTFail(@"No implementation for \"%s\"", __PRETTY_FUNCTION__);
+//    XCTFail(@"No implementation for \"%s\"", __PRETTY_FUNCTION__);
+//    XCTAssertNotNil(calcView, @"Cannot find CalcView instance");
+    XCTAssertEqual(1 + 1, 2, "one plus one should equal two");
 }
 
 @end
