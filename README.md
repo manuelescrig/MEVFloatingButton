@@ -5,6 +5,7 @@ An iOS **drop-in** UITableView, UICollectionView, UIScrollView superclass **cate
 [![License](https://img.shields.io/cocoapods/l/MEVFloatingButton.svg?style=flat)](http://cocoapods.org/pods/MEVFloatingButton)
 [![Platform](https://img.shields.io/cocoapods/p/MEVFloatingButton.svg?style=flat)](http://cocoapods.org/pods/MEVFloatingButton)
 [![Language](http://img.shields.io/badge/language-objective--c-blue.svg?style=flat)](https://developer.apple.com/library/mac/documentation/Cocoa/Conceptual/ProgrammingWithObjectiveC/Introduction/Introduction.html)
+[![Build Status](https://travis-ci.org/manuelescrig/MEVFloatingButton.svg?branch=master)](https://travis-ci.org/manuelescrig/MEVFloatingButton)
 
  <p align="center">![feb 22 2016 14 17](https://cloud.githubusercontent.com/assets/1849990/13462466/db001be6-e087-11e5-92a1-79c8ecefb715.gif)</p>
  
