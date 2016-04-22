@@ -114,7 +114,7 @@ See [Changelog.md](https://github.com/manuelescrig/MEVFloatingButton/blob/master
 
 ## Author
 
-Manuel Escrig Ventura, manuelescrig@gmail.com
+Manuel Escrig Ventura, [@manuelescrig](https://www.twitter.com/manuelescrig/)
 
 ## Credits
 
