@@ -54,7 +54,7 @@ Simply include `UIScrollView+FloatingButton.h` and `UIScrollView+FloatingButton.
 
 ##### Step 2
 
-Add delegate and delegate methods.
+Add datasource and delegate methods.
 
 ```objective-c
 @interface ViewController () <MEVFloatingButtonDelegate>
