@@ -26,7 +26,7 @@ Pod::Spec.new do |s|
   s.license          = 'MIT'
   s.author           = { "Manuel Escrig Ventura" => "manuelescrig@gmail.com" }
   s.source           = { :git => "https://github.com/manuelescrig/MEVFloatingButton.git", :tag => s.version.to_s }
-  # s.social_media_url = 'https://twitter.com/manuelescrig'
+  s.social_media_url = 'https://twitter.com/manuelescrig'
 
   s.platform     = :ios, '8.0'
   s.requires_arc = true
