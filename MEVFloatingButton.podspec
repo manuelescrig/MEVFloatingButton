@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = "MEVFloatingButton"
-  s.version          = "1.2"
+  s.version          = "1.3"
   s.summary          = "An iOS drop-in UITableView, UICollectionView, UIScrollView superclass category for showing a customizable floating button on top of it."
 
 # This description is used to generate tags and improve search results.
@@ -22,7 +22,7 @@ Pod::Spec.new do |s|
                        DESC
 
   s.homepage         = "https://github.com/manuelescrig/MEVFloatingButton"
-  # s.screenshots    = "https://cloud.githubusercontent.com/assets/1849990/13462466/db001be6-e087-11e5-92a1-79c8ecefb715.gif"
+  s.screenshots      = "https://cloud.githubusercontent.com/assets/1849990/13462466/db001be6-e087-11e5-92a1-79c8ecefb715.gif"
   s.license          = 'MIT'
   s.author           = { "Manuel Escrig Ventura" => "manuelescrig@gmail.com" }
   s.source           = { :git => "https://github.com/manuelescrig/MEVFloatingButton.git", :tag => s.version.to_s }
