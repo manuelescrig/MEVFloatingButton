@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		424DEA8C1D64DE0A002C6D42 /* MEVExample5ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 424DEA8B1D64DE0A002C6D42 /* MEVExample5ViewController.m */; };
 		4CA18E05DDDEE146C625B53C /* Pods_MEVFloatingButton_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7C1B9420CD00A013A8C2F0D2 /* Pods_MEVFloatingButton_Tests.framework */; };
 		6003F58E195388D20070C39A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F58D195388D20070C39A /* Foundation.framework */; };
 		6003F590195388D20070C39A /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F58F195388D20070C39A /* CoreGraphics.framework */; };
@@ -47,6 +48,8 @@
 		0C080CB97D034F7B7553480C /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
 		3A49046DD193E8A2C8D1A1FE /* MEVFloatingButton.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = MEVFloatingButton.podspec; path = ../MEVFloatingButton.podspec; sourceTree = "<group>"; };
 		419949C4815252592392460E /* Pods_MEVFloatingButton_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MEVFloatingButton_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		424DEA8A1D64DE0A002C6D42 /* MEVExample5ViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MEVExample5ViewController.h; sourceTree = "<group>"; };
+		424DEA8B1D64DE0A002C6D42 /* MEVExample5ViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MEVExample5ViewController.m; sourceTree = "<group>"; };
 		6003F58A195388D20070C39A /* MEVFloatingButton_Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MEVFloatingButton_Example.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6003F58D195388D20070C39A /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		6003F58F195388D20070C39A /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -156,6 +159,8 @@
 				C41BEAFE1C7CA7B90044AA35 /* MEVExample3ViewController.m */,
 				C41BEAFF1C7CA7B90044AA35 /* MEVExample4ViewController.h */,
 				C41BEB001C7CA7B90044AA35 /* MEVExample4ViewController.m */,
+				424DEA8A1D64DE0A002C6D42 /* MEVExample5ViewController.h */,
+				424DEA8B1D64DE0A002C6D42 /* MEVExample5ViewController.m */,
 				6003F5A8195388D20070C39A /* Images.xcassets */,
 				6003F594195388D20070C39A /* Supporting Files */,
 			);
@@ -416,6 +421,7 @@
 				6003F5A7195388D20070C39A /* MEVViewController.m in Sources */,
 				C41BEB051C7CA7B90044AA35 /* MEVExample3ViewController.m in Sources */,
 				6003F59A195388D20070C39A /* main.m in Sources */,
+				424DEA8C1D64DE0A002C6D42 /* MEVExample5ViewController.m in Sources */,
 				C41BEB011C7CA7B90044AA35 /* MEVExample1ViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -34,6 +34,7 @@ typedef NS_ENUM(NSInteger, MEFloatingButtonState) {
 @property (nonatomic, strong) NSTimer *fadeOutTimer;
 @property (nonatomic, assign) MEFloatingButtonState buttonState;
 @property (nonatomic, assign) float scrollThreshold;
+@property (nonatomic, assign) BOOL valid;
 
 @end
 
@@ -71,6 +72,7 @@ typedef NS_ENUM(NSInteger, MEFloatingButtonState) {
         _verticalOffset = kMEFlatingButtonDefaultVerticalOffset;
         _rounded = NO;
         _hideWhenScrollToTop = NO;
+        _valid = NO;
         
         [self addSubview:self.contentView];
     }
@@ -450,7 +452,14 @@ void Swizzle(Class c, SEL orig, SEL new)
         }
         
         [view setupConstraints];
+        
+        [self.floatingButton setValid:YES];
     }
+}
+
+- (BOOL)mev_isViewValid
+{
+    return [self.floatingButton valid];
 }
 
 -(void)mev_showFloatingButtonView
@@ -581,7 +590,7 @@ void Swizzle(Class c, SEL orig, SEL new)
 
 -(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
-    if ([keyPath isEqualToString:kObserverFrame]) {
+    if ([keyPath isEqualToString:kObserverFrame] || [self mev_isViewValid] == NO) {
         [self mev_validateView];
         
     } else if ([keyPath isEqualToString:kObserverContentOffset]) {

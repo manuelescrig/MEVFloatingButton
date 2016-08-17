@@ -14,6 +14,7 @@
 #import "MEVExample2ViewController.h"
 #import "MEVExample3ViewController.h"
 #import "MEVExample4ViewController.h"
+#import "MEVExample5ViewController.h"
 
 static NSString *CellIdentifier = @"CellIdentifier";
 
@@ -47,7 +48,7 @@ static NSString *CellIdentifier = @"CellIdentifier";
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 4;
+    return 5;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -82,6 +83,11 @@ static NSString *CellIdentifier = @"CellIdentifier";
             
         case 3:  {
             MEVExample4ViewController *viewController = [MEVExample4ViewController new];
+            [self presentViewController:[[UINavigationController alloc] initWithRootViewController:viewController] animated:YES completion:nil];
+        }    break;
+            
+        case 4:  {
+            MEVExample5ViewController *viewController = [MEVExample5ViewController new];
             [self presentViewController:[[UINavigationController alloc] initWithRootViewController:viewController] animated:YES completion:nil];
         }    break;
         default:
