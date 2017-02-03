@@ -1,3 +1,4 @@
 language: objective-c
 xcode_workspace: Example/MEVFloatingButton.xcworkspace # path to your xcodeproj folder
 xcode_scheme: MEVFloatingButton-Example
+osx_image: xcode7.3
