@@ -1,6 +1,3 @@
-language: objective-c  #1
-osx_image: xcode8.1 #2
-
-script:
-    - xcodebuild clean build -sdk iphonesimulator -workspace Example/MEVFloatingButton.xcworkspace -scheme MEVFloatingButton-Example CODE_SIGNING_REQUIRED=NO
-    
+language: objective-c
+xcode_workspace: Example/MEVFloatingButton.xcworkspace # path to your xcodeproj folder
+xcode_scheme: MEVFloatingButton-Example
