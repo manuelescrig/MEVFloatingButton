@@ -122,4 +122,5 @@ Icons made by Elegant Themes from www.flaticon.com
 
 ## License
 
-MEVFloatingButton is available under the MIT license. See the https://github.com/manuelescrig/MEVFloatingButton/blob/master/LICENSE file for more info.
+MEVFloatingButton is available under the MIT license. 
+See [License.md](https://github.com/manuelescrig/MEVFloatingButton/blob/master/LICENSE.md)
