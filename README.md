@@ -7,8 +7,8 @@ An iOS **drop-in** UITableView, UICollectionView, UIScrollView superclass **cate
 [![Platform](https://img.shields.io/cocoapods/p/MEVFloatingButton.svg?style=flat)](http://cocoapods.org/pods/MEVFloatingButton)
 [![Language](http://img.shields.io/badge/language-objective--c-blue.svg?style=flat)](https://developer.apple.com/library/mac/documentation/Cocoa/Conceptual/ProgrammingWithObjectiveC/Introduction/Introduction.html)
 
+![alt text](https://cloud.githubusercontent.com/assets/1849990/13462466/db001be6-e087-11e5-92a1-79c8ecefb715.gif "Logo Title Text 1")
 
- <p align="center">![feb 22 2016 14 17](https://cloud.githubusercontent.com/assets/1849990/13462466/db001be6-e087-11e5-92a1-79c8ecefb715.gif)</p>
  
 ## Features
 * Multiple animation types.
